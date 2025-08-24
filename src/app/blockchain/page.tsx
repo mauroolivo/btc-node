@@ -21,6 +21,7 @@ export default function Client() {
     return (
 
         <>
+
             {data != null && <p>{JSON.stringify(data.result)}</p>}
             <button onClick={handleBlockchainInfo}>get blockchain info</button>
             <button onClick={handleBlockcount}>get block count</button>
