@@ -22,7 +22,7 @@ export default function Client() {
 
         <>
 
-            {data != null && <p>{JSON.stringify(data.result)}</p>}
+            {data != null && <span className="limit-full">{JSON.stringify(data.result)}</span>}
             <button onClick={handleBlockchainInfo}>get blockchain info</button>
             <button onClick={handleBlockcount}>get block count</button>
         </>

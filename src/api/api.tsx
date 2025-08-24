@@ -1,5 +1,5 @@
 import {BlockchainInfo, Blockcount} from "@/models/blockchain";
-import {Transaction} from "@/models/transaction";
+import {TxResponse} from "@/models/tx";
 const url = process.env.NEXT_PUBLIC_NODE_URL || ""
 const API_USER = process.env.NEXT_PUBLIC_RPC_USER
 const API_PASS = process.env.NEXT_PUBLIC_RPC_PASS
@@ -33,9 +33,16 @@ export async function getblockcount(): Promise<Blockcount> {
             return data;
         });
 }
-export async function getrawtransaction(txid: string, verbose: boolean): Promise<Transaction> {
+export async function getrawtransaction(txid: string, verbose: boolean): Promise<TxResponse> {
     const params = [txid, verbose]
     return fetchData("getrawtransaction", params).then((response) => response.json())
+        .then((data) => {
+            return data;
+        });
+}
+export async function getblock(blockid: string, verbosity: number): Promise<TxResponse> {
+    const params = [blockid, verbosity]
+    return fetchData("getblock", params).then((response) => response.json())
         .then((data) => {
             return data;
         });

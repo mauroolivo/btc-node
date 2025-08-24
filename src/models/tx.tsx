@@ -1,9 +1,9 @@
-export interface Transaction {
+export interface TxResponse {
     jsonrpc: string
-    result: Result
+    result: TxResult
     id: string
 }
-export interface Result {
+export interface TxResult {
     txid: string
     hash: string
     version: number

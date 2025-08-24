@@ -46,4 +46,15 @@ body {
   .header a.active {
     @apply text-stone-400
   }
+  .txui-cell-lbl {
+    @apply bg-background whitespace-nowrap font-medium !pt-2 !pb-2 text-gray-900 dark:text-white;
+  }
+  .txui-cell-value {
+    @apply font-mono bg-background text-amber-400 !pt-2 !pb-2;
+  }
+}
+.limit-full {
+  display:inline-block;
+  width: 50%;
+  overflow-wrap: break-word;
 }

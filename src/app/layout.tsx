@@ -30,7 +30,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-[100%]`}
       >
          <Header/>
-         <div className=" font-sans grid grid-rows-[20px_1fr_20px] items-start p-8 pb-20 gap-16 sm:p-20">
+
+         <div className="font-sans  items-start p-8 pb-20 gap-16 sm:p-20">
              <main className="flex flex-col gap-[32px] row-start-2  sm:items-start">
                  {children}
              </main>
