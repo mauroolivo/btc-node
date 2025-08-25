@@ -35,6 +35,7 @@ export default function RootLayout({
              <main className="flex flex-col gap-[32px] row-start-2  sm:items-start">
                  {children}
              </main>
+             { /*
             <footer className="row-start-3 flex gap-[24px] flex-wrap justify-center">
                  <a
                      className="flex items-center gap-2 hover:underline hover:underline-offset-4"
@@ -82,6 +83,7 @@ export default function RootLayout({
                      Go to nextjs.org →
                  </a>
              </footer>
+             */ }
          </div>
       </body>
     </html>

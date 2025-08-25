@@ -39,6 +39,6 @@ export interface ScriptPubKey {
     asm: string
     desc: string
     hex: string
-    address: string
+    address?: string
     type: string
 }

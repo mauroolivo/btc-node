@@ -5,6 +5,7 @@ import {getrawtransaction} from "@/api/api";
 import {toDateString} from "@/util/util";
 
 import {
+    Button,
     Dropdown,
     DropdownDivider,
     DropdownItem,
@@ -14,8 +15,10 @@ import {
     TableHeadCell,
     TableRow
 } from "flowbite-react";
+import {BlockResponse} from "@/models/block";
 
-export default function TxUI({response}: {response: TxResponse}) {
+export default function TxUI({response, onBlockAction}: {response: TxResponse, onBlockAction: (arg: string) => void}) {
+
 
     return (
         <>
@@ -43,7 +46,7 @@ export default function TxUI({response}: {response: TxResponse}) {
                                         Block hash
                                     </TableCell>
                                     <TableCell className="txui-cell-value">
-                                        {response.result.blockhash}
+                                        <Button onClick={ () => onBlockAction(response.result.blockhash) }>{response.result.blockhash}</Button>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow className="dark:border-gray-700 dark:bg-gray-800">

@@ -36,7 +36,7 @@ body {
   }
   button {
     @apply duration-500 ease-in-out inline-flex items-center justify-center font-semibold whitespace-nowrap transition-all hover:cursor-pointer
-    uppercase gap-2 font-mono text-foreground bg-transparent hover:text-background hover:bg-foreground py-[8px] px-3 border-2;
+    uppercase gap-2 font-mono text-foreground !bg-transparent hover:!text-background hover:!bg-foreground py-[8px] px-3 border-2 !rounded-none;
   }
   .header a {
     @apply inline-flex items-center justify-center font-semibold whitespace-nowrap transition-all
@@ -51,6 +51,9 @@ body {
   }
   .txui-cell-value {
     @apply font-mono bg-background text-amber-400 !pt-2 !pb-2;
+  }
+  .txui-cell-value button {
+      @apply !text-amber-400 border-0 !p-0 underline hover:no-underline !bg-background !h-6
   }
 }
 .limit-full {

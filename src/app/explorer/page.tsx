@@ -1,13 +1,16 @@
 'use client'
 import { useState, useEffect } from 'react'
 import {TxResponse} from "@/models/tx";
-import {getrawtransaction} from "@/api/api";
+import {BlockResponse} from "@/models/block";
+import {getblock, getrawtransaction} from "@/api/api";
 import {Dropdown, DropdownDivider, DropdownItem} from "flowbite-react";
 import TxUI from './txui'
+import BlockUI from './blockui'
 
 export default function Client() {
 
-    const [data, setData] = useState<TxResponse | null>(null)
+    const [txData, setTxData] = useState<TxResponse | null>(null)
+    const [blockData, setBlockData] = useState<BlockResponse | null>(null)
     const [input, setInput] = useState<string>("")
     const [err, setErr] = useState<boolean>(false)
     function handleTestSample(n: number) {
@@ -22,19 +25,31 @@ export default function Client() {
         handleSearch(input)
         setInput(input)
     }
-    function handleSearch(input: string) {
-        getrawtransaction(input, true)
-            .then((data) => {
-            console.log(data.result)
-                if(data.result === undefined) {
-                    setData(null)
-                    setErr(true)
-                } else {
-                    setErr(false)
-                    setData(data)
-                }
+    async function handleSearch(input: string) {
 
-        })
+        const [txData, blockData] = await Promise.all([getrawtransaction(input, true), getblock(input, 2)]);
+        setErr(false)
+        setTxData(null)
+        setBlockData(null)
+        if (txData.result === undefined && blockData.result === undefined) {
+            setErr(true)
+        }
+        if (txData.result === undefined) {
+            if (blockData.result === undefined) {
+                setErr(true)
+            } else {
+                setBlockData(blockData)
+            }
+        } else {
+            setTxData(txData)
+        }
+    }
+
+    async function handleNewInput(input: string) {
+        handleSearch(input).then(r => {
+                setInput(input)
+            }
+        )
     }
     return (
         <>
@@ -72,7 +87,8 @@ export default function Client() {
                 <DropdownItem onClick={() => handleTestSample(100)}>block 1</DropdownItem>
             </Dropdown>
             <div>
-                {data != null && <TxUI response={data}/>}
+                {txData != null && <TxUI response={txData} onBlockAction={handleNewInput}/>}
+                {blockData != null && <BlockUI response={blockData} onBlockAction={handleNewInput} />}
             </div>
         </>
     )

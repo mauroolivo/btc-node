@@ -1,11 +1,12 @@
-/*
-export interface Block {
+import {Vin, Vout} from "@/models/tx";
+
+export interface BlockResponse {
     jsonrpc: string
-    result: Result
+    result: BlockResult
     id: string
 }
 
-export interface Result {
+export interface BlockResult {
     hash: string
     confirmations: number
     height: number
@@ -24,10 +25,10 @@ export interface Result {
     strippedsize: number
     size: number
     weight: number
-    tx: Tx[]
+    tx: BlockTx[]
 }
 
-export interface Tx {
+export interface BlockTx {
     txid: string
     hash: string
     version: number
@@ -40,33 +41,3 @@ export interface Tx {
     hex: string
     fee?: number
 }
-
-export interface Vin {
-    coinbase?: string
-    txinwitness: string[]
-    sequence: number
-    txid?: string
-    vout?: number
-    scriptSig?: ScriptSig
-}
-
-export interface ScriptSig {
-    asm: string
-    hex: string
-}
-
-export interface Vout {
-    value: number
-    n: number
-    scriptPubKey: ScriptPubKey
-}
-
-export interface ScriptPubKey {
-    asm: string
-    desc: string
-    hex: string
-    address?: string
-    type: string
-}
-
- */
