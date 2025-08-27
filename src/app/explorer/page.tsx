@@ -56,7 +56,7 @@ export default function Client() {
 
   return (
     <>
-      <form className="w-[100%]">
+      <form className="">
 
         <div className="flex w-full gap-1">
           <div className="grow ">
@@ -83,13 +83,13 @@ export default function Client() {
       {
         err && <p className="text-red-600">Invalid hash</p>
       }
-      <Dropdown className="rounded-none !bg-black" label="Testnet Samples" dismissOnClick={true}>
+      <Dropdown className=" mt-2 rounded-none !bg-black" label="Testnet Samples" dismissOnClick={true}>
         <DropdownItem onClick={() => handleTestSample(1)}>tx 1</DropdownItem>
         <DropdownItem onClick={() => handleTestSample(2)}>tx 2</DropdownItem>
         <DropdownDivider/>
         <DropdownItem onClick={() => handleTestSample(100)}>block 1</DropdownItem>
       </Dropdown>
-      <div>
+      <div className="p-10">
         {txData != null && <TxUI response={txData} onBlockAction={handleNewInput}/>}
         {blockData != null && <BlockUI response={blockData} onBlockAction={handleNewInput}/>}
       </div>

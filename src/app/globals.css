@@ -46,18 +46,21 @@ body {
   .header a.active {
     @apply text-stone-400
   }
-  .txui-cell-lbl {
-    @apply bg-background whitespace-nowrap font-medium !pt-2 !pb-2 text-gray-900 dark:text-white;
-  }
-  .txui-cell-value {
-    @apply font-mono bg-background text-amber-400 !pt-2 !pb-2;
-  }
-  .txui-cell-value button {
-      @apply !text-amber-400 border-0 !p-0 underline hover:no-underline !bg-background !h-6
-  }
 }
 .limit-full {
   display:inline-block;
   width: 50%;
   overflow-wrap: break-word;
+}
+.param-box {
+  @apply w-full justify-center flex gap-2 border-b-blue-900 border-b-1
+}
+.param-key {
+  @apply p-2 grow
+}
+.param-value {
+  @apply font-mono p-2 grow w-[50%] text-right overflow-auto break-words text-amber-400
+}
+.param-value button {
+  @apply inline !text-amber-400 border-0 !p-0 underline hover:no-underline !bg-background !h-6 text-right
 }

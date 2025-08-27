@@ -4,114 +4,147 @@ import {toDateString} from "@/util/util";
 
 import {
   Button,
-  Table,
-  TableBody, TableCell,
-  TableRow
 } from "flowbite-react";
+import {useState} from "react";
 
 export default function TxUI({response, onBlockAction}: {
   response: TxResponse,
   onBlockAction: (arg: string) => void
 }) {
 
+  const [more, setMore] = useState<boolean>(false)
+
+  function inputs(): void {
+
+  }
 
   return (
     <>
       {response &&
         <>
-          <div className="overflow-x-auto">
-            <Table className="">
-              <TableBody className="divide-y">
-                <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
-                    TxId
-                  </TableCell>
-                  <TableCell className="txui-cell-value">{response.result.txid}</TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
-                    Confirmations
-                  </TableCell>
-                  <TableCell className="txui-cell-value">
-                    {response.result.confirmations}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
-                    Block hash
-                  </TableCell>
-                  <TableCell className="txui-cell-value">
-                    <Button
-                      onClick={() => onBlockAction(response.result.blockhash)}>{response.result.blockhash}</Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
-                    Block time
-                  </TableCell>
-                  <TableCell className="txui-cell-value">
-                    {toDateString(response.result.time)}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
-                    Size
-                  </TableCell>
-                  <TableCell className="txui-cell-value">
-                    {response.result.size} B
-                  </TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
-                    Tx hash (wTxid)
-                  </TableCell>
-                  <TableCell className="txui-cell-value">
-                    {response.result.hash}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
+          <div>
+            <div className="param-box">
+              <div className="param-key">
+                TxID
+              </div>
+              <div className="param-value">
+                {response.result.txid}
+              </div>
+            </div>
+            <div className="param-box">
+              <div className="param-key">
+                Confirmations
+              </div>
+              <div className="param-value">
+                {response.result.confirmations}
+              </div>
+            </div>
+            <div className="param-box">
+              <div className="param-key">
+                Block hash
+              </div>
+              <div className="param-value">
+                <Button
+                  onClick={() => onBlockAction(response.result.blockhash)}>{response.result.blockhash}</Button>
+              </div>
+            </div>
+            <div className="param-box">
+              <div className="param-key">
+                Block time
+              </div>
+              <div className="param-value">
+                {toDateString(response.result.time)}
+              </div>
+            </div>
+            <div className="param-box">
+              <div className="param-key">
+                Size
+              </div>
+              <div className="param-value">
+                {response.result.size} B
+              </div>
+            </div>
+            <div className="param-box">
+              <div className="param-key">
+                Tx hash (wTxid)
+              </div>
+              <div className="param-value">
+                {response.result.hash}
+              </div>
+            </div>
+            {more &&
+              <>
+                <div className="param-box">
+                  <div className="param-key">
                     version
-                  </TableCell>
-                  <TableCell className="txui-cell-value">
+                  </div>
+                  <div className="param-value">
                     {response.result.version}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
+                  </div>
+                </div>
+                <div className="param-box">
+                  <div className="param-key">
                     vsize
-                  </TableCell>
-                  <TableCell className="txui-cell-value">
+                  </div>
+                  <div className="param-value">
                     {response.result.vsize}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
+                  </div>
+                </div>
+                <div className="param-box">
+                  <div className="param-key">
                     Weight
-                  </TableCell>
-                  <TableCell className="txui-cell-value">
+                  </div>
+                  <div className="param-value">
                     {response.result.weight}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
+                  </div>
+                </div>
+                <div className="param-box">
+                  <div className="param-key">
                     Locktime
-                  </TableCell>
-                  <TableCell className="txui-cell-value">
+                  </div>
+                  <div className="param-value">
                     {response.result.locktime}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="dark:border-gray-700 dark:bg-gray-800">
-                  <TableCell className="txui-cell-lbl">
+                  </div>
+                </div>
+                <div className="param-box">
+                  <div className="param-key">
                     Hex
-                  </TableCell>
-                  <TableCell className="txui-cell-value break-words">
-                    {response.result.hex.substring(0, 40) + "... "
-                    }
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+                  </div>
+                  <div className="param-value">
+                    {response.result.hex}
+                  </div>
+                </div>
+              </>
+            }
+            <div className="float-right inline-flex gap-2 mt-2">
+              {!more && <Button onClick={() => {
+                setMore(true)
+              }}>More</Button>}
+              {more && <Button onClick={() => {
+                setMore(false)
+              }}>Less</Button>}
+            </div>
+          </div>
+
+          <div className="w-full justify-center flex bg-amber-700 ">
+            <div className="size-14 grow m-1">
+              <div className="w-full bg-blue-900">
+                <div className="param-box">
+                  <div className="param-key">
+                    Locktime
+                  </div>
+                  <div className="param-value">
+                    {response.result.locktime}
+                  </div>
+                </div>
+              </div>
+              <div className="w-full bg-blue-700">hidden body</div>
+            </div>
+            <div className="size-14 flex-none">02</div>
+            <div className="size-14 grow m-1">
+              <div className="w-full bg-blue-900">always visible</div>
+              <div className="w-full bg-blue-700">hidden body</div>
+            </div>
           </div>
         </>
       }
