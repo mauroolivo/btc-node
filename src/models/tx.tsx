@@ -21,9 +21,10 @@ export interface TxResult {
 }
 export interface Vin {
     txid: string
-    vout: number
-    scriptSig: ScriptSig
-    txinwitness: string[]
+    coinbase?: string
+    vout?: number
+    scriptSig?: ScriptSig
+    txinwitness?: string[]
     sequence: number
 }
 export interface ScriptSig {

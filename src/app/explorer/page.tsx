@@ -2,7 +2,7 @@
 import {useState, useEffect} from 'react'
 import {TxResponse} from "@/models/tx";
 import {BlockResponse} from "@/models/block";
-import {getblock, getrawtransaction} from "@/api/api";
+import {getblock, getblockhash, getrawtransaction} from "@/api/api";
 import {Dropdown, DropdownDivider, DropdownItem} from "flowbite-react";
 import TxUI from './txui'
 import BlockUI from './blockui'
@@ -14,12 +14,24 @@ export default function Client() {
   const [input, setInput] = useState<string>("")
   const [err, setErr] = useState<boolean>(false)
 
+  function isValid(): boolean {
+    if (input.length === 64) {
+      return true
+    }
+    if (input.length > 0 && input.length < 64) {
+      return !isNaN(Number(input))
+    }
+    return false
+  }
+
   function handleTestSample(n: number) {
     let input = ""
     if (n === 1) {
       input = "fbd1bf898013a580bd8dce18a2636da8cca460a0457f5a88ce2084e4609c5002"
     } else if (n === 2) {
       input = "ef8df6921c3533490cfe676a950ca038c063d91826124cb0ee07a1e878bcee75"
+    } else if (n === 3) {
+      input = "64e736a94129b00bf521851ecf8f85cd9ea784eba9901b155a0fabc45f989912"
     } else if (n === 100) {
       input = "000000008000b621b1ff1426e6b2d1af900e25214fa1d2bf3e7523d1f0525935"
     }
@@ -29,16 +41,24 @@ export default function Client() {
 
   async function handleSearch(input: string) {
 
-    const [txData, blockData] = await Promise.all([getrawtransaction(input, true), getblock(input, 2)]);
+    const [txData, blockData, blockHash] = await Promise.all([getrawtransaction(input, true), getblock(input, 2), getblockhash(input)]);
     setErr(false)
     setTxData(null)
     setBlockData(null)
-    if (txData.result === undefined && blockData.result === undefined) {
+
+    if (txData.result === undefined && blockData.result === undefined && blockHash.result === undefined) {
       setErr(true)
+      return
     }
     if (txData.result === undefined) {
       if (blockData.result === undefined) {
-        setErr(true)
+        if (blockHash.result !== null) {
+          getblock(blockHash.result, 2).then(response => {
+            setBlockData(response)
+          })
+        } else {
+          setErr(true)
+        }
       } else {
         setBlockData(blockData)
       }
@@ -55,6 +75,7 @@ export default function Client() {
   }
 
   return (
+
     <>
       <form className="">
 
@@ -65,12 +86,12 @@ export default function Client() {
               onChange={(e) => setInput(e.target.value)}
               className=" font-mono flex w-full rounded-0 py-[11px] px-3 flounder:px-4 flounder:pt-[14px] flounder:pb-[15px] !text-callout transition-shadow font-normal
                                 leading-none placeholder:!text-callout placeholder:font-medium placeholder:text-neutral70 ring-1 ring-inset ring-itemPrimaryMute bg-backgroundPrimaryDefault text-itemPrimaryDefault disabled:text-neutral70 focus-visible:outline-none focus-visible:ring-itemSecondaryDefault disabled:cursor-not-allowed disabled:bg-backgroundPrimaryHighlight disabled:ring-itemPrimaryMute h-[54px]"
-              placeholder="Tx or Block ID"
+              placeholder="Search by Tx id or Block id or Block height"
             />
           </div>
           <div className="grow-0">
             <button
-              disabled={input.length !== 64}
+              disabled={!isValid()}
               className="disabled:opacity-40 group/button inline-flex items-center justify-center whitespace-nowrap rounded-0 transition-[color,background,box-shadow] focus-visible:outline-brandDefault focus-visible:-outline-offset-1 focus-visible:outline-1 disabled:pointer-events-none outline-none uppercase gap-1 flounder:gap-2 font-mono text-backgroundInverseOnDefault bg-backgroundInverseDefault hover:text-backgroundInverseOnActive hover:bg-backgroundInverseActive focus-visible:bg-backgroundInverseActive py-3 px-5 flounder:py-4 text-body4 flounder:text-body4 font-semibold tracking-normal flounder:px-8 size-full !text-desktopCallout"
               type="button"
               onClick={() => handleSearch(input)}
@@ -84,8 +105,9 @@ export default function Client() {
         err && <p className="text-red-600">Invalid hash</p>
       }
       <Dropdown className=" mt-2 rounded-none !bg-black" label="Testnet Samples" dismissOnClick={true}>
-        <DropdownItem onClick={() => handleTestSample(1)}>tx 1</DropdownItem>
-        <DropdownItem onClick={() => handleTestSample(2)}>tx 2</DropdownItem>
+        <DropdownItem onClick={() => handleTestSample(1)}>tx</DropdownItem>
+        <DropdownItem onClick={() => handleTestSample(2)}>tx (coinbase)</DropdownItem>
+        <DropdownItem onClick={() => handleTestSample(3)}>tx (2 inputs)</DropdownItem>
         <DropdownDivider/>
         <DropdownItem onClick={() => handleTestSample(100)}>block 1</DropdownItem>
       </Dropdown>

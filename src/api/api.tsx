@@ -1,6 +1,6 @@
 import {BlockchainInfo, Blockcount} from "@/models/blockchain";
 import {TxResponse} from "@/models/tx";
-import {BlockResponse} from "@/models/block";
+import {BlockResponse, BlockHashResponse} from "@/models/block";
 
 const url = process.env.NEXT_PUBLIC_NODE_URL || ""
 const API_USER = process.env.NEXT_PUBLIC_RPC_USER
@@ -48,4 +48,11 @@ export async function getblock(blockid: string, verbosity: number): Promise<Bloc
         .then((data) => {
             return data;
         });
+}
+export async function getblockhash(height: string): Promise<BlockHashResponse> {
+  const params = [Number(height)]
+  return fetchData("getblockhash", params).then((response) => response.json())
+    .then((data) => {
+      return data;
+    });
 }

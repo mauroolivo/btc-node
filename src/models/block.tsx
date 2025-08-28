@@ -41,3 +41,9 @@ export interface BlockTx {
     hex: string
     fee?: number
 }
+
+export interface BlockHashResponse {
+  jsonrpc: string
+  result: string
+  id: string
+}

@@ -68,8 +68,7 @@ export default function BlockUI({response, onBlockAction}: {
               Previous block
             </div>
             <div className="param-value">
-              <Button
-                onClick={() => onBlockAction(response.result.previousblockhash)}>{response.result.previousblockhash}</Button>
+              <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onBlockAction(response.result.previousblockhash)}>{response.result.previousblockhash}</div>
             </div>
           </div>
           <div className="param-box">
@@ -77,8 +76,7 @@ export default function BlockUI({response, onBlockAction}: {
               Next block
             </div>
             <div className="param-value">
-              <Button
-                onClick={() => onBlockAction(response.result.nextblockhash)}>{response.result.nextblockhash}</Button>
+              <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onBlockAction(response.result.nextblockhash)}>{response.result.nextblockhash}</div>
             </div>
           </div>
           {more &&

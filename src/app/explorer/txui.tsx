@@ -6,6 +6,7 @@ import {
   Button,
 } from "flowbite-react";
 import {useState} from "react";
+import TxDetailUI from "@/app/explorer/txdetailui";
 
 export default function TxUI({response, onBlockAction}: {
   response: TxResponse,
@@ -13,10 +14,6 @@ export default function TxUI({response, onBlockAction}: {
 }) {
 
   const [more, setMore] = useState<boolean>(false)
-
-  function inputs(): void {
-
-  }
 
   return (
     <>
@@ -44,8 +41,7 @@ export default function TxUI({response, onBlockAction}: {
                 Block hash
               </div>
               <div className="param-value">
-                <Button
-                  onClick={() => onBlockAction(response.result.blockhash)}>{response.result.blockhash}</Button>
+                <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onBlockAction(response.result.blockhash)}>{response.result.blockhash}</div>
               </div>
             </div>
             <div className="param-box">
@@ -116,7 +112,7 @@ export default function TxUI({response, onBlockAction}: {
                 </div>
               </>
             }
-            <div className="float-right inline-flex gap-2 mt-2">
+            <div className="float-right inline-flex gap-2 mt-2 mb-2">
               {!more && <Button onClick={() => {
                 setMore(true)
               }}>More</Button>}
@@ -126,26 +122,7 @@ export default function TxUI({response, onBlockAction}: {
             </div>
           </div>
 
-          <div className="w-full justify-center flex bg-amber-700 ">
-            <div className="size-14 grow m-1">
-              <div className="w-full bg-blue-900">
-                <div className="param-box">
-                  <div className="param-key">
-                    Locktime
-                  </div>
-                  <div className="param-value">
-                    {response.result.locktime}
-                  </div>
-                </div>
-              </div>
-              <div className="w-full bg-blue-700">hidden body</div>
-            </div>
-            <div className="size-14 flex-none">02</div>
-            <div className="size-14 grow m-1">
-              <div className="w-full bg-blue-900">always visible</div>
-              <div className="w-full bg-blue-700">hidden body</div>
-            </div>
-          </div>
+          <TxDetailUI response={response} />
         </>
       }
     </>
