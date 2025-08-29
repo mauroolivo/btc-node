@@ -7,16 +7,31 @@ import {
 } from "flowbite-react";
 import {BlockResponse} from "@/models/block";
 import {useState} from "react";
+import TxDetailUI from "@/app/explorer/txdetailui";
 
-export default function BlockUI({response, onBlockAction}: {
+export default function BlockUI({response, onBlockAction, onTxAction}: {
   response: BlockResponse,
-  onBlockAction: (arg: string) => void
+  onBlockAction: (arg: string) => void,
+  onTxAction: (arg: string) => void,
 }) {
 
   const [more, setMore] = useState<boolean>(false)
+  const [page, setPage] = useState<number>(0)
+  const offset = 0
 
-  function showTxs() {
-    console.log(response.result.tx.length);
+  function moreTxs() {
+    setPage(page + 1)
+  }
+
+
+  function txs(): React.JSX.Element {
+    const txs = response.result.tx.slice(offset, page)
+    const list_items = txs.map((tx, idx) =>
+      <div key={idx}>
+        <TxDetailUI result={tx} onTxAction={onTxAction}/>
+      </div>
+    );
+    return (<>{list_items}</>)
   }
 
   return (
@@ -147,18 +162,30 @@ export default function BlockUI({response, onBlockAction}: {
               </div>
             </>
           }
-          <div className="float-right inline-flex gap-2">
+          <div className="param-box">
+            <div className="param-key">
+              Transactions
+            </div>
+            <div className="param-value">
+              {response.result.tx.length}
+            </div>
+          </div>
+          <div className="w-full grid justify-items-end">
             {!more && <Button onClick={() => {
               setMore(true)
             }}>More</Button>}
             {more && <Button onClick={() => {
               setMore(false)
             }}>Less</Button>}
+          </div>
+          {txs()}
+          <div className="w-full grid justify-items-center">
             <Button onClick={() => {
-              showTxs()
-            }}>show transactions</Button>
+              moreTxs()
+            }}>show transactions ({page}/{response.result.tx.length})</Button>
           </div>
         </>
+
       }
     </>
   )

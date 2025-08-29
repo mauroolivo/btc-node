@@ -9,7 +9,7 @@ export default function Header() {
         <header
             className="flounder:pt-0 flounder:pb-px z-header pointer-events-auto transition-colors flounder:h-[48px] flex
             fixed inset-x-0 top-0 bg-backgroundPrimaryDefault after:absolute after:inset-x-0 after:bottom-0 after:border-b after:border-itemSecondaryMute py-2 w-screen"
-            id="header" aria-labelledby="header">
+            id="header" aria-labelledby="header" >
             <div className="flex items-center justify-between w-full px-4">
                 <div className="flex flounder:flex-1">
                     <div className="flex items-center gap-4">

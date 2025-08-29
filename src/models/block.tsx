@@ -1,4 +1,4 @@
-import {Vin, Vout} from "@/models/tx";
+import {TxResult, Vin, Vout} from "@/models/tx";
 
 export interface BlockResponse {
     jsonrpc: string
@@ -25,22 +25,22 @@ export interface BlockResult {
     strippedsize: number
     size: number
     weight: number
-    tx: BlockTx[]
+    tx: TxResult[]
 }
 
-export interface BlockTx {
-    txid: string
-    hash: string
-    version: number
-    size: number
-    vsize: number
-    weight: number
-    locktime: number
-    vin: Vin[]
-    vout: Vout[]
-    hex: string
-    fee?: number
-}
+// export interface BlockTx {
+//     txid: string
+//     hash: string
+//     version: number
+//     size: number
+//     vsize: number
+//     weight: number
+//     locktime: number
+//     vin: Vin[]
+//     vout: Vout[]
+//     hex: string
+//     fee?: number
+// }
 
 export interface BlockHashResponse {
   jsonrpc: string

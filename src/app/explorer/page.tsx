@@ -111,9 +111,9 @@ export default function Client() {
         <DropdownDivider/>
         <DropdownItem onClick={() => handleTestSample(100)}>block 1</DropdownItem>
       </Dropdown>
-      <div className="p-10">
-        {txData != null && <TxUI response={txData} onBlockAction={handleNewInput}/>}
-        {blockData != null && <BlockUI response={blockData} onBlockAction={handleNewInput}/>}
+      <div className="pt-10">
+        {txData != null && <TxUI response={txData} onBlockAction={handleNewInput} onTxAction={handleNewInput}/>}
+        {blockData != null && <BlockUI response={blockData} onBlockAction={handleNewInput} onTxAction={handleNewInput}/>}
       </div>
     </>
   )

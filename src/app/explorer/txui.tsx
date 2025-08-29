@@ -8,9 +8,10 @@ import {
 import {useState} from "react";
 import TxDetailUI from "@/app/explorer/txdetailui";
 
-export default function TxUI({response, onBlockAction}: {
+export default function TxUI({response, onBlockAction, onTxAction}: {
   response: TxResponse,
-  onBlockAction: (arg: string) => void
+  onBlockAction: (arg: string) => void,
+  onTxAction: (arg: string) => void
 }) {
 
   const [more, setMore] = useState<boolean>(false)
@@ -122,7 +123,7 @@ export default function TxUI({response, onBlockAction}: {
             </div>
           </div>
 
-          <TxDetailUI response={response} />
+          <TxDetailUI result={response.result} onTxAction={onTxAction} />
         </>
       }
     </>

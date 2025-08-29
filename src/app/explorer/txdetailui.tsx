@@ -1,8 +1,9 @@
 'use client'
-import {ScriptSig, TxResponse, Vin} from "@/models/tx";
+import {ScriptSig, TxResult, Vin} from "@/models/tx";
 
-export default function TxDetailUI({response}: {
-  response: TxResponse,
+export default function TxDetailUI({result, onTxAction}: {
+  result: TxResult,
+  onTxAction: (arg: string) => void
 }) {
 
   function scriptsig(input: Vin): string {
@@ -11,10 +12,12 @@ export default function TxDetailUI({response}: {
     }
     return ""
   }
-
+  function onTxDetailAction(arg: string) {
+    onTxAction(arg)
+  }
   function outputs(): React.JSX.Element {
-    console.log(response.result.vout)
-    const list_items = response.result.vout.map((input, idx) =>
+    console.log(result.vout)
+    const list_items = result.vout.map((input, idx) =>
       <div key={idx} className="w-full  mb-2">
         <div className="w-full text-center font-bold font-mono">Output #{idx}</div>
         <div className="param-box">
@@ -55,8 +58,8 @@ export default function TxDetailUI({response}: {
   }
 
   function inputs(): React.JSX.Element {
-    console.log(response.result.vin)
-    const list_items = response.result.vin.map((input, idx) =>
+    console.log(result.vin)
+    const list_items = result.vin.map((input, idx) =>
       <div key={idx} className="w-full  mb-2">
         <div className="w-full text-center font-bold font-mono">Input #{idx}</div>
         <div className="param-box">
@@ -115,8 +118,11 @@ export default function TxDetailUI({response}: {
   return (
     <>
       {
-        response &&
+        result &&
         <>
+          <div className="w-full grid justify-items-center font-mono">
+            <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onTxDetailAction(result.txid)}>{result.txid}</div>
+            </div>
           <div className="w-full justify-center md:flex-none lg:flex lg:gap-20 ">
             <div className="md:w-full lg:w-14 grow">
               {inputs()}
