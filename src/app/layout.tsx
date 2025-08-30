@@ -31,7 +31,7 @@ export default function RootLayout({
       >
          <Header/>
 
-         <div className="font-sans  items-start p-8 pb-20 gap-16 sm:p-20">
+         <div className="items-start p-8 pb-20 gap-16 sm:p-20">
              <main className="gap-[32px] row-start-2  sm:items-start">
                  {children}
              </main>

@@ -16,10 +16,9 @@ export default function TxDetailUI({result, onTxAction}: {
     onTxAction(arg)
   }
   function outputs(): React.JSX.Element {
-    console.log(result.vout)
     const list_items = result.vout.map((input, idx) =>
       <div key={idx} className="w-full  mb-2">
-        <div className="w-full text-center font-bold font-mono">Output #{idx}</div>
+        <div className="w-full text-center font-bold">Output #{idx}</div>
         <div className="param-box">
           <div className="param-key">
             value
@@ -88,7 +87,7 @@ export default function TxDetailUI({result, onTxAction}: {
         </div>
         <div className="param-box">
           <div className="param-key">
-            script sig
+            ScriptSig
           </div>
           <div className="param-value">
             {scriptsig(input)}
