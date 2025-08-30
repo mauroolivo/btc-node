@@ -1,4 +1,4 @@
-import {BlockchainInfo, Blockcount} from "@/models/blockchain";
+import {BlockchainInfo, Blockcount, Mempoolinfo, Mininginfo, Networkinfo} from "@/models/blockchain";
 import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 
@@ -34,6 +34,24 @@ export async function getblockcount(): Promise<Blockcount> {
         .then((data) => {
             return data;
         });
+}
+export async function getmempoolinfo(): Promise<Mempoolinfo> {
+  return fetchData("getmempoolinfo", []).then((response) => response.json())
+    .then((data) => {
+      return data;
+    });
+}
+export async function getmininginfo(): Promise<Mininginfo> {
+  return fetchData("getmininginfo", []).then((response) => response.json())
+    .then((data) => {
+      return data;
+    });
+}
+export async function getnetworkinfo(): Promise<Networkinfo> {
+  return fetchData("getnetworkinfo", []).then((response) => response.json())
+    .then((data) => {
+      return data;
+    });
 }
 export async function getrawtransaction(txid: string, verbose: boolean): Promise<TxResponse> {
     const params = [txid, verbose]

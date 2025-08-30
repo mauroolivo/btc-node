@@ -25,3 +25,68 @@ export interface Blockcount {
     result: number
     id: string
 }
+export interface Mempoolinfo {
+  jsonrpc: string
+  result: MempoolinfoResult
+  id: string
+}
+
+export interface MempoolinfoResult {
+  loaded: boolean
+  size: number
+  bytes: number
+  usage: number
+  total_fee: number
+  maxmempool: number
+  mempoolminfee: number
+  minrelaytxfee: number
+  incrementalrelayfee: number
+  unbroadcastcount: number
+  fullrbf: boolean
+}
+export interface Mininginfo {
+  jsonrpc: string
+  result: MininginfoResult
+  id: string
+}
+
+export interface MininginfoResult {
+  blocks: number
+  difficulty: number
+  networkhashps: number
+  pooledtx: number
+  chain: string
+  warnings: string[]
+}
+export interface Networkinfo {
+  jsonrpc: string
+  result: NetworkinfoResult
+  id: string
+}
+
+export interface NetworkinfoResult {
+  version: number
+  subversion: string
+  protocolversion: number
+  localservices: string
+  localservicesnames: string[]
+  localrelay: boolean
+  timeoffset: number
+  networkactive: boolean
+  connections: number
+  connections_in: number
+  connections_out: number
+  networks: NetworkinfoNetwork[]
+  relayfee: number
+  incrementalfee: number
+  localaddresses: any[]
+  warnings: string[]
+}
+
+export interface NetworkinfoNetwork {
+  name: string
+  limited: boolean
+  reachable: boolean
+  proxy: string
+  proxy_randomize_credentials: boolean
+}

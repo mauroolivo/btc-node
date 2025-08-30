@@ -59,10 +59,10 @@ body {
   @apply text-prominent p-2 font-bold
 }
 .param-key {
-  @apply p-2 grow font-mono text-right w-[50%]
+  @apply p-2 grow font-mono text-right w-[50%] text-accent
 }
 .param-value {
-  @apply font-mono p-2 grow w-[50%] text-left overflow-auto break-words text-accent
+  @apply font-mono p-2 grow w-[50%] text-left overflow-auto break-words
 }
 .param-value button {
   @apply inline !text-amber-400 border-0 !p-0 underline hover:no-underline !bg-background !h-6 text-left

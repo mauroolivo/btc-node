@@ -18,7 +18,7 @@ export default function TxDetailUI({result, onTxAction}: {
   function outputs(): React.JSX.Element {
     const list_items = result.vout.map((input, idx) =>
       <div key={idx} className="w-full  mb-2">
-        <div className="w-full text-center font-bold">Output #{idx}</div>
+        <div className="w-full text-center font-bold text-prominent">Output #{idx}</div>
         <div className="param-box">
           <div className="param-key">
             value
@@ -60,7 +60,7 @@ export default function TxDetailUI({result, onTxAction}: {
     console.log(result.vin)
     const list_items = result.vin.map((input, idx) =>
       <div key={idx} className="w-full  mb-2">
-        <div className="w-full text-center font-bold font-mono">Input #{idx}</div>
+        <div className="w-full text-center font-bold font-mono text-prominent">Input #{idx}</div>
         <div className="param-box">
           <div className="param-key">
             Coinbase
@@ -119,7 +119,7 @@ export default function TxDetailUI({result, onTxAction}: {
       {
         result &&
         <>
-          <div className="w-full grid justify-items-center font-mono">
+          <div className="w-full grid justify-items-center">
             <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onTxDetailAction(result.txid)}>{result.txid}</div>
             </div>
           <div className="w-full justify-center md:flex-none lg:flex lg:gap-20 ">
