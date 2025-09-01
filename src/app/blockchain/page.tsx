@@ -18,7 +18,10 @@ export default function Client() {
 //
 //   > getdescriptorinfo
 //   > deriveaddresses
-//   > getaddressesbylabel
+//   >
+
+//  getwalletinfo
+  // help commands can be elaborated on UI
 
   const [blockchaininfo, setBlockchainInfo] = useState<BlockchainInfo | null>(null)
   const [blockcount, setBlockcount] = useState<number | null>(null)
@@ -40,7 +43,6 @@ export default function Client() {
       setMininginfo(data)
     })
     getnetworkinfo().then((data) => {
-      console.log(data)
       setNetworkinfo(data)
     })
   }, []);
