@@ -25,7 +25,10 @@ export default function Header() {
                                 <Link
                                     className={isActive('/explorer') ? "active" : ""}
                                     href={`/explorer`}>Explorer</Link>
-                                <Link
+                              <Link
+                                className={isActive('/mempool') ? "active" : ""}
+                                href={`/mempool`}>Mempool</Link>
+                              <Link
                                     className={isActive('/wallet') ? "active" : ""}
                                     href={`/wallet`}>Wallet</Link>
                             </div>

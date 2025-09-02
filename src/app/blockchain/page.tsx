@@ -6,8 +6,6 @@ import {getblockchaininfo, getblockcount, getmempoolinfo, getmininginfo, getnetw
 export default function Client() {
 
 
-
-// > getchaintips
 //   > getrawmempool
 //
 //   > getaddressinfo
