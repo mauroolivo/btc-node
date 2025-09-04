@@ -1,20 +1,50 @@
 'use client'
 import {useState, useEffect} from 'react'
-import {Rawmempool, RawmempoolTx} from "@/models/mempool";
-import {getblock, getblockhash, getRawmempool, getrawtransaction} from "@/api/api";
+import {RawmempoolTx} from "@/models/mempool";
+import {getmempoolinfo, getRawmempool, getrawtransaction} from "@/api/api";
+import {Button} from "flowbite-react";
+import TxDetailUI from "@/app/explorer/txdetailui";
+import Mempooltxui from "@/app/mempool/mempooltxui";
+import {TxResponse} from "@/models/tx";
+import {Mempoolinfo} from "@/models/blockchain";
 
 export default function Client() {
 
-  const [rawMempool, setRawmempool] = useState<Rawmempool | null>(null)
+  const [txs, setTxs] = useState<RawmempoolTx[]>([])
   const [input, setInput] = useState<string>("")
-  const [tx, setTx] = useState<RawmempoolTx | null>(null)
+  const [page, setPage] = useState<number>(5)
+  const offset = 0
+
+  const [mempoolinfo, setMempoolinfo] = useState<Mempoolinfo | null>(null)
 
   useEffect(() => {
-    getRawmempool(true).then((data) => {
-      console.log(data)
-      setRawmempool(data)
+    getmempoolinfo().then((data) => {
+      setMempoolinfo(data)
     })
+    getRawmempool(true).then((rawMempool) => {
+      if (rawMempool?.result !== undefined) {
+        const data: [string: RawmempoolTx] = rawMempool.result as [string: RawmempoolTx];
+
+        const temp_txs: RawmempoolTx[] = []
+        Object.entries(data).forEach(([k, v]) => {
+          v.txid_key = k
+          temp_txs.push(v)
+        })
+        temp_txs.sort((a,b) => b.time - a.time);
+        setTxs(temp_txs)
+      }
+    });
   }, []);
+
+  // async function callTxs() {
+  //   const promise_list: Promise<TxResponse>[] = []
+  //   too heavy, slice to 1000
+  //   txs.slice(0,1000).forEach(function (item, index) {
+  //     promise_list.push(getrawtransaction(item.txid_key, true))
+  //   });
+  //   const tx_list_full = await Promise.all(promise_list);
+  //   console.log("The full tx list: ", tx_list_full.length)
+  // }
 
   function isValid(): boolean {
     if (input.length === 64) {
@@ -22,22 +52,94 @@ export default function Client() {
     }
     return false
   }
-  async function handleSearch(input: string) {
-    if (rawMempool?.result !== undefined) {
-      const data: [string: RawmempoolTx] = rawMempool.result as [string: RawmempoolTx];
-      if (input in data) {
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        //console.log(data[input])
-        setRawmempool(data[input])
-        console.log(rawMempool)
-      }
+  function moreTxs() {
+    setPage(page + 1)
+  }
+
+  function tx_list(): React.JSX.Element {
+    const txs_slice = txs.slice(offset, page)
+    const list_items = txs_slice.map((item, idx) =>
+      <div key={idx}>
+        <Mempooltxui data={item} />
+      </div>
+    );
+    return (<>{list_items}</>)
+  }
+  async function handleSearch(input: string) {
+    if (txs) {
+      const result = txs.filter(function (el) {
+        return el.txid_key === input;
+      });
+      console.log("The result: ", result)
     }
   }
 
   return (
     <>
+      {mempoolinfo &&
+        <div className="w-full text-center">
+          <div className="param-title">bticoin-cli getmempoolinfo</div>
+          <div className="param-box">
+            <div className="param-key">
+              Bytes
+            </div>
+            <div className="param-value">
+              {mempoolinfo.result.bytes}
+            </div>
+          </div>
+          <div className="param-box">
+            <div className="param-key">
+              Incremental relay fee
+            </div>
+            <div className="param-value">
+              {mempoolinfo.result.incrementalrelayfee}
+            </div>
+          </div>
+          <div className="param-box">
+            <div className="param-key">
+              Mempool min fee
+            </div>
+            <div className="param-value">
+              {mempoolinfo.result.mempoolminfee}
+            </div>
+          </div>
+          <div className="param-box">
+            <div className="param-key">
+              Total fee
+            </div>
+            <div className="param-value">
+              {mempoolinfo.result.total_fee}
+            </div>
+          </div>
+          <div className="param-box">
+            <div className="param-key">
+              Unbroadcast count
+            </div>
+            <div className="param-value">
+              {mempoolinfo.result.unbroadcastcount}
+            </div>
+          </div>
+          <div className="param-box">
+            <div className="param-key">
+              Usage
+            </div>
+            <div className="param-value">
+              {mempoolinfo.result.usage}
+            </div>
+          </div>
+
+          <div className="param-box">
+            <div className="param-key">
+              Size
+            </div>
+            <div className="param-value">
+              {mempoolinfo.result.size}
+            </div>
+          </div>
+        </div>
+      }
+
       <form className="">
         <div className="flex w-full gap-1">
           <div className="grow ">
@@ -67,6 +169,12 @@ export default function Client() {
           </div>
         </div>
       </form>
+      {tx_list()}
+      <div className="w-full grid justify-items-center p-4">
+        <Button onClick={() => {
+          moreTxs()
+        }}>show transactions ({page}/{txs.length})</Button>
+      </div>
     </>
   );
 }

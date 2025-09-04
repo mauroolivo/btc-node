@@ -24,10 +24,11 @@ export default function Mempooltxui({data /*, onBlockAction, onTxAction*/}: {
           <div>
             <div className="param-box">
               <div className="param-key">
-                TxID
+                {data.txid_key}
               </div>
               <div className="param-value">
-                {data.vsize}
+                <div>{data.height}</div>
+                <div>{toDateString(data.time)}</div>
               </div>
             </div>
             {/*<div className="param-box">*/}

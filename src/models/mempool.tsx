@@ -24,4 +24,5 @@ export interface RawmempoolTx {
   spentby?: string[]
   "bip125-replaceable": boolean
   unbroadcast: boolean
+  txid_key: string
 }

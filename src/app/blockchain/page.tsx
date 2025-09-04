@@ -1,6 +1,6 @@
 'use client'
 import {useState, useEffect} from 'react'
-import {BlockchainInfo, Mempoolinfo, Mininginfo, Networkinfo} from "@/models/blockchain";
+import {BlockchainInfo, Mininginfo, Networkinfo} from "@/models/blockchain";
 import {getblockchaininfo, getblockcount, getmempoolinfo, getmininginfo, getnetworkinfo} from "@/api/api";
 
 export default function Client() {
@@ -23,7 +23,6 @@ export default function Client() {
 
   const [blockchaininfo, setBlockchainInfo] = useState<BlockchainInfo | null>(null)
   const [blockcount, setBlockcount] = useState<number | null>(null)
-  const [mempoolinfo, setMempoolinfo] = useState<Mempoolinfo | null>(null)
   const [mininginfo, setMininginfo] = useState<Mininginfo | null>(null)
   const [networkinfo, setNetworkinfo] = useState<Networkinfo | null>(null)
 
@@ -33,9 +32,6 @@ export default function Client() {
     })
     getblockchaininfo().then((data) => {
       setBlockchainInfo(data)
-    })
-    getmempoolinfo().then((data) => {
-      setMempoolinfo(data)
     })
     getmininginfo().then((data) => {
       setMininginfo(data)
@@ -71,109 +67,71 @@ export default function Client() {
               </div>
             </div>
           }
-          {mempoolinfo &&
+          {networkinfo &&
             <div className="w-full text-center">
-              <div className="param-title">bticoin-cli getmempoolinfo</div>
+              <div className="param-title">bticoin-cli getnetworkinfo</div>
               <div className="param-box">
                 <div className="param-key">
-                  Bytes
+                  Protocol version
                 </div>
                 <div className="param-value">
-                  {mempoolinfo.result.bytes}
+                  {networkinfo.result.protocolversion}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Incremental relay fee
+                  Subversion
                 </div>
                 <div className="param-value">
-                  {mempoolinfo.result.incrementalrelayfee}
+                  {networkinfo.result.subversion}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Mempool min fee
+                  Version
                 </div>
                 <div className="param-value">
-                  {mempoolinfo.result.mempoolminfee}
+                  {networkinfo.result.version}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Total fee
+                  Connections
                 </div>
                 <div className="param-value">
-                  {mempoolinfo.result.total_fee}
+                  {networkinfo.result.connections} ({networkinfo.result.connections_in} in / {networkinfo.result.connections_out}) out
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Unbroadcast count
+                  Incremental fee
                 </div>
                 <div className="param-value">
-                  {mempoolinfo.result.unbroadcastcount}
+                  {networkinfo.result.incrementalfee}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Usage
+                  Local addresses
                 </div>
                 <div className="param-value">
-                  {mempoolinfo.result.usage}
-                </div>
-              </div>
-
-              <div className="param-box">
-                <div className="param-key">
-                  Size
-                </div>
-                <div className="param-value">
-                  {mempoolinfo.result.size}
-                </div>
-              </div>
-            </div>
-          }
-          {mininginfo &&
-            <div className="w-full text-center">
-              <div className="param-title">bticoin-cli getmininginfo</div>
-              <div className="param-box">
-                <div className="param-key">
-                  Bytes
-                </div>
-                <div className="param-value">
-                  {mininginfo.result.blocks}
+                  {networkinfo.result.localaddresses}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Difficulty
+                  Local services
                 </div>
                 <div className="param-value">
-                  {mininginfo.result.difficulty}
+                  {networkinfo.result.localservices}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Network hash ps
+                  Local services names
                 </div>
                 <div className="param-value">
-                  {mininginfo.result.networkhashps}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Pooled tx
-                </div>
-                <div className="param-value">
-                  {mininginfo.result.pooledtx}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Warnings
-                </div>
-                <div className="param-value">
-                  {list(mininginfo.result.warnings)}
+                  {list(networkinfo.result.localservicesnames)}
                 </div>
               </div>
             </div>
@@ -267,71 +225,47 @@ export default function Client() {
               </div>
             </div>
           }
-          {networkinfo &&
+          {mininginfo &&
             <div className="w-full text-center">
-              <div className="param-title">bticoin-cli getnetworkinfo</div>
+              <div className="param-title">bticoin-cli getmininginfo</div>
               <div className="param-box">
                 <div className="param-key">
-                  Protocol version
+                  Bytes
                 </div>
                 <div className="param-value">
-                  {networkinfo.result.protocolversion}
+                  {mininginfo.result.blocks}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Subversion
+                  Difficulty
                 </div>
                 <div className="param-value">
-                  {networkinfo.result.subversion}
+                  {mininginfo.result.difficulty}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Version
+                  Network hash ps
                 </div>
                 <div className="param-value">
-                  {networkinfo.result.version}
+                  {mininginfo.result.networkhashps}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Connections
+                  Pooled tx
                 </div>
                 <div className="param-value">
-                  {networkinfo.result.connections} ({networkinfo.result.connections_in} in / {networkinfo.result.connections_out}) out
+                  {mininginfo.result.pooledtx}
                 </div>
               </div>
               <div className="param-box">
                 <div className="param-key">
-                  Incremental fee
+                  Warnings
                 </div>
                 <div className="param-value">
-                  {networkinfo.result.incrementalfee}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Local addresses
-                </div>
-                <div className="param-value">
-                  {networkinfo.result.localaddresses}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Local services
-                </div>
-                <div className="param-value">
-                  {networkinfo.result.localservices}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Local services names
-                </div>
-                <div className="param-value">
-                  {list(networkinfo.result.localservicesnames)}
+                  {list(mininginfo.result.warnings)}
                 </div>
               </div>
             </div>
