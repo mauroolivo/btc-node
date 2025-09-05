@@ -19,115 +19,74 @@ export default function Mempooltxui({data /*, onBlockAction, onTxAction*/}: {
 
   return (
     <>
-      {data &&
-        <>
-          <div>
-            <div className="param-box">
-              <div className="param-key">
-                {data.txid_key}
-              </div>
-              <div className="param-value">
-                <div>{data.height}</div>
-                <div>{toDateString(data.time)}</div>
-              </div>
+      <div className="param-title text-center">{data.txid_key}</div>
+      <div className="w-full justify-center md:flex-none lg:flex lg:gap-20 ">
+
+        <div className="md:w-full lg:w-14 grow">
+          <div className="param-box">
+            <div className="param-key">
+              Time
             </div>
-            {/*<div className="param-box">*/}
-            {/*  <div className="param-key">*/}
-            {/*    Confirmations*/}
-            {/*  </div>*/}
-            {/*  <div className="param-value">*/}
-            {/*    {response.result.confirmations}*/}
-            {/*  </div>*/}
-            {/*</div>*/}
-            {/*<div className="param-box">*/}
-            {/*  <div className="param-key">*/}
-            {/*    Block hash*/}
-            {/*  </div>*/}
-            {/*  <div className="param-value">*/}
-            {/*    <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onBlockAction(response.result.blockhash)}>{response.result.blockhash}</div>*/}
-            {/*  </div>*/}
-            {/*</div>*/}
-            {/*<div className="param-box">*/}
-            {/*  <div className="param-key">*/}
-            {/*    Block time*/}
-            {/*  </div>*/}
-            {/*  <div className="param-value">*/}
-            {/*    {toDateString(response.result.time)}*/}
-            {/*  </div>*/}
-            {/*</div>*/}
-            {/*<div className="param-box">*/}
-            {/*  <div className="param-key">*/}
-            {/*    Size*/}
-            {/*  </div>*/}
-            {/*  <div className="param-value">*/}
-            {/*    {response.result.size} B*/}
-            {/*  </div>*/}
-            {/*</div>*/}
-            {/*<div className="param-box">*/}
-            {/*  <div className="param-key">*/}
-            {/*    Tx hash (wTxid)*/}
-            {/*  </div>*/}
-            {/*  <div className="param-value">*/}
-            {/*    {response.result.hash}*/}
-            {/*  </div>*/}
-            {/*</div>*/}
-            {/*{more &&*/}
-            {/*  <>*/}
-            {/*    <div className="param-box">*/}
-            {/*      <div className="param-key">*/}
-            {/*        version*/}
-            {/*      </div>*/}
-            {/*      <div className="param-value">*/}
-            {/*        {response.result.version}*/}
-            {/*      </div>*/}
-            {/*    </div>*/}
-            {/*    <div className="param-box">*/}
-            {/*      <div className="param-key">*/}
-            {/*        vsize*/}
-            {/*      </div>*/}
-            {/*      <div className="param-value">*/}
-            {/*        {response.result.vsize}*/}
-            {/*      </div>*/}
-            {/*    </div>*/}
-            {/*    <div className="param-box">*/}
-            {/*      <div className="param-key">*/}
-            {/*        Weight*/}
-            {/*      </div>*/}
-            {/*      <div className="param-value">*/}
-            {/*        {response.result.weight}*/}
-            {/*      </div>*/}
-            {/*    </div>*/}
-            {/*    <div className="param-box">*/}
-            {/*      <div className="param-key">*/}
-            {/*        Locktime*/}
-            {/*      </div>*/}
-            {/*      <div className="param-value">*/}
-            {/*        {response.result.locktime}*/}
-            {/*      </div>*/}
-            {/*    </div>*/}
-            {/*    <div className="param-box">*/}
-            {/*      <div className="param-key">*/}
-            {/*        Hex*/}
-            {/*      </div>*/}
-            {/*      <div className="param-value">*/}
-            {/*        {response.result.hex}*/}
-            {/*      </div>*/}
-            {/*    </div>*/}
-            {/*  </>*/}
-            {/*}*/}
-            {/*<div className="float-right inline-flex gap-2 mt-2 mb-2">*/}
-            {/*  {!more && <Button onClick={() => {*/}
-            {/*    setMore(true)*/}
-            {/*  }}>More</Button>}*/}
-            {/*  {more && <Button onClick={() => {*/}
-            {/*    setMore(false)*/}
-            {/*  }}>Less</Button>}*/}
-            {/*</div>*/}
+            <div className="param-value">
+              {toDateString(data.time)}
+            </div>
+          </div>
+          <div className="param-box">
+            <div className="param-key">
+              vsize
+            </div>
+            <div className="param-value">
+              {data.vsize}
+            </div>
+          </div>
+          <div className="param-box">
+            <div className="param-key">
+              Weight
+            </div>
+            <div className="param-value">
+              {data.weight}
+            </div>
+          </div>
+          <div className="param-box">
+            <div className="param-key">
+              Height
+            </div>
+            <div className="param-value">
+              {data.height}
+            </div>
           </div>
 
 
-        </>
-      }
+        </div>
+        <div className="md:w-full lg:w-14 grow">
+
+          <div className="param-box">
+            <div className="param-key">
+              descendant count
+            </div>
+            <div className="param-value">
+              {data.descendantcount}
+            </div>
+          </div>
+          <div className="param-box">
+            <div className="param-key">
+              descendant size
+            </div>
+            <div className="param-value">
+              {data.descendantsize}
+            </div>
+          </div>
+
+          <div className="param-box">
+            <div className="param-key">
+              wtxid
+            </div>
+            <div className="param-value">
+              {data.wtxid}
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

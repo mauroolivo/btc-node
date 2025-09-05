@@ -46,10 +46,10 @@ body {
   .header a {
     @apply inline-flex items-center justify-center font-semibold whitespace-nowrap transition-all
     duration-500 ease-in-out hover:cursor-pointer
-    uppercase gap-2 font-mono text-foreground bg-transparent ;
+    uppercase gap-2 !text-white bg-transparent ;
   }
   .header a.active {
-    @apply text-stone-400 cursor-auto
+    @apply !text-stone-400 cursor-auto hover:!text-stone-400 no-underline;
   }
 }
 .param-box {
