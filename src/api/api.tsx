@@ -2,6 +2,7 @@ import {BlockchainInfo, Blockcount, Mempoolinfo, Mininginfo, Networkinfo} from "
 import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 import {Rawmempool} from "@/models/mempool";
+import {ListWallets} from "@/models/wallet";
 
 const url = process.env.NEXT_PUBLIC_NODE_URL || ""
 const API_USER = process.env.NEXT_PUBLIC_RPC_USER
@@ -77,5 +78,10 @@ export async function getblockhash(height: string): Promise<BlockHashResponse> {
 export async function getRawmempool(verbose: boolean): Promise<Rawmempool> {
   const params = [verbose];
   const response = await fetchData("getrawmempool", params);
+  return await response.json();
+}
+
+export async function listWallets(): Promise<ListWallets> {
+  const response = await fetchData("listwallets", []);
   return await response.json();
 }
