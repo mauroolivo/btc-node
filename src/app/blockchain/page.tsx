@@ -11,7 +11,6 @@ export default async function Page() {
   const mininginfo = await getmininginfo()
   const networkinfo = await getnetworkinfo()
 
-
   return (
     <>
       <Client blockchaininfo={blockchaininfo} blockcount={blockcount.result} mininginfo={mininginfo} networkinfo={networkinfo} />
