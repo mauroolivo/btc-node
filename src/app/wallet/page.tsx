@@ -1,9 +1,9 @@
 'use server'
 
-import {getWalletInfo, listWallets} from "@/api/api";
+import {getWalletInfo, listWallets, listTxs} from "@/api/api";
 import WalletSelect from "@/app/wallet/wallet-select";
 import { cookies } from 'next/headers'
-import {WalletInfo, WalletInfoResult} from "@/models/wallet";
+import {WalletInfo, WalletTxs} from "@/models/wallet";
 import WalletHome from "@/app/wallet/wallet-home";
 
 export async function createPost() {}
@@ -18,9 +18,10 @@ export async function selectWallet(formData: FormData) {
 
 export default async function Page() {
 
-  const list = await listWallets()
+  const wallets = await listWallets()
+  const tsx = await listTxs()
   let walletInfo: WalletInfo | null = null
-  console.log("Available Wallets: " + list.result.map((name) => name === "" ? "default wallet" : name).join(", "))
+  console.log("Available Wallets: " + wallets.result.map((name) => name === "" ? "default wallet" : name).join(", "))
   let show = true
   const cookieStore = await cookies()
   const walletName = cookieStore.get('wallet-name')
@@ -35,9 +36,9 @@ export default async function Page() {
   return (
     <>
       {walletInfo &&
-        <WalletHome walletInfo={walletInfo} />
+        <WalletHome walletInfo={walletInfo} txs={tsx.result} />
       }
-      <WalletSelect show={show} wallets={list.result} />
+      <WalletSelect show={show} wallets={wallets.result} />
     </>
   );
 }
