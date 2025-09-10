@@ -61,3 +61,25 @@ export interface WalletTx {
   timereceived: number
   "bip125-replaceable": string
 }
+
+export interface UTXOResponse {
+  jsonrpc: string
+  result: UTXO[]
+  id: string
+}
+
+export interface UTXO {
+
+  txid: string
+  vout: number
+  address: string
+  label: string
+  scriptPubKey: string
+  amount: number
+  confirmations: number
+  spendable: boolean
+  solvable: boolean
+  desc: string
+  parent_descs: string[]
+  safe: boolean
+}

@@ -2,7 +2,7 @@ import {BlockchainInfo, Blockcount, Mempoolinfo, Mininginfo, Networkinfo} from "
 import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 import {Rawmempool} from "@/models/mempool";
-import {ListWallets, WalletInfo, WalletTxs} from "@/models/wallet";
+import {ListWallets, UTXOResponse, WalletInfoResponse, WalletTxs} from "@/models/wallet";
 
 const url = process.env.NEXT_PUBLIC_NODE_URL || ""
 const API_USER = process.env.NEXT_PUBLIC_RPC_USER
@@ -86,12 +86,17 @@ export async function listWallets(): Promise<ListWallets> {
   return await response.json();
 }
 
-export async function getWalletInfo(): Promise<WalletInfo> {
+export async function getWalletInfo(): Promise<WalletInfoResponse> {
   const response = await fetchData("getwalletinfo", []);
   return await response.json();
 }
 
 export async function listTxs(): Promise<WalletTxs> {
   const response = await fetchData("listtransactions", []);
+  return await response.json();
+}
+
+export async function listUnspent(): Promise<UTXOResponse> {
+  const response = await fetchData("listunspent", []);
   return await response.json();
 }
