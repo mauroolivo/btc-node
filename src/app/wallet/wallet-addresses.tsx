@@ -2,12 +2,13 @@
 
 import {ListAddressResponse} from "@/models/wallet";
 import {fetcher} from "@/api/api";
-
 import React from "react";
 import {Button} from "flowbite-react";;
 import useSWR, { mutate } from "swr";
-export default function WalletAddresses() {
+import WalletAddressNew from "@/app/wallet/wallet-address-new";
 
+export default function WalletAddresses() {
+  const [show, setShow] = React.useState(false);
   const [shouldFetch, setShouldFetch] = React.useState(false);
   const { data, error, isLoading } = useSWR<ListAddressResponse>(
     shouldFetch
@@ -19,6 +20,11 @@ export default function WalletAddresses() {
     ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
   );
 
+  function hadleDismiss() {
+    console.log("address created");
+    mutate(["listaddressgroupings", []]);
+    setShow(false);
+  }
   function addresses(): React.JSX.Element {
 
     if (error) return <div>Failed to load addresses</div>;
@@ -47,8 +53,10 @@ export default function WalletAddresses() {
     <>
       <Button onClick={() => setShouldFetch(true)}>Fetch</Button>
       <Button onClick={() => mutate(["listaddressgroupings", []])}>Refresh</Button>
+      <Button onClick={() => setShow(true)}>New Address</Button>
       <div className="param-title text-center">Addresses</div>
       {addresses()}
+      <WalletAddressNew show={show} onDismiss={hadleDismiss} />
     </>
   );
 }

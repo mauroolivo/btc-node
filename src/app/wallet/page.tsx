@@ -1,6 +1,6 @@
 'use server'
 
-import {getWalletInfo, listWallets, listTxs, listUnspent} from "@/api/api";
+import {getWalletInfo, listWallets, listTxs, listUnspent, getUnconfirmedbalance} from "@/api/api";
 import WalletSelect from "@/app/wallet/wallet-select";
 import { cookies } from 'next/headers'
 import {WalletInfoResponse} from "@/models/wallet";
@@ -21,6 +21,7 @@ export default async function Page() {
   const wallets = await listWallets()
   const tsx = await listTxs()
   const utxo = await listUnspent()
+  const unconfirmedBalance = await getUnconfirmedbalance()
 
   let walletInfo: WalletInfoResponse | null = null
   console.log("Available Wallets: " + wallets.result.map((name) => name === "" ? "default wallet" : name).join(", "))
@@ -38,7 +39,7 @@ export default async function Page() {
   return (
     <>
       {walletInfo &&
-        <WalletHome walletInfo={walletInfo} txs={tsx.result} utxos={utxo.result} />
+        <WalletHome walletInfo={walletInfo} txs={tsx.result} utxos={utxo.result} unconfBal={unconfirmedBalance.result} />
       }
       <WalletSelect show={show} wallets={wallets.result} />
     </>

@@ -7,18 +7,18 @@ import WalletInfo from "@/app/wallet/wallet-info";
 import WalletTxs from "@/app/wallet/wallet-txs";
 import WalletUTXOs from "@/app/wallet/wallet-utxos";
 import WalletAddresses from "@/app/wallet/wallet-addresses";
-export default function WalletHome({walletInfo, txs, utxos}: {
+export default function WalletHome({walletInfo, txs, utxos, unconfBal}: {
   walletInfo: WalletInfoResponse,
   txs: WalletTx[],
-  utxos: UTXO[]
+  utxos: UTXO[],
+  unconfBal: number
 }) {
 
-  // console.log(utxos)
   return (
     <>
       <Tabs aria-label="Default tabs" variant="default" className="custom-tabs">
         <TabItem title="Wallet info">
-          <WalletInfo walletInfo={walletInfo}/>
+          <WalletInfo walletInfo={walletInfo} unconfBal={unconfBal}/>
         </TabItem>
         <TabItem title="Transactions" >
           <WalletTxs walletTxs={txs} />

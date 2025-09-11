@@ -3,8 +3,9 @@
 import {WalletInfoResponse} from "@/models/wallet";
 import {toDateString} from "@/util/util";
 
-export default function WalletInfo({walletInfo}: {
-  walletInfo: WalletInfoResponse
+export default function WalletInfo({walletInfo, unconfBal}: {
+  walletInfo: WalletInfoResponse,
+  unconfBal: number
 }) {
 
   return (
@@ -42,15 +43,15 @@ export default function WalletInfo({walletInfo}: {
               Balance
             </div>
             <div className="param-value">
-              {walletInfo.result.balance} tBTC
+              {walletInfo.result.balance}
             </div>
           </div>
           <div className="param-box">
             <div className="param-key">
-              Birth time
+              Unconfirmed balance
             </div>
             <div className="param-value">
-              {toDateString(walletInfo.result.birthtime)}
+              {unconfBal}
             </div>
           </div>
         </div>
@@ -88,7 +89,14 @@ export default function WalletInfo({walletInfo}: {
               {walletInfo.result.external_signer}
             </div>
           </div>
-
+          <div className="param-box">
+            <div className="param-key">
+              Birth time
+            </div>
+            <div className="param-value">
+              {toDateString(walletInfo.result.birthtime)}
+            </div>
+          </div>
         </div>
       </div>
     </>
