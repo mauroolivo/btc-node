@@ -1,7 +1,6 @@
 'use client'
 
 import {BlockchainInfo, Mininginfo, Networkinfo} from "@/models/blockchain";
-import useStorage from "@/hooks/use-storage";
 
 export default function Client({blockchaininfo, blockcount, mininginfo, networkinfo}:{
   blockchaininfo: BlockchainInfo | null,
@@ -18,10 +17,6 @@ export default function Client({blockchaininfo, blockcount, mininginfo, networki
     )
     return (<>{list_items}</>)
   }
-
-  const { getItem } = useStorage();
-  const token = getItem('token');
-  console.log("message: " + token);
 
   return (
     <>

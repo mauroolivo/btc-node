@@ -2,7 +2,7 @@ import {BlockchainInfo, Blockcount, Mempoolinfo, Mininginfo, Networkinfo} from "
 import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 import {Rawmempool} from "@/models/mempool";
-import {ListWallets, UTXOResponse, WalletInfoResponse, WalletTxs} from "@/models/wallet";
+import {ListAddressResponse, ListWallets, UTXOResponse, WalletInfoResponse, WalletTxs} from "@/models/wallet";
 
 const url = process.env.NEXT_PUBLIC_NODE_URL || ""
 const API_USER = process.env.NEXT_PUBLIC_RPC_USER
@@ -27,14 +27,32 @@ async function fetchData(method: string, params: (string | boolean | number)[]) 
   })
 }
 
+export const fetcher = async (
+  method: string,
+  params: (string | boolean | number)[],
+) => {
+  const options = {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({
+      "jsonrpc": "2.0",
+      "id": "curl",
+      "method": method,
+      "params": params
+    })
+  };
+  console.log("fetcher run");
+  return fetch(url, options).then(r => r.json());
+};
+
 // export async function getObj<T>(): Promise<T> {
 //   const response = await fetchData("getblockchaininfo", []);
 //   return await response.json();
 // }
 
 export async function getblockchaininfo(): Promise<BlockchainInfo> {
-  const response = await fetchData("getblockchaininfo", [])
-  return await response.json();
+  return await fetcher("getblockchaininfo", []) as Promise<BlockchainInfo>;
+  //return await response.json();
 }
 
 export async function getblockcount(): Promise<Blockcount> {
@@ -100,3 +118,9 @@ export async function listUnspent(): Promise<UTXOResponse> {
   const response = await fetchData("listunspent", []);
   return await response.json();
 }
+
+// export async function listAddressGroupings(): Promise<ListAddressResponse> {
+//   const response = await fetchData("listaddressgroupings", []);
+//   return await response.json();
+// }
+

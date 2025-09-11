@@ -69,7 +69,6 @@ export interface UTXOResponse {
 }
 
 export interface UTXO {
-
   txid: string
   vout: number
   address: string
@@ -83,3 +82,10 @@ export interface UTXO {
   parent_descs: string[]
   safe: boolean
 }
+
+export interface ListAddressResponse {
+  jsonrpc: string
+  result: unknown[][][]
+  id: string
+}
+

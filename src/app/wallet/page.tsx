@@ -21,6 +21,7 @@ export default async function Page() {
   const wallets = await listWallets()
   const tsx = await listTxs()
   const utxo = await listUnspent()
+
   let walletInfo: WalletInfoResponse | null = null
   console.log("Available Wallets: " + wallets.result.map((name) => name === "" ? "default wallet" : name).join(", "))
   let show = true

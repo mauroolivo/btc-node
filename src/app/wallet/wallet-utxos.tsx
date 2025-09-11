@@ -1,7 +1,9 @@
 "use client";
 
-import {UTXO, WalletInfoResponse, WalletTx} from "@/models/wallet";
+import {UTXO, ListAddressResponse, WalletTx} from "@/models/wallet";
 import WalletUTXOC from "@/app/wallet/wallet-utxo-c";
+import {fetcher} from "@/api/api";
+import useSWR from "swr";
 
 export default function WalletUTXOs({walletUTXOs}: {
   walletUTXOs: UTXO[]
