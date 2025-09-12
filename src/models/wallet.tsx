@@ -94,3 +94,9 @@ export interface UnconfirmedBalance {
   result: number
   id: string
 }
+
+export interface NewAddressResponse {
+  jsonrpc: string
+  result: string
+  id: string
+}

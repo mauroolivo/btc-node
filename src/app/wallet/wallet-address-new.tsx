@@ -2,7 +2,7 @@
 import {Button, Modal, ModalBody} from "flowbite-react";
 import React from "react";
 import useSWR, { mutate } from "swr";
-import {ListAddressResponse} from "@/models/wallet";
+import {ListAddressResponse, NewAddressResponse} from "@/models/wallet";
 import {fetcher} from "@/api/api";
 
 export default function WalletAddressNew({show, onDismiss}: {
@@ -18,15 +18,21 @@ export default function WalletAddressNew({show, onDismiss}: {
     onDismiss()
   }
   const [shouldFetch, setShouldFetch] = React.useState(false);
-  const { data, error, isLoading } = useSWR<ListAddressResponse>(
+  const [newAddress, setNewAddress] = React.useState("");
+  const { data, error, isLoading } = useSWR<NewAddressResponse>(
     shouldFetch
       ? [
-        "listaddressgroupings",
-        [],
+        "getnewaddress",
+        ["", addressType],
       ]
       : null,
     ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
   );
+  if(data?.result !== undefined) {
+    setNewAddress(data.result)
+    setShouldFetch(false);
+  }
+
   function select(): React.JSX.Element {
     const list_items = avail_items.map((name, idx) =>
       <option key={idx+1} value={name}>{name}</option>
@@ -34,6 +40,7 @@ export default function WalletAddressNew({show, onDismiss}: {
     const list = [<option key={0} value="no-value">-- select address type --</option>].concat(list_items)
     return (<select onChange={e => {setAddressType(e.currentTarget.value)}} name={'address-type'}>{list}</select>)
   }
+
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
@@ -44,7 +51,7 @@ export default function WalletAddressNew({show, onDismiss}: {
       alert("Please select an address type");
       return;
     }
-    onGenerate();
+    // onGenerate();
 
     console.log(walletType);
   }
@@ -52,6 +59,7 @@ export default function WalletAddressNew({show, onDismiss}: {
     <>
       <Modal show={show}>
         <ModalBody>
+          <h3>{newAddress}</h3>
           <form onSubmit={onSubmit}>
           <div className="space-y-6">
             Select address type
