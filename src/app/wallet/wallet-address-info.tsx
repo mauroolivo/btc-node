@@ -60,10 +60,10 @@ export default function WalletAddressInfo({address, onDismissInfo}: {
                       </div>
                       <div className="param-box">
                         <div className="param-key">
-                          Is mine
+                          Is watchonly
                         </div>
                         <div className="param-value">
-                          {data.result.ismine ? "true" : "false"}
+                          {data.result.iswatchonly ? "true" : "false"}
                         </div>
                       </div>
                       <div className="param-box">
