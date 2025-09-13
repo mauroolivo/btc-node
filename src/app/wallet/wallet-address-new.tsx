@@ -59,7 +59,17 @@ export default function WalletAddressNew({show, onDismiss}: {
     <>
       <Modal show={show}>
         <ModalBody>
-          <h3>{newAddress}</h3>
+          {
+            newAddress &&
+            <>
+            <h3>{newAddress}</h3>
+            <button
+              onClick={() => navigator.clipboard.writeText(newAddress) }>
+              Copy
+            </button>
+            </>
+          }
+
           <form onSubmit={onSubmit}>
           <div className="space-y-6">
             Select address type

@@ -10,9 +10,11 @@ import useSWR, {mutate} from "swr";
 import WalletAddressNew from "@/app/wallet/wallet-address-new";
 import WalletAddressC from "@/app/wallet/wallet-address-c";
 import WalletUTXOC from "@/app/wallet/wallet-utxo-c";
+import WalletAddressInfo from "@/app/wallet/wallet-address-info";
 
 export default function WalletAddresses() {
   const [show, setShow] = React.useState(false);
+  const [infoAddress, setInfoAddress] = React.useState<string | null>(null);
   // const [shouldFetch, setShouldFetch] = React.useState(false);
   const [shouldFetch, setShouldFetch] = React.useState(true);
   const {data, error, isLoading} = useSWR<ListAddressResponse>(
@@ -29,7 +31,12 @@ export default function WalletAddresses() {
     // mutate(["listaddressgroupings", []]);
     setShow(false);
   }
-
+  function handleDismissInfo() {
+    setInfoAddress(null);
+  }
+  function handleInfoAddress(address: string) {
+    setInfoAddress(address);
+  }
   function addresses(): React.JSX.Element {
     const list_items: unknown[] = [];
     if (error) return <div>Failed to load addresses</div>;
@@ -43,7 +50,7 @@ export default function WalletAddresses() {
           if (groups.length > 0) {
             for (const [, address] of groups.entries()) {
               list_items.push(<div key={idx}>
-                <WalletAddressC address={address}/>
+                <WalletAddressC address={address} onInfoAddress={handleInfoAddress}/>
               </div>)
             }
           }
@@ -61,6 +68,10 @@ export default function WalletAddresses() {
       <div className="param-title text-center">Addresses</div>
       {addresses()}
       <WalletAddressNew show={show} onDismiss={hadleDismiss}/>
+      {
+        infoAddress &&
+        <WalletAddressInfo address={infoAddress} onDismissInfo={handleDismissInfo}/>
+      }
     </>
   );
 }

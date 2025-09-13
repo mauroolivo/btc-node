@@ -100,3 +100,29 @@ export interface NewAddressResponse {
   result: string
   id: string
 }
+
+export interface AddressInfoResponse {
+  jsonrpc: string
+  result: AddressInfoResult
+  id: string
+}
+
+export interface AddressInfoResult {
+  address: string
+  scriptPubKey: string
+  ismine: boolean
+  solvable: boolean
+  desc: string
+  parent_desc: string
+  iswatchonly: boolean
+  isscript: boolean
+  iswitness: boolean
+  pubkey: string
+  iscompressed: boolean
+  ischange: boolean
+  timestamp: number
+  hdkeypath: string
+  hdseedid: string
+  hdmasterfingerprint: string
+  labels: string[]
+}
