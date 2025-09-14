@@ -3,6 +3,8 @@ import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 import {Rawmempool} from "@/models/mempool";
 import {
+  DeriveAddressesResponse,
+  DescriptorInfoResponse,
   ListAddressResponse,
   ListWallets,
   UnconfirmedBalance,
@@ -51,11 +53,6 @@ export const fetcher = async (
   console.log("fetcher run");
   return fetch(url, options).then(r => r.json());
 };
-
-// export async function getObj<T>(): Promise<T> {
-//   const response = await fetchData("getblockchaininfo", []);
-//   return await response.json();
-// }
 
 export async function getblockchaininfo(): Promise<BlockchainInfo> {
   return await fetcher("getblockchaininfo", []) as Promise<BlockchainInfo>;

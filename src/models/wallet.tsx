@@ -126,3 +126,23 @@ export interface AddressInfoResult {
   hdmasterfingerprint: string
   labels: string[]
 }
+
+export interface DescriptorInfoResponse {
+  jsonrpc: string
+  result: DescriptorInfoResult
+  error: {[key: string]: unknown} | undefined;
+  id: string
+}
+
+export interface DescriptorInfoResult {
+  descriptor: string
+  checksum: string
+  isrange: boolean
+  issolvable: boolean
+  hasprivatekeys: boolean
+}
+export interface DeriveAddressesResponse {
+  jsonrpc: string
+  result: string[]
+  id: string
+}

@@ -7,6 +7,7 @@ import WalletInfo from "@/app/wallet/wallet-info";
 import WalletTxs from "@/app/wallet/wallet-txs";
 import WalletUTXOs from "@/app/wallet/wallet-utxos";
 import WalletAddresses from "@/app/wallet/wallet-addresses";
+import WalletDescriptors from "@/app/wallet/wallet-descriptors";
 export default function WalletHome({walletInfo, txs, utxos, unconfBal}: {
   walletInfo: WalletInfoResponse,
   txs: WalletTx[],
@@ -28,6 +29,9 @@ export default function WalletHome({walletInfo, txs, utxos, unconfBal}: {
         </TabItem>
         <TabItem title="Addresses">
           <WalletAddresses />
+        </TabItem>
+        <TabItem title="Descriptors">
+          <WalletDescriptors />
         </TabItem>
       </Tabs>
     </>
