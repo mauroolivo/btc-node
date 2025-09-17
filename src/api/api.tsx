@@ -3,9 +3,6 @@ import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 import {Rawmempool} from "@/models/mempool";
 import {
-  DeriveAddressesResponse,
-  DescriptorInfoResponse,
-  ListAddressResponse,
   ListWallets,
   UnconfirmedBalance,
   UTXOResponse,
@@ -127,9 +124,3 @@ export async function listUnspent(): Promise<UTXOResponse> {
   const response = await fetchData("listunspent", []);
   return await response.json();
 }
-
-// export async function listAddressGroupings(): Promise<ListAddressResponse> {
-//   const response = await fetchData("listaddressgroupings", []);
-//   return await response.json();
-// }
-
