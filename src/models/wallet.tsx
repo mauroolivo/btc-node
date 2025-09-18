@@ -146,3 +146,22 @@ export interface DeriveAddressesResponse {
   result: string[]
   id: string
 }
+
+export interface ListWalletDirResponse {
+  jsonrpc: string
+  result: WalletDirResult
+  id: string
+}
+
+export interface WalletDirResult {
+  wallets: WalletDir[]
+}
+
+export interface WalletDir {
+  name: string
+}
+export interface LoadWallet {
+  jsonrpc: string
+  result: WalletDir
+  id: string
+}

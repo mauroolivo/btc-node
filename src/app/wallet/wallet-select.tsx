@@ -1,41 +1,37 @@
 "use client";
-import {Modal, ModalBody} from "flowbite-react";
-import {selectWallet} from "@/app/wallet/page";
-import {concat} from "recast/lib/lines";
+import {Button, Modal, ModalBody} from "flowbite-react";
 
-export default function WalletSelect({show, wallets}: {
+import {ListWalletDirResponse} from "@/models/wallet";
+import React from "react";
+
+export default function WalletSelect({show, walletResponse, onWalletSelect}: {
   show: boolean,
-  wallets: string[],
+  walletResponse: ListWalletDirResponse | undefined,
+  onWalletSelect: (name: string) => void
 }) {
 
-  function select(): React.JSX.Element {
-    const list_items = wallets.map((name, idx) =>
-      <option key={idx+1} value={name === "" ? "default wallet" : name}>{name === "" ? "default wallet" : name}</option>
-    );
-    const list = [<option key={0} value="no-value">-- select wallet --</option>].concat(list_items)
-    return (<select name={'wallet-name'}>{list}</select>)
-  }
-function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const walletName = formData.get('wallet-name');
-    if (walletName === "no-value") {
-      e.preventDefault();
-      alert("Please select a wallet");
+  function name(idx: number, str: string) {
+    const pref = `${idx+1}. `
+    if (str === "") {
+      return pref + "default no name";
+    } else {
+      return pref + str;
     }
-
-}
+  }
+  function wallets(): React.JSX.Element {
+    const list_items = walletResponse?.result.wallets.map((item, idx) =>
+      <div key={idx+1}>{name(idx, item.name)}<Button onClick={() => onWalletSelect(name(idx, item.name))}>Select</Button></div>
+    );
+    return (<div>{list_items}</div>)
+  }
   return (
     <>
       <Modal show={show}>
         <ModalBody>
           <div className="space-y-6">
-            Select a wallet
+            Load a wallet
           </div>
-          <form action={selectWallet} onSubmit={onSubmit}>
-            {select()}
-            <button type="submit">click</button>
-          </form>
+          {wallets()}
         </ModalBody>
       </Modal>
     </>

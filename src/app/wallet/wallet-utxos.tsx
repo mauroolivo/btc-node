@@ -1,16 +1,32 @@
 "use client";
 
-import {UTXO, ListAddressResponse, WalletTx} from "@/models/wallet";
+import {UTXO, UTXOResponse} from "@/models/wallet";
 import WalletUTXOC from "@/app/wallet/wallet-utxo-c";
 import {fetcher} from "@/api/api";
 import useSWR from "swr";
+import React from "react";
 
-export default function WalletUTXOs({walletUTXOs}: {
-  walletUTXOs: UTXO[]
-}) {
+export default function WalletUTXOs() {
 
-  function utxos(): React.JSX.Element {
-    const list_items = walletUTXOs.map((utxo, idx) =>
+  const [shouldFetch, setShouldFetch] = React.useState(true);
+  const [utxos, setUtxos] = React.useState<UTXO[]>([]);
+  const { data, error, isLoading } = useSWR<UTXOResponse>(
+    shouldFetch
+      ? [
+        "listunspent",
+        [],
+      ]
+      : null,
+    ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
+  );
+  if(data?.result !== undefined) {
+    console.log("data", data.result);
+    setUtxos(data.result);
+    setShouldFetch(false);
+  }
+
+  function utxosList(): React.JSX.Element {
+    const list_items = utxos.map((utxo, idx) =>
       <div key={idx}>
         <WalletUTXOC walletUTXO={utxo}/>
       </div>
@@ -21,7 +37,7 @@ export default function WalletUTXOs({walletUTXOs}: {
   return (
     <>
       <div className="param-title text-center">Unspent Transactions</div>
-      {utxos()}
+      {utxosList()}
     </>
   );
 }

@@ -26,7 +26,7 @@ export default function WalletAddresses() {
       : null,
     ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
   );
-
+console.log(data)
   function hadleDismiss() {
     // mutate(["listaddressgroupings", []]);
     setShow(false);
@@ -42,7 +42,7 @@ export default function WalletAddresses() {
     if (error) return <div>Failed to load addresses</div>;
     if (isLoading) return <div>Loading...</div>;
     if (!data) return <div>No data</div>;
-    if (data.result.length == 0) {
+    if (data.result === undefined) {
       return <div>No addresses in this wallet</div>
     } else {
       if (data.result.length > 0) {

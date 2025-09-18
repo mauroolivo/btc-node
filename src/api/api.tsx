@@ -53,7 +53,6 @@ export const fetcher = async (
 
 export async function getblockchaininfo(): Promise<BlockchainInfo> {
   return await fetcher("getblockchaininfo", []) as Promise<BlockchainInfo>;
-  //return await response.json();
 }
 
 export async function getblockcount(): Promise<Blockcount> {
