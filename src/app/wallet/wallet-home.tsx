@@ -5,14 +5,15 @@ import WalletAddresses from "@/app/wallet/wallet-addresses";
 import WalletDescriptors from "@/app/wallet/wallet-descriptors";
 import WalletTxsList from "@/app/wallet/wallet-txs";
 import WalletUTXOs from "@/app/wallet/wallet-utxos";
+import WalletInfo from "@/app/wallet/wallet-info";
 export default function WalletHome() {
 
   return (
     <>
       <Tabs aria-label="Default tabs" variant="default" className="custom-tabs">
-        {/*<TabItem title="Wallet info">*/}
-        {/*  <WalletInfo walletInfo={walletInfo} unconfBal={unconfBal}/>*/}
-        {/*</TabItem>*/}
+        <TabItem title="Wallet info">
+          <WalletInfo />
+        </TabItem>
         <TabItem title="Transactions" >
           <WalletTxsList />
         </TabItem>
