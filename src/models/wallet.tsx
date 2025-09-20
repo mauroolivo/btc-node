@@ -160,8 +160,17 @@ export interface WalletDirResult {
 export interface WalletDir {
   name: string
 }
-export interface LoadWallet {
+export interface WalletUnload {
   jsonrpc: string
-  result: WalletDir
+  result: object
   id: string
+}
+export interface WalletLoad {
+  jsonrpc: string
+  result: WalletLoadResult
+  id: string
+}
+
+export interface WalletLoadResult {
+  name: string
 }

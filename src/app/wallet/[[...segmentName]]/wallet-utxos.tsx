@@ -1,7 +1,7 @@
 "use client";
 
 import {UTXO, UTXOResponse} from "@/models/wallet";
-import WalletUTXOC from "@/app/wallet/wallet-utxo-c";
+import WalletUTXOC from "@/app/wallet/[[...segmentName]]/wallet-utxo-c";
 import {fetcher} from "@/api/api";
 import useSWR from "swr";
 import React from "react";

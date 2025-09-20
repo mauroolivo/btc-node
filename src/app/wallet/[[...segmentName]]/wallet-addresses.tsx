@@ -7,10 +7,10 @@ import {Button} from "flowbite-react";
 
 ;
 import useSWR, {mutate} from "swr";
-import WalletAddressNew from "@/app/wallet/wallet-address-new";
-import WalletAddressC from "@/app/wallet/wallet-address-c";
-import WalletUTXOC from "@/app/wallet/wallet-utxo-c";
-import WalletAddressInfo from "@/app/wallet/wallet-address-info";
+import WalletAddressNew from "@/app/wallet/[[...segmentName]]/wallet-address-new";
+import WalletAddressC from "@/app/wallet/[[...segmentName]]/wallet-address-c";
+import WalletUTXOC from "@/app/wallet/[[...segmentName]]/wallet-utxo-c";
+import WalletAddressInfo from "@/app/wallet/[[...segmentName]]/wallet-address-info";
 
 export default function WalletAddresses() {
   const [show, setShow] = React.useState(false);
@@ -26,7 +26,7 @@ export default function WalletAddresses() {
       : null,
     ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
   );
-console.log(data)
+
   function hadleDismiss() {
     // mutate(["listaddressgroupings", []]);
     setShow(false);

@@ -3,11 +3,12 @@ import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 import {Rawmempool} from "@/models/mempool";
 import {
+  ListWalletDirResponse,
   ListWallets,
   UnconfirmedBalance,
   UTXOResponse,
-  WalletInfoResponse,
-  WalletTxs
+  WalletInfoResponse, WalletLoad,
+  WalletTxs, WalletUnload
 } from "@/models/wallet";
 
 const url = process.env.NEXT_PUBLIC_NODE_URL || ""
@@ -121,5 +122,20 @@ export async function listTxs(): Promise<WalletTxs> {
 
 export async function listUnspent(): Promise<UTXOResponse> {
   const response = await fetchData("listunspent", []);
+  return await response.json();
+}
+
+export async function listWalletDir(): Promise<ListWalletDirResponse> {
+  const response = await fetchData("listwalletdir", []);
+  return await response.json();
+}
+
+export async function unloadWallet(name: string): Promise<WalletUnload> {
+  const response = await fetchData("unloadwallet", [name]);
+  return await response.json();
+}
+
+export async function loadWallet(name: string): Promise<WalletLoad> {
+  const response = await fetchData("loadwallet", [name]);
   return await response.json();
 }

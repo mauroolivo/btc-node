@@ -7,29 +7,24 @@ import {fetcher} from "@/api/api";
 import React from "react";
 
 export default function WalletInfo() {
-  const [wInfo, setWInfo] = React.useState<WalletInfoResponse | null>(null);
-  const [unconfBal, setUnconfBal] = React.useState<UnconfirmedBalance | null>(null);
+
+  const [shouldFetch, setShouldFetch] = React.useState(true);
   const r1 = useSWR<WalletInfoResponse>(
-    wInfo === null ?
+    shouldFetch ?
     ["getwalletinfo", [],] : null,
     ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
   );
-  if(r1.data !== undefined) {
-    setWInfo(r1.data);
-  }
+
   const r2 = useSWR<UnconfirmedBalance>(
-    unconfBal === null ?
+    shouldFetch ?
       ["getunconfirmedbalance", [],] : null,
     ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
   );
-  if(r2.data !== undefined) {
-    setUnconfBal(r2.data)
-  }
-  // walletInfo={walletInfo} unconfBal={unconfBal}
+
   return (
 
     <>
-    {wInfo !== null &&
+    {r1.data !== undefined &&
       <>
       <div className="param-title text-center">Wallet info</div>
       <div className="w-full justify-center md:flex-none lg:flex lg:gap-20 ">
@@ -40,7 +35,7 @@ export default function WalletInfo() {
               Name
             </div>
             <div className="param-value">
-              {wInfo.result.walletname}
+              {r1.data.result.walletname}
             </div>
           </div>
           <div className="param-box">
@@ -48,7 +43,7 @@ export default function WalletInfo() {
               Version
             </div>
             <div className="param-value">
-              {wInfo.result.walletversion}
+              {r1.data.result.walletversion}
             </div>
           </div>
           <div className="param-box">
@@ -56,7 +51,7 @@ export default function WalletInfo() {
               Format
             </div>
             <div className="param-value">
-              {wInfo.result.format}
+              {r1.data.result.format}
             </div>
           </div>
           <div className="param-box">
@@ -64,17 +59,19 @@ export default function WalletInfo() {
               Balance
             </div>
             <div className="param-value">
-              {wInfo.result.balance}
+              {r1.data.result.balance}
             </div>
           </div>
+          { r2.data !== undefined &&
           <div className="param-box">
             <div className="param-key">
               Unconfirmed balance
             </div>
             <div className="param-value">
-              {unconfBal?.result}
+              {r2.data.result}
             </div>
           </div>
+          }
         </div>
         <div className="md:w-full lg:w-14 grow">
           <div className="param-box">
@@ -82,7 +79,7 @@ export default function WalletInfo() {
               Avoid reuse
             </div>
             <div className="param-value">
-              {wInfo.result.avoid_reuse}
+              {r1.data.result.avoid_reuse}
             </div>
           </div>
           <div className="param-box">
@@ -90,7 +87,7 @@ export default function WalletInfo() {
               Scanning
             </div>
             <div className="param-value">
-              {wInfo.result.scanning}
+              {r1.data.result.scanning}
             </div>
           </div>
 
@@ -99,7 +96,7 @@ export default function WalletInfo() {
               Descriptors
             </div>
             <div className="param-value">
-              {wInfo.result.descriptors}
+              {r1.data.result.descriptors}
             </div>
           </div>
           <div className="param-box">
@@ -107,7 +104,7 @@ export default function WalletInfo() {
               External signer
             </div>
             <div className="param-value">
-              {wInfo.result.external_signer}
+              {r1.data.result.external_signer}
             </div>
           </div>
           <div className="param-box">
@@ -115,7 +112,7 @@ export default function WalletInfo() {
               Birth time
             </div>
             <div className="param-value">
-              {toDateString(wInfo.result.birthtime)}
+              {toDateString(r1.data.result.birthtime)}
             </div>
           </div>
         </div>

@@ -4,10 +4,10 @@ import {Button, Modal, ModalBody} from "flowbite-react";
 import {ListWalletDirResponse} from "@/models/wallet";
 import React from "react";
 
-export default function WalletSelect({show, walletResponse, onWalletSelect}: {
+export default function WalletSelect({show, names, onWalletSelectAction}: {
   show: boolean,
-  walletResponse: ListWalletDirResponse | undefined,
-  onWalletSelect: (name: string) => void
+  names: string[],
+  onWalletSelectAction: (name: string) => void
 }) {
 
   function name(idx: number, str: string) {
@@ -19,8 +19,8 @@ export default function WalletSelect({show, walletResponse, onWalletSelect}: {
     }
   }
   function wallets(): React.JSX.Element {
-    const list_items = walletResponse?.result.wallets.map((item, idx) =>
-      <div key={idx+1}>{name(idx, item.name)}<Button onClick={() => onWalletSelect(name(idx, item.name))}>Select</Button></div>
+    const list_items = names.map((item, idx) =>
+      <div key={idx+1}>{name(idx, item)}<Button onClick={() => onWalletSelectAction(item)}>Select</Button></div>
     );
     return (<div>{list_items}</div>)
   }

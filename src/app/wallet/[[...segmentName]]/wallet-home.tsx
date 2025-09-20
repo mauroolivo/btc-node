@@ -1,11 +1,11 @@
 "use client";
 
 import {TabItem, Tabs} from "flowbite-react";
-import WalletAddresses from "@/app/wallet/wallet-addresses";
-import WalletDescriptors from "@/app/wallet/wallet-descriptors";
-import WalletTxsList from "@/app/wallet/wallet-txs";
-import WalletUTXOs from "@/app/wallet/wallet-utxos";
-import WalletInfo from "@/app/wallet/wallet-info";
+import WalletAddresses from "@/app/wallet/[[...segmentName]]/wallet-addresses";
+import WalletDescriptors from "@/app/wallet/[[...segmentName]]/wallet-descriptors";
+import WalletTxsList from "@/app/wallet/[[...segmentName]]/wallet-txs";
+import WalletUTXOs from "@/app/wallet/[[...segmentName]]/wallet-utxos";
+import WalletInfo from "@/app/wallet/[[...segmentName]]/wallet-info";
 export default function WalletHome() {
 
   return (

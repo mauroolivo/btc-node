@@ -1,7 +1,7 @@
 "use client";
 
 import {WalletTx, WalletTxs} from "@/models/wallet";
-import WalletTxC from "@/app/wallet/wallet-tx-c";
+import WalletTxC from "@/app/wallet/[[...segmentName]]/wallet-tx-c";
 import useSWR from "swr";
 import {fetcher} from "@/api/api";
 import React from "react";
