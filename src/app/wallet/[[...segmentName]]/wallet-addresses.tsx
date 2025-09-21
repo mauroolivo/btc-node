@@ -3,7 +3,7 @@
 import {ListAddressResponse} from "@/models/wallet";
 import {fetcher} from "@/api/api";
 import React from "react";
-import {Button} from "flowbite-react";
+import {Button} from "@/components/ui/button"
 
 ;
 import useSWR, {mutate} from "swr";
@@ -11,6 +11,13 @@ import WalletAddressNew from "@/app/wallet/[[...segmentName]]/wallet-address-new
 import WalletAddressC from "@/app/wallet/[[...segmentName]]/wallet-address-c";
 import WalletUTXOC from "@/app/wallet/[[...segmentName]]/wallet-utxo-c";
 import WalletAddressInfo from "@/app/wallet/[[...segmentName]]/wallet-address-info";
+import {
+  AlertDialog, AlertDialogCancel,
+  AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
 
 export default function WalletAddresses() {
   const [show, setShow] = React.useState(false);
@@ -62,16 +69,22 @@ export default function WalletAddresses() {
 
   return (
     <>
-      {/*<Button onClick={() => setShouldFetch(true)}>Fetch</Button>*/}
-      {/*<Button onClick={() => mutate(["listaddressgroupings", []])}>Refresh</Button>*/}
-      <Button onClick={() => setShow(true)}>New Address</Button>
+      <AlertDialog>
+        <AlertDialogTrigger>New Address</AlertDialogTrigger>
+        <AlertDialogContent className={" bg-black  min-w-[50%] "}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Generate new address</AlertDialogTitle>
+            <AlertDialogDescription>Select address type</AlertDialogDescription>
+            <WalletAddressNew/>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            {/*<AlertDialogAction>Continue</AlertDialogAction>*/}
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <div className="param-title text-center">Addresses</div>
       {addresses()}
-      <WalletAddressNew show={show} onDismiss={hadleDismiss}/>
-      {
-        infoAddress &&
-        <WalletAddressInfo address={infoAddress} onDismissInfo={handleDismissInfo}/>
-      }
     </>
   );
 }

@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import React from "react";
 import WalletSelect from "@/app/wallet/[[...segmentName]]/wallet-select";
-import {Button} from "flowbite-react";
+import {Button} from "@/components/ui/button"
 
 export default function WalletCurrent({wallet, wallets}: {
   wallet: string,
@@ -19,9 +19,9 @@ export default function WalletCurrent({wallet, wallets}: {
   return (
     <>
       <p>Loaded wallet: {wallet}</p>
-      <Button onClick={() => {
-        setShow(true);
-      }}>Change Wallet</Button>
+      {/*<Button onClick={() => {*/}
+      {/*  setShow(true);*/}
+      {/*}}>Change Wallet</Button>*/}
       <WalletSelect show={show} names={wallets} onWalletSelectAction={handleWalletSelect}/>
     </>
   );

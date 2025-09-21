@@ -1,7 +1,17 @@
 "use client";
-import {Button, Modal, ModalBody} from "flowbite-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import {Button} from "@/components/ui/button"
 
-import {ListWalletDirResponse} from "@/models/wallet";
 import React from "react";
 
 export default function WalletSelect({show, names, onWalletSelectAction}: {
@@ -20,20 +30,26 @@ export default function WalletSelect({show, names, onWalletSelectAction}: {
   }
   function wallets(): React.JSX.Element {
     const list_items = names.map((item, idx) =>
-      <div key={idx+1}>{name(idx, item)}<Button onClick={() => onWalletSelectAction(item)}>Select</Button></div>
+      <div key={idx+1}>{name(idx, item)} <Button onClick={() => onWalletSelectAction(item)}>Select</Button></div>
     );
     return (<div>{list_items}</div>)
   }
   return (
     <>
-      <Modal show={show}>
-        <ModalBody>
-          <div className="space-y-6">
-            Load a wallet
-          </div>
-          {wallets()}
-        </ModalBody>
-      </Modal>
+      <AlertDialog>
+        <AlertDialogTrigger>Change Wallet</AlertDialogTrigger>
+        <AlertDialogContent className={"bg-black"}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Select your wallet</AlertDialogTitle>
+            <AlertDialogDescription></AlertDialogDescription>
+            {wallets()}
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            {/*<AlertDialogAction>Continue</AlertDialogAction>*/}
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

@@ -1,5 +1,3 @@
-import Image from "next/image";
-import {Dropdown, DropdownItem} from "flowbite-react";
 
 export default function Page() {
   return (

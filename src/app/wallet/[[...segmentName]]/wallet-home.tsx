@@ -1,6 +1,5 @@
 "use client";
 
-import {Button, TabItem, Tabs} from "flowbite-react";
 import WalletAddresses from "@/app/wallet/[[...segmentName]]/wallet-addresses";
 import WalletDescriptors from "@/app/wallet/[[...segmentName]]/wallet-descriptors";
 import WalletTxsList from "@/app/wallet/[[...segmentName]]/wallet-txs";
@@ -17,16 +16,16 @@ export default function WalletHome() {
     DESCRIPTOR
   }
   const [current, setCurrent] = React.useState(Tab.INFO);
-
+  const isActive = (tab: Tab) => current === tab;
   return (
     <>
 
       <div className={" flex flex-wrap gap-8 uppercase justify-end"}>
-        <div className={""} onClick={() => {setCurrent(Tab.INFO)}}>Wallet info</div>
-        <div className={""} onClick={() => {setCurrent(Tab.TRANSACTION)}}>Transactions</div>
-        <div className={""} onClick={() => {setCurrent(Tab.UNSPENT)}}>UTXO</div>
-        <div className={""} onClick={() => {setCurrent(Tab.ADDRESS)}}>Addresses</div>
-        <div className={""} onClick={() => {setCurrent(Tab.DESCRIPTOR)}}>Descriptor</div>
+        <a className={isActive(Tab.INFO) ? "active" : ""} onClick={() => {setCurrent(Tab.INFO)}}>Wallet info</a>
+        <a className={isActive(Tab.TRANSACTION) ? "active" : ""} onClick={() => {setCurrent(Tab.TRANSACTION)}}>Transactions</a>
+        <a className={isActive(Tab.UNSPENT) ? "active" : ""} onClick={() => {setCurrent(Tab.UNSPENT)}}>UTXO</a>
+        <a className={isActive(Tab.ADDRESS) ? "active" : ""} onClick={() => {setCurrent(Tab.ADDRESS)}}>Addresses</a>
+        <a className={isActive(Tab.DESCRIPTOR) ? "active" : ""} onClick={() => {setCurrent(Tab.DESCRIPTOR)}}>Descriptor</a>
       </div>
       {
         current == Tab.INFO && <WalletInfo />

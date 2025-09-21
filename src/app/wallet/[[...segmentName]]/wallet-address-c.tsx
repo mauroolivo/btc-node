@@ -1,12 +1,17 @@
 "use client";
-
-import {UTXO} from "@/models/wallet";
-import {toDateString} from "@/util/util";
 import React from "react";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import WalletAddressInfo from "@/app/wallet/[[...segmentName]]/wallet-address-info";
 
-export default function WalletAddressC({address, onInfoAddress}: {
-  address: unknown[],
-  onInfoAddress: (addr: string) => void
+export default function WalletAddressC({address}: {
+  address: unknown[]
 }) {
 
   return (
@@ -20,10 +25,20 @@ export default function WalletAddressC({address, onInfoAddress}: {
                 onClick={() => navigator.clipboard.writeText(address[0] as string) }>
                 Copy
               </button>
-              <button
-                onClick={() => onInfoAddress(address[0] as string) }>
-                Info
-              </button>
+              <AlertDialog>
+                <AlertDialogTrigger>info</AlertDialogTrigger>
+                <AlertDialogContent className={" bg-black  min-w-[80%] "}>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Address info</AlertDialogTitle>
+                    <AlertDialogDescription></AlertDialogDescription>
+                    <WalletAddressInfo address={address[0] as string}/>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    {/*<AlertDialogAction>Continue</AlertDialogAction>*/}
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
             <div className="param-value">
               {address[1] as string}

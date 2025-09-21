@@ -3,10 +3,23 @@ import {useState, useEffect} from 'react'
 import {TxResponse} from "@/models/tx";
 import {BlockResponse} from "@/models/block";
 import {getblock, getblockhash, getrawtransaction} from "@/api/api";
-import {Dropdown, DropdownDivider, DropdownItem} from "flowbite-react";
 import TxUI from './txui'
 import BlockUI from './blockui'
-
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 export default function Client() {
 
   const [txData, setTxData] = useState<TxResponse | null>(null)
@@ -104,13 +117,34 @@ export default function Client() {
       {
         err && <p className="text-red-600">Invalid hash</p>
       }
-      <Dropdown className=" mt-2 rounded-none !bg-black" label="Testnet Samples" dismissOnClick={true}>
-        <DropdownItem onClick={() => handleTestSample(1)}>tx</DropdownItem>
-        <DropdownItem onClick={() => handleTestSample(2)}>tx (coinbase)</DropdownItem>
-        <DropdownItem onClick={() => handleTestSample(3)}>tx (2 inputs)</DropdownItem>
-        <DropdownDivider/>
-        <DropdownItem onClick={() => handleTestSample(100)}>block 1</DropdownItem>
-      </Dropdown>
+      {/*<Dropdown className=" mt-2 rounded-none !bg-black" label="Testnet Samples" dismissOnClick={true}>*/}
+      {/*  <DropdownItem onClick={() => handleTestSample(1)}>tx</DropdownItem>*/}
+      {/*  <DropdownItem onClick={() => handleTestSample(2)}>tx (coinbase)</DropdownItem>*/}
+      {/*  <DropdownItem onClick={() => handleTestSample(3)}>tx (2 inputs)</DropdownItem>*/}
+      {/*  <DropdownDivider/>*/}
+      {/*  <DropdownItem onClick={() => handleTestSample(100)}>block 1</DropdownItem>*/}
+      {/*</Dropdown>*/}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline">Samples</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56 bg-black" align="start">
+
+          <DropdownMenuItem onClick={() => handleTestSample(1)}>
+            Tx 1
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleTestSample(2)}>
+            Tx 2 coinbase
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleTestSample(3)}>
+            Tx 3
+          </DropdownMenuItem>
+          <DropdownMenuSeparator></DropdownMenuSeparator>
+          <DropdownMenuItem onClick={() => handleTestSample(100)}>
+            Block
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       <div className="pt-10">
         {txData != null && <TxUI response={txData} onBlockAction={handleNewInput} onTxAction={handleNewInput}/>}
         {blockData != null && <BlockUI response={blockData} onBlockAction={handleNewInput} onTxAction={handleNewInput}/>}

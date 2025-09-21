@@ -1,5 +1,5 @@
 'use client'
-import {Button} from "flowbite-react";
+import {Button} from "@/components/ui/button"
 
 export default function MyChild2({action}: {action: (arg: number) => void}) {
 

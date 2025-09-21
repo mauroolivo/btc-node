@@ -2,9 +2,7 @@
 
 import {toDateString} from "@/util/util";
 
-import {
-  Button,
-} from "flowbite-react";
+import {Button} from "@/components/ui/button"
 import {BlockResponse} from "@/models/block";
 import {useState} from "react";
 import TxDetailUI from "@/app/explorer/txdetailui";

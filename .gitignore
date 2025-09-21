@@ -42,6 +42,3 @@ next-env.d.ts
 
 .idea
 .vscode
-
-# is this ok?
-.flowbite-react

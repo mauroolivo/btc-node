@@ -1,7 +1,7 @@
 'use client'
 import MyChild from "@/app/play/MyChild";
 import {useState} from "react";
-import {Button} from "flowbite-react";
+import {Button} from "@/components/ui/button"
 import MyChild2 from "@/app/play/MyChild2";
 
 

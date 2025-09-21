@@ -2,8 +2,8 @@
 import {useState, useEffect} from 'react'
 import {RawmempoolTx} from "@/models/mempool";
 import {getblock, getblockhash, getmempoolinfo, getRawmempool, getrawtransaction} from "@/api/api";
-import {Button} from "flowbite-react";
-import TxDetailUI from "@/app/explorer/txdetailui";
+import {Button} from "@/components/ui/button"
+
 import Mempooltxui from "@/app/mempool/mempooltxui";
 import {TxResponse} from "@/models/tx";
 import {Mempoolinfo} from "@/models/blockchain";

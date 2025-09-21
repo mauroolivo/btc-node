@@ -3,7 +3,7 @@
 import {DeriveAddressesResponse, DescriptorInfoResponse, DescriptorInfoResult} from "@/models/wallet";
 import {fetcher} from "@/api/api";
 import React from "react";
-import {Button} from "flowbite-react";
+import {Button} from "@/components/ui/button"
 
 ;
 import useSWR, {mutate} from "swr";

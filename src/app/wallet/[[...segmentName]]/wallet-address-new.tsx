@@ -1,22 +1,16 @@
 "use client";
-import {Button, Modal, ModalBody} from "flowbite-react";
+
+import {Button} from "@/components/ui/button"
 import React from "react";
 import useSWR, { mutate } from "swr";
 import {ListAddressResponse, NewAddressResponse} from "@/models/wallet";
 import {fetcher} from "@/api/api";
 
-export default function WalletAddressNew({show, onDismiss}: {
-  show: boolean,
-  onDismiss: () => void,
-}) {
+export default function WalletAddressNew() {
 
   const avail_items = ["legacy", "p2sh-segwit", "bech32", "bech32m"]
   const [addressType, setAddressType] = React.useState("no-value");
 
-  function onGenerate() {
-    console.log("WalletAddressNew")
-    onDismiss()
-  }
   const [shouldFetch, setShouldFetch] = React.useState(false);
   const [newAddress, setNewAddress] = React.useState("");
   const { data, error, isLoading } = useSWR<NewAddressResponse>(
@@ -57,8 +51,7 @@ export default function WalletAddressNew({show, onDismiss}: {
   }
   return (
     <>
-      <Modal show={show}>
-        <ModalBody>
+
           {
             newAddress &&
             <>
@@ -71,18 +64,9 @@ export default function WalletAddressNew({show, onDismiss}: {
           }
 
           <form onSubmit={onSubmit}>
-          <div className="space-y-6">
-            Select address type
-          </div>
-
             {select()}
-            {/*<button type="submit">click</button>*/}
           <Button type="submit" disabled={addressType === "no-value"}>Generate</Button>
-
-          <Button onClick={onDismiss}>Dismiss</Button>
           </form>
-        </ModalBody>
-      </Modal>
     </>
   );
 }
