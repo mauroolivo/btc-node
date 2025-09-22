@@ -5,6 +5,7 @@ import WalletTxC from "@/app/wallet/[[...segmentName]]/wallet-tx-c";
 import useSWR from "swr";
 import {fetcher} from "@/api/api";
 import React from "react";
+import {ParamsDictionary} from "@/models/api";
 
 
 export default function WalletTxsList() {
@@ -17,7 +18,7 @@ export default function WalletTxsList() {
         [],
       ]
       : null,
-    ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
+    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
   if(data?.result !== undefined) {
     console.log("data", data.result);

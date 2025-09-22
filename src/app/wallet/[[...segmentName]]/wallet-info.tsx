@@ -5,6 +5,7 @@ import {toDateString} from "@/util/util";
 import useSWR from "swr";
 import {fetcher} from "@/api/api";
 import React from "react";
+import {ParamsDictionary} from "@/models/api";
 
 export default function WalletInfo() {
 
@@ -12,13 +13,13 @@ export default function WalletInfo() {
   const r1 = useSWR<WalletInfoResponse>(
     shouldFetch ?
     ["getwalletinfo", [],] : null,
-    ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
+    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
 
   const r2 = useSWR<UnconfirmedBalance>(
     shouldFetch ?
       ["getunconfirmedbalance", [],] : null,
-    ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
+    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
 
   return (

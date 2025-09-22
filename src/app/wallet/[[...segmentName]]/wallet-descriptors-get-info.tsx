@@ -8,6 +8,7 @@ import {Button} from "@/components/ui/button"
 ;
 import useSWR, {mutate} from "swr";
 import {Input} from "postcss";
+import {ParamsDictionary} from "@/models/api";
 
 
 export default function WalletDescriptorsGetInfo() {
@@ -23,7 +24,7 @@ export default function WalletDescriptorsGetInfo() {
         [dField],
       ]
       : null,
-    ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
+    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
 
   if(data?.result !== undefined) {

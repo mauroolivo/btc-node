@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import {ParamsDictionary} from "@/models/api";
 
 export default function WalletAddressInfo({address}: {
   address: string
@@ -23,7 +24,7 @@ export default function WalletAddressInfo({address}: {
       [address],
     ]
     ,
-    ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
+    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
 
   if (error) return <div>Failed to load address info</div>;

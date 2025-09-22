@@ -18,6 +18,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import {ParamsDictionary} from "@/models/api";
 
 export default function WalletAddresses() {
   const [show, setShow] = React.useState(false);
@@ -31,19 +32,9 @@ export default function WalletAddresses() {
         [],
       ]
       : null,
-    ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
+    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
 
-  function hadleDismiss() {
-    // mutate(["listaddressgroupings", []]);
-    setShow(false);
-  }
-  function handleDismissInfo() {
-    setInfoAddress(null);
-  }
-  function handleInfoAddress(address: string) {
-    setInfoAddress(address);
-  }
   function addresses(): React.JSX.Element {
     const list_items: unknown[] = [];
     if (error) return <div>Failed to load addresses</div>;
@@ -57,7 +48,7 @@ export default function WalletAddresses() {
           if (groups.length > 0) {
             for (const [, address] of groups.entries()) {
               list_items.push(<div key={idx}>
-                <WalletAddressC address={address} onInfoAddress={handleInfoAddress}/>
+                <WalletAddressC address={address} />
               </div>)
             }
           }

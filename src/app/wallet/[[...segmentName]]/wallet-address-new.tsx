@@ -5,6 +5,7 @@ import React from "react";
 import useSWR, { mutate } from "swr";
 import {ListAddressResponse, NewAddressResponse} from "@/models/wallet";
 import {fetcher} from "@/api/api";
+import {ParamsDictionary} from "@/models/api";
 
 export default function WalletAddressNew() {
 
@@ -20,7 +21,7 @@ export default function WalletAddressNew() {
         ["", addressType],
       ]
       : null,
-    ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
+    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
   if(data?.result !== undefined) {
     setNewAddress(data.result)

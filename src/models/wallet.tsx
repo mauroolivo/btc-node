@@ -164,6 +164,7 @@ export interface WalletUnload {
   jsonrpc: string
   result: object
   id: string
+  error: {[key: string]: unknown} | undefined;
 }
 export interface WalletLoad {
   jsonrpc: string

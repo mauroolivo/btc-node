@@ -5,6 +5,7 @@ import WalletUTXOC from "@/app/wallet/[[...segmentName]]/wallet-utxo-c";
 import {fetcher} from "@/api/api";
 import useSWR from "swr";
 import React from "react";
+import {ParamsDictionary} from "@/models/api";
 
 export default function WalletUTXOs() {
 
@@ -17,7 +18,7 @@ export default function WalletUTXOs() {
         [],
       ]
       : null,
-    ([m, p]: [string, (string | boolean | number)[]]) => fetcher(m, p)
+    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
   if(data?.result !== undefined) {
     console.log("data", data.result);

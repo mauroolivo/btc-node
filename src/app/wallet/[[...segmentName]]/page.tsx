@@ -32,17 +32,19 @@ export default async function Page({params}: {
   console.log(listLoaded.result)
   for (const item of listLoaded.result) {
     console.log("ITEM TO UNLOAD " + item)
-    await unloadWallet(item)
+    let rs = await unloadWallet(item)
+    console.log(rs)
   }
   listLoaded = await listWallets()
+  console.log("loaded after unload: " + listLoaded.result.length)
   if (names.includes(slug)) {
     name = slug
     console.log("NAME" + name)
     if (listLoaded.result.includes(slug)) {
       console.log("NEVER HERE")
     } else {
-      await loadWallet(slug)
-      console.log("LOADING ", listLoaded.result, slug)
+      let rs = await loadWallet(slug)
+      console.log("LOADING ", listLoaded.result, slug, rs)
     }
   }
 
