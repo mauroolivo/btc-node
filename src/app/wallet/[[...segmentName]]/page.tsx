@@ -5,7 +5,7 @@ import {
   listWalletDir, loadWallet, unloadWallet
 } from "@/api/api";
 import WalletHome from "@/app/wallet/[[...segmentName]]/wallet-home";
-import WalletSelect from "@/app/wallet/[[...segmentName]]/wallet-select";
+
 import WalletCurrent from "@/app/wallet/[[...segmentName]]/wallet-current";
 
 export default async function Page({params}: {

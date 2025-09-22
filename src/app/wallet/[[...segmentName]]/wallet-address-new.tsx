@@ -49,9 +49,10 @@ export default function WalletAddressNew() {
 
     console.log(walletType);
   }
+
+  console.log(newAddress)
   return (
     <>
-
           {
             newAddress &&
             <>
@@ -62,7 +63,6 @@ export default function WalletAddressNew() {
             </button>
             </>
           }
-
           <form onSubmit={onSubmit}>
             {select()}
           <Button type="submit" disabled={addressType === "no-value"}>Generate</Button>
