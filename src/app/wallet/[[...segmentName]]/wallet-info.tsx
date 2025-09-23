@@ -80,7 +80,7 @@ export default function WalletInfo() {
               Avoid reuse
             </div>
             <div className="param-value">
-              {r1.data.result.avoid_reuse}
+              {r1.data.result.avoid_reuse ? "true" : "false"}
             </div>
           </div>
           <div className="param-box">
@@ -88,7 +88,7 @@ export default function WalletInfo() {
               Scanning
             </div>
             <div className="param-value">
-              {r1.data.result.scanning}
+              {r1.data.result.scanning ? "true" : "false"}
             </div>
           </div>
 
@@ -97,7 +97,7 @@ export default function WalletInfo() {
               Descriptors
             </div>
             <div className="param-value">
-              {r1.data.result.descriptors}
+              {r1.data.result.descriptors ? "true" : "false"}
             </div>
           </div>
           <div className="param-box">
@@ -105,7 +105,7 @@ export default function WalletInfo() {
               External signer
             </div>
             <div className="param-value">
-              {r1.data.result.external_signer}
+              {r1.data.result.external_signer ? "true" : "false"}
             </div>
           </div>
           <div className="param-box">

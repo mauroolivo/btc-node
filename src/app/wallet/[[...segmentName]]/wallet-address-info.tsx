@@ -128,8 +128,6 @@ export default function WalletAddressInfo({address}: {
     } else {
       return <p>Invalid data</p>
     }
-
-
   }
 
   return (
