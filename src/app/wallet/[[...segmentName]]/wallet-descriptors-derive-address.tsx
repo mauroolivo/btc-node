@@ -21,7 +21,7 @@ export default function WalletDescriptorsDeriveAddress() {
     shouldFetch
       ? [
         "deriveaddresses",
-        [dField],
+        {"descriptor": dField},
       ]
       : null,
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)

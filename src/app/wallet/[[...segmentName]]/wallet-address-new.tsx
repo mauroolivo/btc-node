@@ -18,7 +18,7 @@ export default function WalletAddressNew() {
     shouldFetch
       ? [
         "getnewaddress",
-        ["", addressType],
+        {"label": "", "address_type": addressType},
       ]
       : null,
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)

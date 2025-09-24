@@ -15,7 +15,7 @@ export default function WalletUTXOs() {
     shouldFetch
       ? [
         "listunspent",
-        [],
+        {},
       ]
       : null,
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)

@@ -21,7 +21,7 @@ export default function WalletAddressInfo({address}: {
   const {data, error, isLoading} = useSWR<AddressInfoResponse>(
     [
       "getaddressinfo",
-      [address],
+      {"address": address},
     ]
     ,
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)

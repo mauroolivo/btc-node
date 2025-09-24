@@ -15,7 +15,7 @@ export default function WalletTxsList() {
     shouldFetch
       ? [
         "listtransactions",
-        [],
+        {},
       ]
       : null,
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)

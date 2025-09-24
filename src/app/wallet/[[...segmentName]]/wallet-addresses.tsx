@@ -29,7 +29,7 @@ export default function WalletAddresses() {
     shouldFetch
       ? [
         "listaddressgroupings",
-        [],
+        {},
       ]
       : null,
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)

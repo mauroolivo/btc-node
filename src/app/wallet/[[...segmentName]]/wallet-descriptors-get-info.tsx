@@ -21,7 +21,7 @@ export default function WalletDescriptorsGetInfo() {
     shouldFetch
       ? [
         "getdescriptorinfo",
-        [dField],
+        {"descriptor": dField},
       ]
       : null,
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
