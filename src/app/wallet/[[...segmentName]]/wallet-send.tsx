@@ -1,11 +1,15 @@
+'use client';
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {ParamsDictionary} from "@/models/api";
+import useSWR from "swr";
+import {NewAddressResponse, SendResponse} from "@/models/wallet";
+import {fetcher} from "@/api/api";
 
 const fields = [
   { name: "address", label: "Address", type: "text" },
   { name: "amount", label: "Amount", type: "number" },
-  { name: "fee_rate", label: "Fee Rate", type: "number" },
+  { name: "fee_rate", label: "Fee Rate (if empty takes default)", type: "number" },
   { name: "subtractfeefromamount", label: "Subtract fee from amount", type: "checkbox" },
   { name: "replaceable", label: "Replaceable", type: "checkbox" },
 ];
@@ -20,6 +24,42 @@ export default function WalletSend() {
   });
 
   const addressRef = useRef<HTMLTextAreaElement>(null);
+
+  const [shouldFetch, setShouldFetch] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+
+  const payload: ParamsDictionary = {
+    "address": form.address,
+    "amount": parseFloat(form.amount),
+    "subtractfeefromamount": form.subtractfeefromamount,
+    "replaceable": form.replaceable,
+    "fee_rate": parseFloat(form.fee_rate),
+  }
+  console.log(payload)
+  console.log("shouldFetch is " + shouldFetch)
+  const {data, error, isLoading} = useSWR<SendResponse>(
+    shouldFetch
+      ? [
+        "sendtoaddress",
+        payload
+      ]
+      : null,
+    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
+  );
+  if(data !== undefined) {
+    console.log("DATA")
+    console.log(data)
+    setShouldFetch(false);
+    if (data?.result !== undefined) {
+      console.log("OK")
+      console.log(data?.result);
+    }
+    else {
+      console.log("NO data")
+      console.log(data?.error)
+      setErrorMsg(data?.error?.message || "Unknown error");
+    }
+  }
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -47,15 +87,24 @@ export default function WalletSend() {
     const p: ParamsDictionary = form
 
     console.log(p);
+    setShouldFetch(true);
   }
-
+  console.log("error is " + data?.error)
   return (
+
     <div className="flex justify-center items-center mt-5">
+
       <form
         onSubmit={onSubmit}
         className="space-y-4 pt-4 w-full max-w-md p-6 rounded shadow"
       >
         <div className="grid grid-cols-1 gap-4">
+          {
+            errorMsg &&
+
+            (<p>Error: {errorMsg}</p>)
+          }
+
           {fields.map((field) => {
             if (field.name === "address") {
               return (

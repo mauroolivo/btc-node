@@ -44,12 +44,16 @@ export default function WalletAddresses() {
       return <div>No addresses in this wallet</div>
     } else {
       if (data.result.length > 0) {
+        console.log("PIPPO")
+        console.log(data.result)
+        let prog_idx = 0
         for (const [idx, groups] of data.result.entries()) {
           if (groups.length > 0) {
             for (const [, address] of groups.entries()) {
-              list_items.push(<div key={idx}>
+              list_items.push(<div key={prog_idx}>
                 <WalletAddressC address={address} />
               </div>)
+              prog_idx += 1
             }
           }
         }

@@ -175,3 +175,16 @@ export interface WalletLoad {
 export interface WalletLoadResult {
   name: string
 }
+
+export interface SendResponse {
+  jsonrpc: string
+  result: string | null
+  id: string
+  error: RpcError | null
+}
+
+export interface RpcError {
+  code: number
+  message: string
+}
+// {"jsonrpc":"2.0","error":{"code":-3,"message":"Invalid amount"},"id":"curl"}

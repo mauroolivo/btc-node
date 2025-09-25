@@ -40,7 +40,7 @@ export default function WalletTxC({walletTx}: {
             Parent descs
           </div>
           <div className="param-value">
-            {walletTx.parent_descs.toString()}
+            {walletTx.parent_descs === undefined ? "" : walletTx.parent_descs.join(", ")}
           </div>
         </div>
       </div>
