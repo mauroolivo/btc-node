@@ -9,35 +9,36 @@ import {ParamsDictionary} from "@/models/api";
 
 export default function WalletUTXOs() {
 
-  const [shouldFetch, setShouldFetch] = React.useState(true);
-  const [utxos, setUtxos] = React.useState<UTXO[]>([]);
-  const { data, error, isLoading } = useSWR<UTXOResponse>(
-    shouldFetch
-      ? [
-        "listunspent",
-        {},
-      ]
-      : null,
+  const {data, error, isLoading} = useSWR<UTXOResponse>(
+    [
+      "listunspent",
+      {},
+    ],
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
-  if(data?.result !== undefined) {
-    console.log("data", data.result);
-    setUtxos(data.result);
-    setShouldFetch(false);
-  }
 
   function utxosList(): React.JSX.Element {
-    const list_items = utxos.map((utxo, idx) =>
-      <div key={idx}>
-        <WalletUTXOC walletUTXO={utxo}/>
-      </div>
-    );
+    let list_items: unknown[] = [];
+    if (error) return <div>Failed to load addresses</div>;
+    if (isLoading) return <div>Loading...</div>;
+    if (!data) return <div>No data</div>;
+    if (data.result === undefined) {
+      return <div>No txs in this wallet</div>
+    } else {
+      if (data.result.length > 0) {
+        list_items = data.result.map((utxo, idx) =>
+          <div key={idx}>
+            <WalletUTXOC walletUTXO={utxo}/>
+          </div>
+        );
+      }
+    }
     return (<>{list_items}</>)
   }
 
   return (
     <>
-      <div className="param-title text-center">Unspent Transactions</div>
+      <div className="param-title text-center">Unspent Transactions {data?.result?.length}</div>
       {utxosList()}
     </>
   );

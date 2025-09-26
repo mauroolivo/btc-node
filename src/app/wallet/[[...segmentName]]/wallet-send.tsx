@@ -5,11 +5,20 @@ import {ParamsDictionary} from "@/models/api";
 import useSWR from "swr";
 import {NewAddressResponse, SendResponse} from "@/models/wallet";
 import {fetcher} from "@/api/api";
+import {
+  AlertDialog, AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import WalletAddressInfo from "@/app/wallet/[[...segmentName]]/wallet-address-info";
 
 const fields = [
   { name: "address", label: "Address", type: "text" },
   { name: "amount", label: "Amount", type: "number" },
-  { name: "fee_rate", label: "Fee Rate (if empty takes default)", type: "number" },
+  { name: "fee_rate", label: "Fee Rate (sats/vbyte)", type: "number" },
   { name: "subtractfeefromamount", label: "Subtract fee from amount", type: "checkbox" },
   { name: "replaceable", label: "Replaceable", type: "checkbox" },
 ];
@@ -18,22 +27,25 @@ export default function WalletSend() {
   const [form, setForm] = useState({
     address: "",
     amount: "",
+    fee_rate: "",
     subtractfeefromamount: true,
     replaceable: true,
-    fee_rate: "",
   });
 
   const addressRef = useRef<HTMLTextAreaElement>(null);
 
   const [shouldFetch, setShouldFetch] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+  const [open, setOpen] = React.useState(false);
+  const [isReady, setIsReady] = React.useState(false);
+  const [newTx, setNewTx] = React.useState<string | null>(null);
 
   const payload: ParamsDictionary = {
     "address": form.address,
     "amount": parseFloat(form.amount),
+    "fee_rate": parseFloat(form.fee_rate),
     "subtractfeefromamount": form.subtractfeefromamount,
     "replaceable": form.replaceable,
-    "fee_rate": parseFloat(form.fee_rate),
   }
   console.log(payload)
   console.log("shouldFetch is " + shouldFetch)
@@ -46,17 +58,25 @@ export default function WalletSend() {
       : null,
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
   );
+
   if(data !== undefined) {
-    console.log("DATA")
-    console.log(data)
+
     setShouldFetch(false);
     if (data?.result !== undefined) {
-      console.log("OK")
+
+      /// show success message
+      setErrorMsg(null);
+      setNewTx(data?.result);
+      setForm({
+        address: "",
+        amount: "",
+        fee_rate: "",
+        subtractfeefromamount: true,
+        replaceable: true,
+      });
       console.log(data?.result);
     }
     else {
-      console.log("NO data")
-      console.log(data?.error)
       setErrorMsg(data?.error?.message || "Unknown error");
     }
   }
@@ -79,20 +99,62 @@ export default function WalletSend() {
       addressRef.current.style.height = "auto";
       addressRef.current.style.height = addressRef.current.scrollHeight + "px";
     }
+
+    // light validation
+    setIsReady(false);
+    if ( parseFloat(e.target.form?.amount.value) > 0 && (e.target.form?.address.value.trim()).length > 0 &&
+      parseFloat(e.target.form?.fee_rate.value) >= 1 ) {
+      setIsReady(true);
+    }
+    setErrorMsg(null);
   }
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setOpen(true)
+  }
+  function onConfirm() {
 
-    const p: ParamsDictionary = form
-
-    console.log(p);
+    setOpen(false)
     setShouldFetch(true);
   }
-  console.log("error is " + data?.error)
+
   return (
 
     <div className="flex justify-center items-center mt-5">
+
+      <AlertDialog open={open}>
+        {/*<AlertDialogTrigger>show alert</AlertDialogTrigger>*/}
+        <AlertDialogContent className={" bg-black"}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Transactions</AlertDialogTitle>
+            <AlertDialogDescription></AlertDialogDescription>
+            <div>Address: <span className="text-prominent">{form.address}</span></div>
+            <div>Amount: <span className="text-prominent">{form.amount}</span></div>
+            <div>Fee rate: <span className="text-prominent">{form.fee_rate}</span></div>
+            <div>Subtract fee from amount: <span className="text-prominent">{form.subtractfeefromamount ? "true" : "false"}</span></div>
+            <div>Replaceable by fee: <span className="text-prominent">{form.replaceable ? "true" : "false"}</span></div>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setOpen(false)}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => onConfirm()}>Confirm</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={newTx !== null}>
+        {/*<AlertDialogTrigger>show alert</AlertDialogTrigger>*/}
+        <AlertDialogContent className={" bg-black"}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>New transaction created</AlertDialogTitle>
+            <AlertDialogDescription></AlertDialogDescription>
+            <div>Tx ID: <span className="text-prominent">{newTx}</span></div>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setNewTx(null)}>Close</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <form
         onSubmit={onSubmit}
@@ -101,8 +163,7 @@ export default function WalletSend() {
         <div className="grid grid-cols-1 gap-4">
           {
             errorMsg &&
-
-            (<p>Error: {errorMsg}</p>)
+            (<p className="text-red-500">Error: {errorMsg}</p>)
           }
 
           {fields.map((field) => {
@@ -178,7 +239,7 @@ export default function WalletSend() {
           })}
         </div>
         <div className="flex justify-end">
-          <Button type="submit">Send</Button>
+          <Button type="submit" disabled={!isReady}>Send</Button>
         </div>
       </form>
     </div>
