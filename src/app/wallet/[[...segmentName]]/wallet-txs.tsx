@@ -12,7 +12,7 @@ export default function WalletTxsList() {
   const {data, error, isLoading} = useSWR<WalletTxs>(
     [
       "listtransactions",
-      {"label": "*", "count": 100, "skip": 0, "include_watchonly": true},
+      {"label": "*", "count": 1000, "skip": 0, "include_watchonly": true},
     ],
     ([m, p]: [string, ParamsDictionary]) => fetcher(m, p),
   );
@@ -25,6 +25,7 @@ export default function WalletTxsList() {
     if (data.result === undefined) {
       return <div>No txs in this wallet</div>
     } else {
+      console.log(data.result);
       if (data.result.length > 0) {
         list_items = data.result.map((tx, idx) =>
           <div key={idx}>
