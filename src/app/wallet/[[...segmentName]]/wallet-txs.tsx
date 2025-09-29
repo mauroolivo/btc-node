@@ -28,7 +28,13 @@ export default function WalletTxsList() {
       console.log(data.result);
       if (data.result.length > 0) {
         list_items = data.result.map((tx, idx) =>
-          <div key={idx}>
+          <div
+            key={idx}
+            className="cursor-pointer transition-opacity duration-200 hover:opacity-80"
+            onClick={() => {/* handle click */}}
+            role="button"
+            tabIndex={0}
+          >
             <WalletTxC walletTx={tx}/>
           </div>
         );
@@ -40,7 +46,11 @@ export default function WalletTxsList() {
   return (
     <>
       <div className="param-title text-center">Transactions {data?.result?.length}</div>
-        {txsList()}
+      <div className="flex justify-center w-full">
+        <div className="w-full max-w-md mx-auto">
+          {txsList()}
+        </div>
+      </div>
     </>
   );
 }

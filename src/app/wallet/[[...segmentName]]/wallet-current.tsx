@@ -18,11 +18,8 @@ export default function WalletCurrent({wallet, wallets}: {
 
   return (
     <>
-      <p>Loaded wallet: {wallet}</p>
-      {/*<Button onClick={() => {*/}
-      {/*  setShow(true);*/}
-      {/*}}>Change Wallet</Button>*/}
-      <WalletSelect show={show} names={wallets} onWalletSelectAction={handleWalletSelect}/>
+      <p>Loaded wallet: {wallet === "" ? "`default`" : wallet}</p>
+      {/*<WalletSelect show={show} names={wallets} onWalletSelectAction={handleWalletSelect}/>*/}
     </>
   );
 }

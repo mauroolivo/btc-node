@@ -2,15 +2,8 @@
 
 import {WalletTx} from "@/models/wallet";
 import {toDateString} from "@/util/util";
-import {ArrowBigDownDash, ArrowBigUpDash} from "lucide-react";
+import {ChevronRight} from "lucide-react";
 
-function getIcon(tx: WalletTx): React.JSX.Element {
-  if (tx.category === "receive") {
-  return <ArrowBigDownDash className="" size={32} strokeWidth={1}/>;
-  } else {
-    return <ArrowBigUpDash className="" size={32} strokeWidth={1}/>;
-  }
-}
 export default function WalletTxC({walletTx}: {
   walletTx: WalletTx
 }) {
@@ -18,8 +11,17 @@ export default function WalletTxC({walletTx}: {
   return (
     <>
 
-      <div className="border-1 border-white m-1 p-2">
-        {getIcon(walletTx)}  {walletTx.amount} {toDateString(walletTx.blocktime)} {walletTx.category.toUpperCase()}
+      <div className="border-b-zinc-700 border-b-1 m-1 p-2">
+        <div className="flex justify-between items-center">
+          <div>
+            <div className={"text-xl" + (walletTx.amount > 0 ? " text-green-400" : " text-red-400")}>
+              {(walletTx.amount > 0 ? "+" : "") + walletTx.amount}
+            </div>
+            <div className={"text-zinc-700"}>{walletTx.blocktime === undefined ? "" : toDateString(walletTx.blocktime)}</div>
+
+          </div>
+          <ChevronRight />
+        </div>
       </div>
 
       {/*<div className="w-full justify-center md:flex-none lg:flex lg:gap-20 ">*/}
