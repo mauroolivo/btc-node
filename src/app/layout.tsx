@@ -4,6 +4,8 @@ import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import Header from "@/app/header";
 import {listWalletDir, listWallets} from "@/api/api";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar} from "@/app/app-sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,13 +36,19 @@ export default async function RootLayout({
     <body
       className={`${geistSans.variable} ${geistMono.variable} antialiased w-[100%]`}
     >
-    <Header name={null} names={names}/>
-    <div className="items-start p-8 pb-20 gap-16 sm:p-20">
-      <main className="gap-[32px] row-start-2  sm:items-start">
-        {children}
-      </main>
-    </div>
+    {/*<Header name={null} names={names}/>*/}
 
+    <SidebarProvider>
+      <AppSidebar name={null} names={names} />
+      <SidebarTrigger />
+        <div className="items-start p-8 pb-20 gap-16 sm:p-20">
+          <main className="gap-[32px] row-start-2  sm:items-start">
+
+            {children}
+          </main>
+        </div>
+
+    </SidebarProvider>
     </body>
     </html>
   );
