@@ -124,6 +124,9 @@ body {
     @apply !text-stone-400 cursor-auto hover:!text-stone-400 no-underline hover:cursor-pointer;
   }
 }
+span.param-label {
+  @apply text-gray-500 w-48 inline-block
+}
 .param-box {
   @apply w-full justify-center flex gap-2 border-b-zinc-700 border-b-1
 }

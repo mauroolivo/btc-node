@@ -41,12 +41,12 @@ export default async function RootLayout({
     <SidebarProvider>
       <AppSidebar name={null} names={names} />
       <SidebarTrigger />
-        <div className="items-start p-8 pb-20 gap-16 sm:p-20">
-          <main className="gap-[32px] row-start-2  sm:items-start">
-
+        {/*<div className="items-start p-8 pb-20 gap-16 sm:p-20">*/}
+        {/*  <main className="gap-[32px] row-start-2  sm:items-start">*/}
+            <main className="p-2">
             {children}
           </main>
-        </div>
+        {/*</div>*/}
 
     </SidebarProvider>
     </body>
