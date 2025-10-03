@@ -35,8 +35,8 @@ export function AppSidebar({name, names} : {
   ]
 
   return (
-    <Sidebar className={"pt-10 pl-2 pr-2"}>
-      <SidebarContent>
+    <Sidebar className={"pt-10 pl-6 pr-6 "}>
+      <SidebarContent className={"bg-black"}>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu >
@@ -63,7 +63,7 @@ export function AppSidebar({name, names} : {
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {names.map((item) => (
+                  {names && names.map((item) => (
                     <SidebarMenuItem key={item}>
                       <SidebarMenuButton asChild>
                         <a href={"/wallet/" + item}>

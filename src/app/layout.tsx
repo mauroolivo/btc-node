@@ -38,12 +38,12 @@ export default async function RootLayout({
     >
     {/*<Header name={null} names={names}/>*/}
 
-    <SidebarProvider>
+    <SidebarProvider className={"w-[100%]"}>
       <AppSidebar name={null} names={names} />
-      <SidebarTrigger />
+      <SidebarTrigger className={"border-0"} />
         {/*<div className="items-start p-8 pb-20 gap-16 sm:p-20">*/}
         {/*  <main className="gap-[32px] row-start-2  sm:items-start">*/}
-            <main className="p-2">
+            <main className="pt-12 pl-4 w-[70%]">
             {children}
           </main>
         {/*</div>*/}

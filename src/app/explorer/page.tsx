@@ -76,6 +76,8 @@ export default function Client() {
         setBlockData(blockData)
       }
     } else {
+      console.log("txData")
+      console.log(txData)
       setTxData(txData)
     }
   }
@@ -90,22 +92,29 @@ export default function Client() {
   return (
 
     <>
-      <form className="">
-
-        <div className="flex w-full gap-1">
-          <div className="grow ">
+      <form className="w-full">
+        <div className="flex w-full gap-2">
+          <div className="flex-1">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className=" font-mono flex w-full rounded-0 py-[11px] px-3 flounder:px-4 flounder:pt-[14px] flounder:pb-[15px] !text-callout transition-shadow font-normal
-                                leading-none placeholder:!text-callout placeholder:font-medium placeholder:text-neutral70 ring-1 ring-inset ring-itemPrimaryMute bg-backgroundPrimaryDefault text-itemPrimaryDefault disabled:text-neutral70 focus-visible:outline-none focus-visible:ring-itemSecondaryDefault disabled:cursor-not-allowed disabled:bg-backgroundPrimaryHighlight disabled:ring-itemPrimaryMute h-[54px]"
+              className="w-full font-mono flex rounded-0 py-[11px] px-3 flounder:px-4 flounder:pt-[14px] flounder:pb-[15px] !text-callout transition-shadow font-normal
+                                leading-none placeholder:!text-callout placeholder:font-medium placeholder:text-neutral70 ring-1 ring-inset ring-itemPrimaryMute
+                                bg-backgroundPrimaryDefault text-itemPrimaryDefault disabled:text-neutral70 focus-visible:outline-none
+                                focus-visible:ring-itemSecondaryDefault disabled:cursor-not-allowed disabled:bg-backgroundPrimaryHighlight
+                                disabled:ring-itemPrimaryMute h-[44px]"
               placeholder="Search by Tx id or Block id or Block height"
             />
           </div>
-          <div className="grow-0">
+          <div>
             <button
               disabled={!isValid()}
-              className="disabled:opacity-40 group/button inline-flex items-center justify-center whitespace-nowrap rounded-0 transition-[color,background,box-shadow] focus-visible:outline-brandDefault focus-visible:-outline-offset-1 focus-visible:outline-1 disabled:pointer-events-none outline-none uppercase gap-1 flounder:gap-2 font-mono text-backgroundInverseOnDefault bg-backgroundInverseDefault hover:text-backgroundInverseOnActive hover:bg-backgroundInverseActive focus-visible:bg-backgroundInverseActive py-3 px-5 flounder:py-4 text-body4 flounder:text-body4 font-semibold tracking-normal flounder:px-8 size-full !text-desktopCallout"
+              className="disabled:opacity-40 group/button inline-flex items-center justify-center whitespace-nowrap rounded-0
+              transition-[color,background,box-shadow] focus-visible:outline-brandDefault focus-visible:-outline-offset-1
+              focus-visible:outline-1 disabled:pointer-events-none outline-none uppercase gap-1 flounder:gap-2 font-mono
+              text-backgroundInverseOnDefault bg-backgroundInverseDefault hover:text-backgroundInverseOnActive
+              hover:bg-backgroundInverseActive focus-visible:bg-backgroundInverseActive py-3 px-5 flounder:py-4 text-body4
+              flounder:text-body4 font-semibold tracking-normal flounder:px-8 size-full !text-desktopCallout h-[44px]"
               type="button"
               onClick={() => handleSearch(input)}
             >

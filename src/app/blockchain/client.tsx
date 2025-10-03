@@ -21,13 +21,13 @@ export default function Client({blockchaininfo, blockcount, mininginfo, networki
   return (
     <>
       <div>
-        <p>getblockcount</p>
+        <p className={"text-prominent"}>getblockcount</p>
         {blockcount && <div><span className={"param-label"}>Blocks:</span> <span>{blockcount}</span></div>}
       </div>
       {
         networkinfo &&
         <div>
-          <p>getnetworkinfo</p>
+          <p className={"text-prominent"}>getnetworkinfo</p>
           <div><span className={"param-label"}>Protocol version:</span> <span>{networkinfo.result.protocolversion}</span></div>
           <div><span className={"param-label"}>Subversion:</span> <span>{networkinfo.result.subversion}</span></div>
           <div><span className={"param-label"}>Version:</span> <span>{networkinfo.result.version}</span></div>
@@ -39,7 +39,7 @@ export default function Client({blockchaininfo, blockcount, mininginfo, networki
       {
         blockchaininfo &&
         <div>
-          <p>getblockchaininfo</p>
+          <p className={"text-prominent"}>getblockchaininfo</p>
           <div><span className={"param-label"}>Chain:</span> <span>{blockchaininfo.result.chain}</span></div>
 
           <div><span className={"param-label"}>Initial block download:</span> <span>{blockchaininfo.result.initialblockdownload && ("true")}

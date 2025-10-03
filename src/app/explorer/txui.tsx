@@ -18,100 +18,31 @@ export default function TxUI({response, onBlockAction, onTxAction}: {
     <>
       {response &&
         <>
+
           <div>
-            <div className="param-box">
-              <div className="param-key">
-                TxID
-              </div>
-              <div className="param-value">
-                {response.result.txid}
-              </div>
+            <p className={"text-prominent"}>transaction details</p>
+            <div><span className={"param-label"}>Tx ID:</span> <span>{response.result.txid}</span></div>
+            <div><span className={"param-label"}>Block hash:</span> <span
+              className="underline hover:no-underline hover:cursor-pointer"
+              onClick={() => onBlockAction(response.result.blockhash)}>{response.result.blockhash}</span></div>
+            <div><span className={"param-label"}>Confirmations:</span> <span>{response.result.confirmations}</span>
             </div>
-            <div className="param-box">
-              <div className="param-key">
-                Confirmations
-              </div>
-              <div className="param-value">
-                {response.result.confirmations}
-              </div>
-            </div>
-            <div className="param-box">
-              <div className="param-key">
-                Block hash
-              </div>
-              <div className="param-value">
-                <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onBlockAction(response.result.blockhash)}>{response.result.blockhash}</div>
-              </div>
-            </div>
-            <div className="param-box">
-              <div className="param-key">
-                Block time
-              </div>
-              <div className="param-value">
-                {toDateString(response.result.time)}
-              </div>
-            </div>
-            <div className="param-box">
-              <div className="param-key">
-                Size
-              </div>
-              <div className="param-value">
-                {response.result.size} B
-              </div>
-            </div>
-            <div className="param-box">
-              <div className="param-key">
-                Tx hash (wTxid)
-              </div>
-              <div className="param-value">
-                {response.result.hash}
-              </div>
-            </div>
+            <div><span className={"param-label"}>Time:</span> <span>{toDateString(response.result.time)}</span></div>
+            <div><span className={"param-label"}>Size:</span> <span>{response.result.size} B</span></div>
+            <div><span className={"param-label"}>Tx hash (wTxid):</span> <span>{response.result.hash}</span></div>
             {more &&
               <>
-                <div className="param-box">
-                  <div className="param-key">
-                    version
-                  </div>
-                  <div className="param-value">
-                    {response.result.version}
-                  </div>
-                </div>
-                <div className="param-box">
-                  <div className="param-key">
-                    vsize
-                  </div>
-                  <div className="param-value">
-                    {response.result.vsize}
-                  </div>
-                </div>
-                <div className="param-box">
-                  <div className="param-key">
-                    Weight
-                  </div>
-                  <div className="param-value">
-                    {response.result.weight}
-                  </div>
-                </div>
-                <div className="param-box">
-                  <div className="param-key">
-                    Locktime
-                  </div>
-                  <div className="param-value">
-                    {response.result.locktime}
-                  </div>
-                </div>
-                <div className="param-box">
-                  <div className="param-key">
-                    Hex
-                  </div>
-                  <div className="param-value">
-                    {response.result.hex}
-                  </div>
-                </div>
+                <div><span className={"param-label"}>Version:</span> <span>{response.result.version}</span></div>
+                <div><span className={"param-label"}>Vsize:</span> <span>{response.result.vsize}</span></div>
+                <div><span className={"param-label"}>Locktime:</span> <span>{response.result.locktime}</span></div>
+                <div><span className={"param-label"}>Weight:</span> <span>{response.result.weight}</span></div>
+                {/*<div><span className={"param-label"}>Hex:</span> <span>{response.result.hex}</span></div>*/}
               </>
             }
-            <div className="float-right inline-flex gap-2 mt-2 mb-2">
+          </div>
+
+          <div className={"mb-6"}>
+            <div className="inline-flex gap-2 mt-2 mb-2">
               {!more && <Button onClick={() => {
                 setMore(true)
               }}>More</Button>}

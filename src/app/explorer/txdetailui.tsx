@@ -17,40 +17,15 @@ export default function TxDetailUI({result, onTxAction}: {
   }
   function outputs(): React.JSX.Element {
     const list_items = result.vout.map((input, idx) =>
-      <div key={idx} className="w-full  mb-2">
-        <div className="w-full text-center font-bold text-prominent">Output #{idx}</div>
-        <div className="param-box">
-          <div className="param-key">
-            value
-          </div>
-          <div className="param-value">
-            {input.value}
-          </div>
-        </div>
-        <div className="param-box">
-          <div className="param-key">
-            number
-          </div>
-          <div className="param-value">
-            {input.n}
-          </div>
-        </div>
-        <div className="param-box">
-          <div className="param-key">
-            ScriptPubKey ASM
-          </div>
-          <div className="param-value">
-            {input.scriptPubKey.asm}
-          </div>
-        </div>
-        <div className="param-box">
-          <div className="param-key">
-            Type
-          </div>
-          <div className="param-value">
-            {input.scriptPubKey.type}
-          </div>
-        </div>
+
+      <div key={idx} className="w-full bg-gray-950 mb-4 p-2 border-gray-900 border">
+        <div className="w-full text-center font-bold font-mono text-prominent">Input #{idx}</div>
+
+        <div><span className={"param-label"}>Address:</span> <span className={"text-left overflow-auto break-words"}>{input.scriptPubKey.address}</span></div>
+        <div><span className={"param-label"}>Value:</span> <span>{input.value}</span></div>
+        <div><span className={"param-label"}>Number:</span> <span>{input.n}</span></div>
+        <div><span className={"param-label"}>ScriptPubKey ASM:</span> <span className={"text-left overflow-auto break-words"}>{input.scriptPubKey.asm}</span></div>
+        <div><span className={"param-label"}>Type:</span> <span>{input.scriptPubKey.type}</span></div>
       </div>
     );
     return (<>{list_items}</>)
@@ -59,56 +34,14 @@ export default function TxDetailUI({result, onTxAction}: {
   function inputs(): React.JSX.Element {
     console.log(result.vin)
     const list_items = result.vin.map((input, idx) =>
-      <div key={idx} className="w-full  mb-2">
+      <div key={idx} className="w-full bg-gray-950 mb-4 p-2 border-gray-900 border">
         <div className="w-full text-center font-bold font-mono text-prominent">Input #{idx}</div>
-        <div className="param-box">
-          <div className="param-key">
-            Coinbase
-          </div>
-          <div className="param-value">
-            {input.coinbase}
-          </div>
-        </div>
-        <div className="param-box">
-          <div className="param-key">
-            TxId
-          </div>
-          <div className="param-value">
-            {input.txid}
-          </div>
-        </div>
-        <div className="param-box">
-          <div className="param-key">
-            vout
-          </div>
-          <div className="param-value">
-            {input.vout}
-          </div>
-        </div>
-        <div className="param-box">
-          <div className="param-key">
-            ScriptSig
-          </div>
-          <div className="param-value">
-            {scriptsig(input)}
-          </div>
-        </div>
-        <div className="param-box">
-          <div className="param-key">
-            witness
-          </div>
-          <div className="param-value">
-            {input.txinwitness}
-          </div>
-        </div>
-        <div className="param-box">
-          <div className="param-key">
-            sequence
-          </div>
-          <div className="param-value">
-            {input.sequence}
-          </div>
-        </div>
+        <div><span className={"param-label"}>IsCoinbase:</span> <span>{input.coinbase ? "yes" : "no"}</span></div>
+        <div><span className={"param-label"}>TxId:</span> <span className={"text-left overflow-auto break-words"}>{input.txid}</span></div>
+        <div><span className={"param-label"}>Vout:</span> <span>{input.vout}</span></div>
+        <div><span className={"param-label"}>ScriptSig:</span> <span>{scriptsig(input)}</span></div>
+        <div><span className={"param-label"}>Witness:</span> <span className={"text-left overflow-auto break-words"}>{input.txinwitness}</span></div>
+        <div><span className={"param-label"}>Sequence:</span> <span>{input.sequence}</span></div>
       </div>
     );
     return (<>{list_items}</>)
@@ -120,8 +53,8 @@ export default function TxDetailUI({result, onTxAction}: {
         result &&
         <>
           <div className="w-full grid justify-items-center">
-            <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onTxDetailAction(result.txid)}>{result.txid}</div>
-            </div>
+            <div className="underline hover:no-underline hover:cursor-pointer mt-4 mb-4" onClick={() => onTxDetailAction(result.txid)}>{result.txid}</div>
+          </div>
           <div className="w-full justify-center md:flex-none lg:flex lg:gap-20 ">
             <div className="md:w-full lg:w-14 grow">
               {inputs()}
