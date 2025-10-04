@@ -23,103 +23,22 @@ export default function WalletInfo() {
   );
 
   return (
-
     <>
-    {r1.data !== undefined &&
-      <>
-      <div className="param-title text-center">Wallet info</div>
-      <div className="w-full justify-center md:flex-none lg:flex lg:gap-20 ">
-
-        <div className="md:w-full lg:w-14 grow">
-          <div className="param-box">
-            <div className="param-key">
-              Name
-            </div>
-            <div className="param-value">
-              {r1.data.result.walletname}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Version
-            </div>
-            <div className="param-value">
-              {r1.data.result.walletversion}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Format
-            </div>
-            <div className="param-value">
-              {r1.data.result.format}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Balance
-            </div>
-            <div className="param-value">
-              {r1.data.result.balance}
-            </div>
-          </div>
-          { r2.data !== undefined &&
-          <div className="param-box">
-            <div className="param-key">
-              Unconfirmed balance
-            </div>
-            <div className="param-value">
-              {r2.data.result}
-            </div>
-          </div>
+      {r1.data !== undefined &&
+        <div>
+          <div><span className={"param-label"}>Balance:</span> <span className={"text-xl"}>{r1.data.result.balance}</span></div>
+          {r2.data !== undefined &&
+            <div><span className={"param-label"}>Unconfirmed balance:</span> <span>{r1.data.result.unconfirmed_balance}</span></div>
           }
+          <div><span className={"param-label"}>Name:</span> <span>{(r1.data.result.walletname === "" ? "`default`" : r1.data.result.walletname)}</span></div>
+          <div><span className={"param-label"}>Version:</span> <span>{r1.data.result.walletversion}</span></div>
+          <div><span className={"param-label"}>Avoid reuse:</span> <span>{r1.data.result.avoid_reuse ? "true" : "false"}</span></div>
+          <div><span className={"param-label"}>Scanning:</span> <span>{r1.data.result.scanning ? "true": "false"}</span></div>
+          <div><span className={"param-label"}>Descriptors:</span> <span>{r1.data.result.descriptors ? "true": "false"}</span></div>
+          <div><span className={"param-label"}>External signer:</span> <span>{r1.data.result.external_signer ? "true": "false"}</span></div>
+          <div><span className={"param-label"}>Birth time:</span> <span>{toDateString(r1.data.result.birthtime)}</span></div>
         </div>
-        <div className="md:w-full lg:w-14 grow">
-          <div className="param-box">
-            <div className="param-key">
-              Avoid reuse
-            </div>
-            <div className="param-value">
-              {r1.data.result.avoid_reuse ? "true" : "false"}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Scanning
-            </div>
-            <div className="param-value">
-              {r1.data.result.scanning ? "true" : "false"}
-            </div>
-          </div>
-
-          <div className="param-box">
-            <div className="param-key">
-              Descriptors
-            </div>
-            <div className="param-value">
-              {r1.data.result.descriptors ? "true" : "false"}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              External signer
-            </div>
-            <div className="param-value">
-              {r1.data.result.external_signer ? "true" : "false"}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Birth time
-            </div>
-            <div className="param-value">
-              {toDateString(r1.data.result.birthtime)}
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-}
+      }
     </>
   );
 }

@@ -158,7 +158,7 @@ export default function Client({mempoolinfo, txs}: {
           </div>
         </div>
       </form>
-      {mempoolTx && <Mempooltxui data={mempoolTx}/>}
+      {/*{mempoolTx && <Mempooltxui data={mempoolTx}/>}*/}
       {txData && mempoolTx && <TxUI response={txData} onBlockAction={handleNewInput} onTxAction={handleNewInput}/>}
       {
         listBlock()

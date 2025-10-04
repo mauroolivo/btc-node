@@ -52,31 +52,22 @@ export function AppSidebar({name, names} : {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <Collapsible defaultOpen className="group/collapsible">
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
-                Wallets
-                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {names && names.map((item) => (
-                    <SidebarMenuItem key={item}>
-                      <SidebarMenuButton asChild>
-                        <a href={"/wallet/" + item}>
-                          <span>{(item === "" ? "`default`" : item)}</span>
-                        </a>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
+        <SidebarGroup>
+          <SidebarGroupLabel className={"text-gray-400"}>Wallets</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {names && names.map((item) => (
+                <SidebarMenuItem key={item}>
+                  <SidebarMenuButton asChild>
+                    <a href={"/wallet/" + item}>
+                      <span>{(item === "" ? "`default`" : item)}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   )

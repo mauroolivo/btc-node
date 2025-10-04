@@ -21,8 +21,7 @@ export default function WalletHome() {
   const isActive = (tab: Tab) => current === tab;
   return (
     <>
-
-      <div className={" flex flex-wrap gap-8 uppercase justify-end"}>
+      <div className={" flex flex-wrap gap-8 uppercase justify-end pb-12"}>
         <a className={isActive(Tab.INFO) ? "active" : ""} onClick={() => {setCurrent(Tab.INFO)}}>Wallet info</a>
         <a className={isActive(Tab.TRANSACTION) ? "active" : ""} onClick={() => {setCurrent(Tab.TRANSACTION)}}>Transactions</a>
         <a className={isActive(Tab.UNSPENT) ? "active" : ""} onClick={() => {setCurrent(Tab.UNSPENT)}}>UTXO</a>

@@ -45,12 +45,10 @@ export default function WalletTxsList() {
 
   return (
     <>
-      <div className="param-title text-center">Transactions {data?.result?.length}</div>
-      <div className="flex justify-center w-full">
-        <div className="w-full max-w-md mx-auto">
-          {txsList()}
-        </div>
-      </div>
+      <div>Transactions {data?.result?.length}</div>
+
+      {txsList()}
+
     </>
   );
 }

@@ -11,13 +11,13 @@ export default function WalletTxC({walletTx}: {
   return (
     <>
 
-      <div className="border-b-zinc-700 border-b-1 m-1 p-2">
+      <div className="m-1 p-2">
         <div className="flex justify-between items-center">
           <div>
-            <div className={"text-xl" + (walletTx.amount > 0 ? " text-green-400" : " text-red-400")}>
+            <div className={"text-xl" + (walletTx.amount > 0 ? " text-white" : " text-white")}>
               {(walletTx.amount > 0 ? "+" : "") + walletTx.amount}
             </div>
-            <div className={"text-zinc-700"}>{walletTx.blocktime === undefined ? "" : toDateString(walletTx.blocktime)}</div>
+            <div className={"text-zinc-400"}>{walletTx.blocktime === undefined ? "" : toDateString(walletTx.blocktime)}</div>
 
           </div>
           <ChevronRight />

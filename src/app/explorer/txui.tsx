@@ -18,7 +18,6 @@ export default function TxUI({response, onBlockAction, onTxAction}: {
     <>
       {response &&
         <>
-
           <div>
             <p className={"text-prominent"}>transaction details</p>
             <div><span className={"param-label"}>Tx ID:</span> <span>{response.result.txid}</span></div>
@@ -27,7 +26,7 @@ export default function TxUI({response, onBlockAction, onTxAction}: {
               onClick={() => onBlockAction(response.result.blockhash)}>{response.result.blockhash}</span></div>
             <div><span className={"param-label"}>Confirmations:</span> <span>{response.result.confirmations}</span>
             </div>
-            <div><span className={"param-label"}>Time:</span> <span>{toDateString(response.result.time)}</span></div>
+            <div><span className={"param-label"}>Time:</span> <span>{response.result.time > 0 ? toDateString(response.result.time) : ""}</span></div>
             <div><span className={"param-label"}>Size:</span> <span>{response.result.size} B</span></div>
             <div><span className={"param-label"}>Tx hash (wTxid):</span> <span>{response.result.hash}</span></div>
             {more &&
