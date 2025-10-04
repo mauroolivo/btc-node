@@ -19,10 +19,10 @@ export default function TxDetailUI({result, onTxAction}: {
     const list_items = result.vout.map((input, idx) =>
 
       <div key={idx} className="w-full bg-gray-950 mb-4 p-2 border-gray-900 border">
-        <div className="w-full text-center font-bold font-mono text-prominent">Input #{idx}</div>
+        <div className="w-full text-center font-bold font-mono text-prominent">Output #{idx}</div>
 
+        <div><span className={"param-label"}>Amount:</span> <span>{input.value}</span></div>
         <div><span className={"param-label"}>Address:</span> <span className={"text-left overflow-auto break-words"}>{input.scriptPubKey.address}</span></div>
-        <div><span className={"param-label"}>Value:</span> <span>{input.value}</span></div>
         <div><span className={"param-label"}>Number:</span> <span>{input.n}</span></div>
         <div><span className={"param-label"}>ScriptPubKey ASM:</span> <span className={"text-left overflow-auto break-words"}>{input.scriptPubKey.asm}</span></div>
         <div><span className={"param-label"}>Type:</span> <span>{input.scriptPubKey.type}</span></div>

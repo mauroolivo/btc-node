@@ -36,138 +36,31 @@ export default function BlockUI({response, onBlockAction, onTxAction}: {
     <>
       {response &&
         <>
-          <div className="param-box">
-            <div className="param-key">
-              Block hash
-            </div>
-            <div className="param-value">
-              {response.result.hash}
-            </div>
+          <div>
+            <div><span className={"param-label"}>Block hash:</span> <span>{response.result.hash}</span></div>
+            <div><span className={"param-label"}>Height:</span> <span>{response.result.height}</span></div>
+            <div><span className={"param-label"}>Confirmations:</span> <span>{response.result.confirmations}</span></div>
+            <div><span className={"param-label"}>Time:</span> <span>{toDateString(response.result.time)}</span></div>
+
+            <div><span className={"param-label"} >Prev block:</span> <span
+              className="underline hover:no-underline hover:cursor-pointer" onClick={() => onBlockAction(response.result.previousblockhash)}>{response.result.previousblockhash}</span></div>
+            <div><span className={"param-label"} >Next block:</span> <span
+              className="underline hover:no-underline hover:cursor-pointer" onClick={() => onBlockAction(response.result.nextblockhash)}>{response.result.nextblockhash}</span></div>
+            {more &&
+              <>
+                <div><span className={"param-label"}>Version:</span> <span>{response.result.versionHex + " (" + response.result.version + ")"}</span></div>
+                <div><span className={"param-label"} >Merkle root:</span> <span className="underline hover:no-underline hover:cursor-pointer" >{response.result.merkleroot}</span></div>
+                <div><span className={"param-label"}>Nonce:</span> <span>{response.result.nonce}</span></div>
+                <div><span className={"param-label"}>Bits:</span> <span>{response.result.bits}</span></div>
+                <div><span className={"param-label"}>Difficulty:</span> <span>{response.result.difficulty}</span></div>
+                <div><span className={"param-label"}>Size:</span> <span>{response.result.size}</span></div>
+                <div><span className={"param-label"}>Weight:</span> <span>{response.result.weight}</span></div>
+
+              </>
+            }
           </div>
-          <div className="param-box">
-            <div className="param-key">
-              Confirmations
-            </div>
-            <div className="param-value">
-              {response.result.confirmations}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Block height
-            </div>
-            <div className="param-value">
-              {response.result.height}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Block height
-            </div>
-            <div className="param-value">
-              {response.result.height}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Time
-            </div>
-            <div className="param-value">
-              {toDateString(response.result.time)}
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Previous block
-            </div>
-            <div className="param-value">
-              <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onBlockAction(response.result.previousblockhash)}>{response.result.previousblockhash}</div>
-            </div>
-          </div>
-          <div className="param-box">
-            <div className="param-key">
-              Next block
-            </div>
-            <div className="param-value">
-              <div className="underline hover:no-underline hover:cursor-pointer" onClick={() => onBlockAction(response.result.nextblockhash)}>{response.result.nextblockhash}</div>
-            </div>
-          </div>
-          {more &&
-            <>
-              <div className="param-box">
-                <div className="param-key">
-                  Version
-                </div>
-                <div className="param-value">
-                  {response.result.versionHex + " (" + response.result.version + ")"}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  merkleroot
-                </div>
-                <div className="param-value">
-                  {response.result.merkleroot}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  nonce
-                </div>
-                <div className="param-value">
-                  {response.result.nonce}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Bits
-                </div>
-                <div className="param-value">
-                  {response.result.bits}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Difficulty
-                </div>
-                <div className="param-value">
-                  {response.result.difficulty}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Stripped size
-                </div>
-                <div className="param-value">
-                  {response.result.strippedsize}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Size
-                </div>
-                <div className="param-value">
-                  {response.result.size}
-                </div>
-              </div>
-              <div className="param-box">
-                <div className="param-key">
-                  Weight
-                </div>
-                <div className="param-value">
-                  {response.result.weight}
-                </div>
-              </div>
-            </>
-          }
-          <div className="param-box">
-            <div className="param-key">
-              Transactions
-            </div>
-            <div className="param-value">
-              {response.result.tx.length}
-            </div>
-          </div>
+          <div><span className={"param-label"}>Transactions:</span> <span>{response.result.tx.length}</span></div>
+
           <div className="w-full grid justify-items-end">
             {!more && <Button onClick={() => {
               setMore(true)
