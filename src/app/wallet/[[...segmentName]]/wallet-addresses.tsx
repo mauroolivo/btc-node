@@ -19,11 +19,11 @@ import {
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import {ParamsDictionary} from "@/models/api";
+import {ChevronRight} from "lucide-react";
 
 export default function WalletAddresses() {
-  const [show, setShow] = React.useState(false);
-  const [infoAddress, setInfoAddress] = React.useState<string | null>(null);
-  // const [shouldFetch, setShouldFetch] = React.useState(false);
+  const [cAddress, setCAddress] = React.useState<string | null>(null);
+
   const [shouldFetch, setShouldFetch] = React.useState(true);
   const {data, error, isLoading} = useSWR<ListAddressResponse>(
     shouldFetch
@@ -50,9 +50,25 @@ export default function WalletAddresses() {
         for (const [idx, groups] of data.result.entries()) {
           if (groups.length > 0) {
             for (const [, address] of groups.entries()) {
-              list_items.push(<div key={prog_idx}>
-                <WalletAddressC address={address} />
-              </div>)
+              list_items.push(
+                <div
+                  key={prog_idx}
+                  className="cursor-pointer transition-opacity duration-200 hover:opacity-80"
+                  onClick={() => {setCAddress(address[0] as string)}}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <div className="m-1 p-2">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <div>{address[1] as string}</div>
+                        <div>{address[0] as string}</div>
+                      </div>
+                      <ChevronRight />
+                    </div>
+                  </div>
+                </div>
+              )
               prog_idx += 1
             }
           }
@@ -64,16 +80,30 @@ export default function WalletAddresses() {
 
   return (
     <>
-      <AlertDialog>
-        <AlertDialogTrigger>New Address</AlertDialogTrigger>
-        <AlertDialogContent className={" bg-black  min-w-[50%] "}>
+      {/*<AlertDialog>*/}
+      {/*  <AlertDialogTrigger>New Address</AlertDialogTrigger>*/}
+      {/*  <AlertDialogContent className={" bg-black  min-w-[50%] "}>*/}
+      {/*    <AlertDialogHeader>*/}
+      {/*      <AlertDialogTitle>Generate new address</AlertDialogTitle>*/}
+      {/*      <AlertDialogDescription>Select address type</AlertDialogDescription>*/}
+      {/*      <WalletAddressNew/>*/}
+      {/*    </AlertDialogHeader>*/}
+      {/*    <AlertDialogFooter>*/}
+      {/*      <AlertDialogCancel>Cancel</AlertDialogCancel>*/}
+      {/*      /!*<AlertDialogAction>Continue</AlertDialogAction>*!/*/}
+      {/*    </AlertDialogFooter>*/}
+      {/*  </AlertDialogContent>*/}
+      {/*</AlertDialog>*/}
+
+      <AlertDialog open={cAddress !== null}>
+        <AlertDialogContent className={" bg-black  min-w-[80%] "}>
           <AlertDialogHeader>
-            <AlertDialogTitle>Generate new address</AlertDialogTitle>
-            <AlertDialogDescription>Select address type</AlertDialogDescription>
-            <WalletAddressNew/>
+            <AlertDialogTitle>Address info</AlertDialogTitle>
+            <AlertDialogDescription></AlertDialogDescription>
+            <WalletAddressInfo address={cAddress as string}/>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={()=> setCAddress(null)}>Cancel</AlertDialogCancel>
             {/*<AlertDialogAction>Continue</AlertDialogAction>*/}
           </AlertDialogFooter>
         </AlertDialogContent>

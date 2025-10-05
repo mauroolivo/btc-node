@@ -7,6 +7,7 @@ import WalletUTXOs from "@/app/wallet/[[...segmentName]]/wallet-utxos";
 import WalletInfo from "@/app/wallet/[[...segmentName]]/wallet-info";
 import React from "react";
 import WalletSend from "@/app/wallet/[[...segmentName]]/wallet-send";
+import WalletReceive from "@/app/wallet/[[...segmentName]]/wallet-receive";
 export default function WalletHome() {
 
   enum Tab {
@@ -15,6 +16,7 @@ export default function WalletHome() {
     UNSPENT,
     ADDRESS,
     DESCRIPTOR,
+    RECEIVE,
     SEND
   }
   const [current, setCurrent] = React.useState(Tab.INFO);
@@ -27,6 +29,7 @@ export default function WalletHome() {
         <a className={isActive(Tab.UNSPENT) ? "active" : ""} onClick={() => {setCurrent(Tab.UNSPENT)}}>UTXO</a>
         <a className={isActive(Tab.ADDRESS) ? "active" : ""} onClick={() => {setCurrent(Tab.ADDRESS)}}>Addresses</a>
         <a className={isActive(Tab.DESCRIPTOR) ? "active" : ""} onClick={() => {setCurrent(Tab.DESCRIPTOR)}}>Descriptor</a>
+        <a className={isActive(Tab.RECEIVE) ? "active" : ""} onClick={() => setCurrent(Tab.RECEIVE)}>Receive</a>
         <a className={isActive(Tab.SEND) ? "active" : ""} onClick={() => setCurrent(Tab.SEND)}>Send</a>
       </div>
       { current === Tab.INFO && <WalletInfo /> }
@@ -34,6 +37,7 @@ export default function WalletHome() {
       { current === Tab.UNSPENT && <WalletUTXOs /> }
       { current === Tab.ADDRESS && <WalletAddresses /> }
       { current === Tab.DESCRIPTOR && <WalletDescriptors /> }
+      { current === Tab.RECEIVE && <WalletReceive /> }
       { current === Tab.SEND && <WalletSend /> }
     </>
   );

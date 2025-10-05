@@ -25,7 +25,7 @@ export default function WalletTxsList() {
     if (data.result === undefined) {
       return <div>No txs in this wallet</div>
     } else {
-      console.log(data.result);
+
       if (data.result.length > 0) {
         list_items = data.result.map((tx, idx) =>
           <div
