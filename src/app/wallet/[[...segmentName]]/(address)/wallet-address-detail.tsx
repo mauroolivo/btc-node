@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import {ParamsDictionary} from "@/models/api";
 
-export default function WalletAddressInfo({address}: {
+export default function WalletAddressDetail({address}: {
   address: string
 }) {
 

@@ -3,27 +3,21 @@
 import {ListAddressResponse} from "@/models/wallet";
 import {fetcher} from "@/api/api";
 import React from "react";
-import {Button} from "@/components/ui/button"
-
-;
-import useSWR, {mutate} from "swr";
-import WalletAddressNew from "@/app/wallet/[[...segmentName]]/wallet-address-new";
-import WalletAddressC from "@/app/wallet/[[...segmentName]]/wallet-address-c";
-import WalletUTXOC from "@/app/wallet/[[...segmentName]]/wallet-utxo-c";
-import WalletAddressInfo from "@/app/wallet/[[...segmentName]]/wallet-address-info";
+import useSWR from "swr";
+import WalletAddressDetail from "@/app/wallet/[[...segmentName]]/(address)/wallet-address-detail";
 import {
   AlertDialog, AlertDialogCancel,
   AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+
 import {ParamsDictionary} from "@/models/api";
-import {ChevronRight} from "lucide-react";
+import WalletAddressRow from "@/app/wallet/[[...segmentName]]/(address)/wallet-address-row";
 
 export default function WalletAddresses() {
   const [cAddress, setCAddress] = React.useState<string | null>(null);
-
+  const [show, setShow] = React.useState(false);
   const [shouldFetch, setShouldFetch] = React.useState(true);
   const {data, error, isLoading} = useSWR<ListAddressResponse>(
     shouldFetch
@@ -54,19 +48,14 @@ export default function WalletAddresses() {
                 <div
                   key={prog_idx}
                   className="cursor-pointer transition-opacity duration-200 hover:opacity-80"
-                  onClick={() => {setCAddress(address[0] as string)}}
+                  onClick={() => {
+                    setCAddress(address[0] as string)
+                    setShow(true)
+                  }}
                   role="button"
                   tabIndex={0}
                 >
-                  <div className="m-1 p-2">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <div>{address[1] as string}</div>
-                        <div>{address[0] as string}</div>
-                      </div>
-                      <ChevronRight />
-                    </div>
-                  </div>
+                  <WalletAddressRow address={address}/>
                 </div>
               )
               prog_idx += 1
@@ -80,30 +69,15 @@ export default function WalletAddresses() {
 
   return (
     <>
-      {/*<AlertDialog>*/}
-      {/*  <AlertDialogTrigger>New Address</AlertDialogTrigger>*/}
-      {/*  <AlertDialogContent className={" bg-black  min-w-[50%] "}>*/}
-      {/*    <AlertDialogHeader>*/}
-      {/*      <AlertDialogTitle>Generate new address</AlertDialogTitle>*/}
-      {/*      <AlertDialogDescription>Select address type</AlertDialogDescription>*/}
-      {/*      <WalletAddressNew/>*/}
-      {/*    </AlertDialogHeader>*/}
-      {/*    <AlertDialogFooter>*/}
-      {/*      <AlertDialogCancel>Cancel</AlertDialogCancel>*/}
-      {/*      /!*<AlertDialogAction>Continue</AlertDialogAction>*!/*/}
-      {/*    </AlertDialogFooter>*/}
-      {/*  </AlertDialogContent>*/}
-      {/*</AlertDialog>*/}
-
-      <AlertDialog open={cAddress !== null}>
+      <AlertDialog open={cAddress !== null && show}>
         <AlertDialogContent className={" bg-black  min-w-[80%] "}>
           <AlertDialogHeader>
             <AlertDialogTitle>Address info</AlertDialogTitle>
             <AlertDialogDescription></AlertDialogDescription>
-            <WalletAddressInfo address={cAddress as string}/>
+            <WalletAddressDetail address={cAddress as string}/>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={()=> setCAddress(null)}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setShow(false)}>Cancel</AlertDialogCancel>
             {/*<AlertDialogAction>Continue</AlertDialogAction>*/}
           </AlertDialogFooter>
         </AlertDialogContent>

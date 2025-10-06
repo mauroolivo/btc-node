@@ -1,12 +1,11 @@
 "use client";
 
 import {UTXO, UTXOResponse} from "@/models/wallet";
-import WalletUTXOC from "@/app/wallet/[[...segmentName]]/wallet-utxo-c";
+import WalletUtxoRow from "@/app/wallet/[[...segmentName]]/(send)/wallet-utxo-row";
 import {fetcher} from "@/api/api";
 import useSWR from "swr";
 import React from "react";
 import {ParamsDictionary} from "@/models/api";
-import WalletTxC from "@/app/wallet/[[...segmentName]]/wallet-tx-c";
 
 export default function WalletUTXOs() {
 
@@ -31,11 +30,11 @@ export default function WalletUTXOs() {
         <div
           key={idx}
           className="cursor-pointer transition-opacity duration-200 hover:opacity-80"
-          onClick={() => {/* handle click */}}
+          onClick={() => { console.log(utxo) /* handle click */}}
           role="button"
           tabIndex={0}
         >
-          <WalletUTXOC walletUTXO={utxo}/>
+          <WalletUtxoRow walletUTXO={utxo}/>
         </div>
         );
       }

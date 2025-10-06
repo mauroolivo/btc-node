@@ -4,7 +4,7 @@ import {WalletTx} from "@/models/wallet";
 import {toDateString} from "@/util/util";
 import {ChevronRight} from "lucide-react";
 
-export default function WalletTxC({walletTx}: {
+export default function WalletTxRow({walletTx}: {
   walletTx: WalletTx
 }) {
 

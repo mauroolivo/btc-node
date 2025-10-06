@@ -13,7 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
-import WalletAddressInfo from "@/app/wallet/[[...segmentName]]/wallet-address-info";
+import WalletAddressDetail from "@/app/wallet/[[...segmentName]]/(address)/wallet-address-detail";
 
 const fields = [
   { name: "address", label: "Address", type: "text" },

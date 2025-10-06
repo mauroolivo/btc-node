@@ -1,7 +1,7 @@
 "use client";
 
 import {WalletTx, WalletTxs} from "@/models/wallet";
-import WalletTxC from "@/app/wallet/[[...segmentName]]/wallet-tx-c";
+import WalletTxRow from "@/app/wallet/[[...segmentName]]/(tx)/wallet-tx-row";
 import useSWR from "swr";
 import {fetcher} from "@/api/api";
 import React from "react";
@@ -35,7 +35,7 @@ export default function WalletTxsList() {
             role="button"
             tabIndex={0}
           >
-            <WalletTxC walletTx={tx}/>
+            <WalletTxRow walletTx={tx}/>
           </div>
         );
       }
