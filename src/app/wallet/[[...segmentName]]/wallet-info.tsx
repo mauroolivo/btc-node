@@ -1,6 +1,6 @@
 "use client";
 
-import {UnconfirmedBalance, UTXOResponse, WalletInfoResponse} from "@/models/wallet";
+import {UnconfirmedBalance, WalletInfoResponse} from "@/models/wallet";
 import {toDateString} from "@/util/util";
 import useSWR from "swr";
 import {fetcher} from "@/api/api";

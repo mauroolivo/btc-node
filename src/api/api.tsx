@@ -3,6 +3,7 @@ import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 import {Rawmempool} from "@/models/mempool";
 import {
+  ChangeAddressResponse,
   ListWalletDirResponse,
   ListWallets,
   UnconfirmedBalance,
@@ -138,5 +139,10 @@ export async function unloadWallet(name: string): Promise<WalletUnload> {
 
 export async function loadWallet(name: string): Promise<WalletLoad> {
   const response = await fetchData("loadwallet", {"filename": name});
+  return await response.json();
+}
+
+export async function getRawChangeAddress(name: string): Promise<ChangeAddressResponse> {
+  const response = await fetchData("getrawchangeaddress", {"filename": name});
   return await response.json();
 }

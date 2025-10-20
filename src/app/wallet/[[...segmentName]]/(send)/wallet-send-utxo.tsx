@@ -4,9 +4,10 @@ import React from "react";
 import WalletUtxoSelect from "@/app/wallet/[[...segmentName]]/(send)/wallet-utxo-select";
 import {Button} from "@/components/ui/button";
 import {useState} from "react";
+import WalletUtxoData from "@/app/wallet/[[...segmentName]]/(send)/wallet-utxo-data";
 enum Step {
   SELECT_UTXO,
-  ADDRESS
+  DATA,
 }
 
 export default function WalletSendUtxo() {
@@ -25,6 +26,15 @@ export default function WalletSendUtxo() {
   const isSelected = (txid: string, vout: number) =>
     selected.some(item => item.txid === txid && item.vout === vout);
 
+  function nav(): React.JSX.Element {
+    if (step === Step.SELECT_UTXO) {
+      return (<Button type="submit" onClick={() => { setStep(Step.DATA) }} disabled={selected.length === 0}>Next</Button>)
+    } else if (step === Step.DATA) {
+      return (<Button type="submit" onClick={() => { setStep(Step.SELECT_UTXO) }} disabled={false}>Back</Button>)
+    } else {
+      return (<></>);
+    }
+  }
   function content(): React.JSX.Element {
     if (step === Step.SELECT_UTXO) {
       return <WalletUtxoSelect
@@ -32,8 +42,8 @@ export default function WalletSendUtxo() {
         handleSelect={handleSelect}
         isSelected={isSelected}
       />;
-    } else if (step === Step.ADDRESS) {
-      return <div>Address Step</div>;
+    } else if (step === Step.DATA) {
+      return <WalletUtxoData />;
     } else {
       return <div>Unknown Step</div>;
       }
@@ -42,7 +52,7 @@ export default function WalletSendUtxo() {
   return (
     <>
       <div className="flex justify-end">
-        <Button type="submit" onClick={() => { setStep(Step.ADDRESS) }} disabled={selected.length === 0}>Next</Button>
+        { nav() }
       </div>
       { content() }
     </>

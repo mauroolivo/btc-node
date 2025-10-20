@@ -188,3 +188,9 @@ export interface RpcError {
   message: string
 }
 // {"jsonrpc":"2.0","error":{"code":-3,"message":"Invalid amount"},"id":"curl"}
+
+export interface ChangeAddressResponse {
+  result: string | null
+  id: string
+  error: RpcError | null
+}
