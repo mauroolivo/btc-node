@@ -43,7 +43,7 @@ export default function WalletSendUtxo() {
         isSelected={isSelected}
       />;
     } else if (step === Step.DATA) {
-      return <WalletUtxoData />;
+      return <WalletUtxoData selected={selected} />;
     } else {
       return <div>Unknown Step</div>;
       }
