@@ -15,8 +15,8 @@ export default function WalletUtxoSelect({
                                            isSelected,
                                          }: {
   selected: { txid: string; vout: number }[];
-  handleSelect: (txid: string, vout: number) => void;
-  isSelected: (txid: string, vout: number) => boolean;
+  handleSelect: (txid: string, vout: number, amount: number) => void;
+  isSelected: (txid: string, vout: number, amount: number) => boolean;
 }) {
 
   const {data, error, isLoading} = useSWR<UTXOResponse>(
@@ -45,8 +45,8 @@ export default function WalletUtxoSelect({
           >
             <WalletUtxoRow
               walletUTXO={utxo}
-              checked={isSelected(utxo.txid, utxo.vout)}
-              onChangeAction={() => handleSelect(utxo.txid, utxo.vout)}
+              checked={isSelected(utxo.txid, utxo.vout, utxo.amount)}
+              onChangeAction={() => handleSelect(utxo.txid, utxo.vout, utxo.amount)}
             />
           </div>
         ));

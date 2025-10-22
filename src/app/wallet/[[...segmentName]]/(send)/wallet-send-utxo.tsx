@@ -12,18 +12,18 @@ enum Step {
 
 export default function WalletSendUtxo() {
   const [step, setStep] = useState<Step>(Step.SELECT_UTXO);
-  const [selected, setSelected] = useState<{ txid: string; vout: number }[]>([]);
+  const [selected, setSelected] = useState<{ txid: string; vout: number, amount: number}[]>([]);
 
-  const handleSelect = (txid: string, vout: number) => {
+  const handleSelect = (txid: string, vout: number, amount: number) => {
     setSelected(prev => {
       const exists = prev.some(item => item.txid === txid && item.vout === vout);
       return exists
         ? prev.filter(item => !(item.txid === txid && item.vout === vout))
-        : [...prev, { txid, vout }];
+        : [...prev, { txid, vout, amount }];
     });
   };
 
-  const isSelected = (txid: string, vout: number) =>
+  const isSelected = (txid: string, vout: number, amount: number) =>
     selected.some(item => item.txid === txid && item.vout === vout);
 
   function nav(): React.JSX.Element {
