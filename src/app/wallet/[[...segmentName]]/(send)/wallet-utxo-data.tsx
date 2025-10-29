@@ -15,6 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from "@/components/ui/alert-dialog";
+import {Divide, Space} from "lucide-react";
 
 
 export default function WalletUtxoData(
@@ -65,6 +66,7 @@ export default function WalletUtxoData(
   if (add !== undefined && add !== null) {
     setChangeaddress(add)
     form["change_address"] = add
+    form["change_amount"] = 0.0.toString()
     setShouldFetch(false);
   }
 
@@ -110,7 +112,12 @@ export default function WalletUtxoData(
 
     // light validation
     setIsReady(false);
+
+
+    form["fee_amount"] =  (totalAmount() - (parseFloat(e.target.form?.recipient_amount.value) +  parseFloat(e.target.form?.change_amount.value))) .toString()
+    
     if (
+      (e.target.form?.recipient_address.value.trim()).length > 0 &&
       parseFloat(e.target.form?.recipient_amount.value) > 0 &&
       (e.target.form?.recipient_address.value.trim()).length > 0 &&
       parseFloat(e.target.form?.change_amount.value) > 0 &&
@@ -159,10 +166,12 @@ export default function WalletUtxoData(
             <AlertDialogTitle>Confirm Transactions</AlertDialogTitle>
             <AlertDialogDescription></AlertDialogDescription>
             <div>Recipient Address: <span className="text-prominent">{form.recipient_address}</span></div>
-            <div>Recipient Amount: <span className="text-prominent">{form.recipient_amount}</span></div>
             <div>Change Address: <span className="text-prominent">{form.change_address}</span></div>
+
+            <div>Recipient Amount: <span className="text-prominent">{form.recipient_amount}</span></div>
             <div>Change Amount: <span className="text-prominent">{form.change_amount}</span></div>
             <div>Fee Amount: <span className="text-prominent">{form.fee_amount}</span></div>
+            <div>Inputs amount: {totalAmount()}</div>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setOpen(false)}>Cancel</AlertDialogCancel>
@@ -182,7 +191,7 @@ export default function WalletUtxoData(
           }
 
           {utxosList()}
-          <div>Total amount: {totalAmount()}</div>
+          <div>Inputs amount: {totalAmount()}</div>
           {fields.map((field) => {
             if (field.name === "address") {
               return (
@@ -202,6 +211,25 @@ export default function WalletUtxoData(
             }
 
             if (field.type === "number") {
+              if (field.name === "fee_amount") {
+                return (
+                  <div key={field.name}>
+                    <p>{field.label}</p>
+                    <input
+                      className="border-1 p-1"
+                      placeholder={field.label}
+                      name={field.name}
+                      type="text"
+                      inputMode="numeric"
+                      disabled={true}
+                      pattern="[0-9\.]*"
+                      value={form[field.name as keyof typeof form] as string}
+                      onChange={handleChange}
+                      autoComplete="off"
+                    />
+                  </div>
+                );
+              }
               return (
                 <div key={field.name}>
                   <p>{field.label}</p>
