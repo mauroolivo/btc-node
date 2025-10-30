@@ -16,6 +16,7 @@ import {
   AlertDialogTitle
 } from "@/components/ui/alert-dialog";
 import {Divide, Space} from "lucide-react";
+import WalletUtxoSummary from "@/app/wallet/[[...segmentName]]/(send)/wallet-utxo-summary";
 
 
 export default function WalletUtxoData(
@@ -115,7 +116,7 @@ export default function WalletUtxoData(
 
 
     form["fee_amount"] =  (totalAmount() - (parseFloat(e.target.form?.recipient_amount.value) +  parseFloat(e.target.form?.change_amount.value))) .toString()
-    
+
     if (
       (e.target.form?.recipient_address.value.trim()).length > 0 &&
       parseFloat(e.target.form?.recipient_amount.value) > 0 &&
@@ -165,13 +166,14 @@ export default function WalletUtxoData(
           <AlertDialogHeader>
             <AlertDialogTitle>Confirm Transactions</AlertDialogTitle>
             <AlertDialogDescription></AlertDialogDescription>
-            <div>Recipient Address: <span className="text-prominent">{form.recipient_address}</span></div>
-            <div>Change Address: <span className="text-prominent">{form.change_address}</span></div>
 
-            <div>Recipient Amount: <span className="text-prominent">{form.recipient_amount}</span></div>
-            <div>Change Amount: <span className="text-prominent">{form.change_amount}</span></div>
-            <div>Fee Amount: <span className="text-prominent">{form.fee_amount}</span></div>
-            <div>Inputs amount: {totalAmount()}</div>
+            <WalletUtxoSummary recipient_address={form.recipient_address}
+                               change_address={form.change_address}
+                               recipient_amount={parseFloat(form.recipient_amount)}
+                               change_amount={parseFloat(form.change_amount)}
+                               fee_amount={parseFloat(form.fee_amount)}
+                               total_amount={totalAmount()}
+                               utxo_list={selected}/>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setOpen(false)}>Cancel</AlertDialogCancel>
@@ -264,7 +266,7 @@ export default function WalletUtxoData(
           })}
         </div>
         <div className="flex justify-end">
-          <Button type="submit" disabled={!isReady}>Send</Button>
+          <Button type="submit" disabled={!isReady}>Review</Button>
         </div>
       </form>
 

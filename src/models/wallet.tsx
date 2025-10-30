@@ -194,3 +194,10 @@ export interface ChangeAddressResponse {
   id: string
   error: RpcError | null
 }
+
+
+export interface CreateRawTransactionResponse {
+  result: string | null
+  id: string
+  error: RpcError | null
+}

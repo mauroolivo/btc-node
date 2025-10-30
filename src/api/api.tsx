@@ -146,3 +146,4 @@ export async function getRawChangeAddress(name: string): Promise<ChangeAddressRe
   const response = await fetchData("getrawchangeaddress", {"filename": name});
   return await response.json();
 }
+
