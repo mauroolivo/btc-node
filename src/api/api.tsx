@@ -1,11 +1,13 @@
+'use server'
+
 import {BlockchainInfo, Blockcount, Mempoolinfo, Mininginfo, Networkinfo} from "@/models/blockchain";
 import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 import {Rawmempool} from "@/models/mempool";
 import {
-  ChangeAddressResponse,
+  ChangeAddressResponse, CreateRawTransactionResponse,
   ListWalletDirResponse,
-  ListWallets,
+  ListWallets, SendResponse,
   UnconfirmedBalance,
   UTXOResponse,
   WalletInfoResponse, WalletLoad,
@@ -147,3 +149,12 @@ export async function getRawChangeAddress(name: string): Promise<ChangeAddressRe
   return await response.json();
 }
 
+export async function createRawTransaction(payload: ParamsDictionary): Promise<CreateRawTransactionResponse> {
+  const response = await fetchData("createrawtransaction", payload);
+  return await response.json();
+}
+
+export async function sendToAddress(payload: ParamsDictionary): Promise<SendResponse> {
+  const response = await fetchData("sendtoaddress", payload);
+  return await response.json();
+}

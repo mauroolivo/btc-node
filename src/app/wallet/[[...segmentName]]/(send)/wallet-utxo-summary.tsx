@@ -4,7 +4,8 @@ import React from "react";
 import useSWR from "swr";
 import {ChangeAddressResponse, CreateRawTransactionResponse} from "@/models/wallet";
 import {ParamsDictionary} from "@/models/api";
-import {fetcher} from "@/api/api";
+import {createRawTransaction, fetcher, getblockchaininfo} from "@/api/api";
+import {Button} from "@/components/ui/button";
 
 
 export default function WalletUtxoSummary({
@@ -61,8 +62,17 @@ export default function WalletUtxoSummary({
   );
 
   console.log(payload)
-
   console.log(res.data);
+
+  async function sign() {
+    try {
+      const rt = await createRawTransaction(payload);
+      console.log("raw transaction:", rt);
+    } catch (err) {
+      console.error("fetch failed:", err);
+      // setErrorMsg(r?.error?.message || "Unknown error");
+    }
+  }
 
   const hex = res.data?.result
   if (hex !== undefined && hex !== null) {
@@ -80,6 +90,8 @@ export default function WalletUtxoSummary({
       <div>Change Amount: <span className="text-prominent">{change_amount}</span></div>
       <div>Fee Amount: <span className="text-prominent">{fee_amount}</span></div>
       <div>Inputs amount: {total_amount}</div>
+
+      <Button onClick={() => sign()}>Sign</Button>
     </>
   );
 }

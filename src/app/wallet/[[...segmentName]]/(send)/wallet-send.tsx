@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import {ParamsDictionary} from "@/models/api";
 import useSWR from "swr";
 import {NewAddressResponse, SendResponse} from "@/models/wallet";
-import {fetcher} from "@/api/api";
+import {createRawTransaction, fetcher, sendToAddress} from "@/api/api";
 import {
   AlertDialog, AlertDialogAction,
   AlertDialogCancel,
@@ -34,7 +34,7 @@ export default function WalletSend() {
 
   const addressRef = useRef<HTMLTextAreaElement>(null);
 
-  const [shouldFetch, setShouldFetch] = React.useState(false);
+  // const [shouldFetch, setShouldFetch] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
   const [open, setOpen] = React.useState(false);
   const [isReady, setIsReady] = React.useState(false);
@@ -48,38 +48,38 @@ export default function WalletSend() {
     "replaceable": form.replaceable,
   }
   console.log(payload)
-  console.log("shouldFetch is " + shouldFetch)
-  const {data, error, isLoading} = useSWR<SendResponse>(
-    shouldFetch
-      ? [
-        "sendtoaddress",
-        payload
-      ]
-      : null,
-    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
-  );
+  // console.log("shouldFetch is " + shouldFetch)
+  // const {data, error, isLoading} = useSWR<SendResponse>(
+  //   shouldFetch
+  //     ? [
+  //       "sendtoaddress",
+  //       payload
+  //     ]
+  //     : null,
+  //   ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
+  // );
 
-  if(data !== undefined) {
-
-    setShouldFetch(false);
-    if (data?.result !== undefined) {
-
-      /// show success message
-      setErrorMsg(null);
-      setNewTx(data?.result);
-      setForm({
-        address: "",
-        amount: "",
-        fee_rate: "",
-        subtractfeefromamount: true,
-        replaceable: true,
-      });
-      console.log(data?.result);
-    }
-    else {
-      setErrorMsg(data?.error?.message || "Unknown error");
-    }
-  }
+  // if(data !== undefined) {
+  //
+  //   setShouldFetch(false);
+  //   if (data?.result !== undefined) {
+  //
+  //     /// show success message
+  //     setErrorMsg(null);
+  //     setNewTx(data?.result);
+  //     setForm({
+  //       address: "",
+  //       amount: "",
+  //       fee_rate: "",
+  //       subtractfeefromamount: true,
+  //       replaceable: true,
+  //     });
+  //     console.log(data?.result);
+  //   }
+  //   else {
+  //     setErrorMsg(data?.error?.message || "Unknown error");
+  //   }
+  // }
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -113,10 +113,36 @@ export default function WalletSend() {
     e.preventDefault();
     setOpen(true)
   }
+  async function send() {
+    try {
+      await sendToAddress(payload).then(r => {
+        if(r !== undefined) {
+          if (r?.result !== undefined) {
+            /// show success message
+            setErrorMsg(null);
+            setNewTx(r?.result);
+            setForm({
+              address: "",
+              amount: "",
+              fee_rate: "",
+              subtractfeefromamount: true,
+              replaceable: true,
+            });
+            console.log(r?.result);
+          }
+          else {
+            setErrorMsg(r?.error?.message || "Unknown error");
+          }
+        }
+      })
+      // console.log("raw transaction:", rt);
+    } catch (err) {
+      setErrorMsg("Network Unknown error " + err);
+    }
+  }
   function onConfirm() {
-
     setOpen(false)
-    setShouldFetch(true);
+    send()
   }
 
   return (
