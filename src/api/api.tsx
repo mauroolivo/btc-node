@@ -5,9 +5,10 @@ import {TxResponse} from "@/models/tx";
 import {BlockResponse, BlockHashResponse} from "@/models/block";
 import {Rawmempool} from "@/models/mempool";
 import {
+  BroadcastResponse,
   ChangeAddressResponse, CreateRawTransactionResponse,
   ListWalletDirResponse,
-  ListWallets, SendResponse,
+  ListWallets, SendResponse, SignRawTransactionResponse,
   UnconfirmedBalance,
   UTXOResponse,
   WalletInfoResponse, WalletLoad,
@@ -149,12 +150,23 @@ export async function getRawChangeAddress(name: string): Promise<ChangeAddressRe
   return await response.json();
 }
 
+export async function sendToAddress(payload: ParamsDictionary): Promise<SendResponse> {
+  const response = await fetchData("sendtoaddress", payload);
+  return await response.json();
+}
+
 export async function createRawTransaction(payload: ParamsDictionary): Promise<CreateRawTransactionResponse> {
   const response = await fetchData("createrawtransaction", payload);
   return await response.json();
 }
 
-export async function sendToAddress(payload: ParamsDictionary): Promise<SendResponse> {
-  const response = await fetchData("sendtoaddress", payload);
+export async function signRawTransactionWithWallet(payload: ParamsDictionary): Promise<SignRawTransactionResponse> {
+  const response = await fetchData("signrawtransactionwithwallet", payload);
   return await response.json();
 }
+
+export async function sendRawTransaction(payload: ParamsDictionary): Promise<BroadcastResponse> {
+  const response = await fetchData("sendrawtransaction", payload);
+  return await response.json();
+}
+

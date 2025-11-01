@@ -142,13 +142,8 @@ export default function WalletUtxoData(
         tabIndex={0}
       >
         <div className="w-full text-center font-bold font-mono text-prominent">Input #{idx}</div>
-        <div className={"text-xl text-white"}>
-          {/*{(utxo.amount > 0 ? "+" : "") + utxo.amount}*/}
-        </div>
-        <div className={"text-zinc-400"}>{utxo.txid}</div>
-        <div className={"text-zinc-400"}>{utxo.vout}</div>
-        <div className={"text-zinc-400"}>{utxo.amount}</div>
-        {/*<div className={"text-zinc-400"}>{utxo.address}</div>*/}
+        <div className={"text-lg"}>{utxo.amount}</div>
+        <div className={"text-zinc-400  wrap-break-word"}>{utxo.txid} / {utxo.vout}</div>
 
       </div>
     ));
@@ -193,7 +188,7 @@ export default function WalletUtxoData(
           }
 
           {utxosList()}
-          <div>Inputs amount: {totalAmount()}</div>
+          <div>Inputs amount: <span className={"text-lg"}>{totalAmount()}</span></div>
           {fields.map((field) => {
             if (field.name === "address") {
               return (

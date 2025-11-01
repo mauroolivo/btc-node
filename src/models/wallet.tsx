@@ -195,9 +195,28 @@ export interface ChangeAddressResponse {
   error: RpcError | null
 }
 
-
 export interface CreateRawTransactionResponse {
   result: string | null
   id: string
   error: RpcError | null
+}
+
+export interface SignRawTransactionResponse {
+  result: SignRawTransactionResult | null
+  error: SignRawTransactionErr | null
+}
+
+export interface SignRawTransactionResult {
+  hex: string
+  complete: boolean
+}
+export interface SignRawTransactionErr {
+  txid: string | null
+  vout: number | null
+  scriptSig: string | null
+  sequence: number | null
+  error: string | null
+}
+export interface BroadcastResponse {
+  result: string | null
 }
