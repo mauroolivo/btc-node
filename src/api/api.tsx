@@ -145,8 +145,8 @@ export async function loadWallet(name: string): Promise<WalletLoad> {
   return await response.json();
 }
 
-export async function getRawChangeAddress(name: string): Promise<ChangeAddressResponse> {
-  const response = await fetchData("getrawchangeaddress", {"filename": name});
+export async function getRawChangeAddress(): Promise<ChangeAddressResponse> {
+  const response = await fetchData("getrawchangeaddress", {});
   return await response.json();
 }
 

@@ -1,13 +1,9 @@
 "use client";
 
 import React from "react";
-import useSWR from "swr";
-import {ChangeAddressResponse, CreateRawTransactionResponse} from "@/models/wallet";
 import {ParamsDictionary} from "@/models/api";
 import {
   createRawTransaction,
-  fetcher,
-  getblockchaininfo,
   sendRawTransaction,
   signRawTransactionWithWallet
 } from "@/api/api";
@@ -32,6 +28,7 @@ export default function WalletUtxoSummary({
                                             utxo_list: { txid: string; vout: number; amount: number }[]
                                           }) {
 
+  const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
 
   function payload() {
     const inputs = utxo_list.map((utxo) => {
@@ -90,7 +87,6 @@ export default function WalletUtxoSummary({
   async function sign(payload: ParamsDictionary) {
     try {
       return await signRawTransactionWithWallet(payload)
-
     } catch (err) {
       console.error("sign failed:", err);
       return

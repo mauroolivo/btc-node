@@ -25,15 +25,12 @@ import {Divide, Space} from "lucide-react";
 import WalletUtxoSummary from "@/app/wallet/[[...segmentName]]/(send)/wallet-utxo-summary";
 
 
-export default function WalletUtxoData(
-  {
+export default function WalletUtxoData({
     selected,
-//                                            handleSelect,
-//                                            isSelected,
+    changeAddress
   }: {
-    selected: { txid: string; vout: number, amount: number }[];
-//   handleSelect: (txid: string, vout: number) => void;
-//   isSelected: (txid: string, vout: number) => boolean;
+    selected: { txid: string; vout: number, amount: number }[],
+    changeAddress: string
   }
 ) {
   const [form, setForm] = useState({
@@ -47,35 +44,17 @@ export default function WalletUtxoData(
   const fields = [
     {name: "recipient_address", label: "Recipient Address", type: "text"},
     {name: "recipient_amount", label: "Recipient Amount", type: "number"},
-
     {name: "change_address", label: "Change Address", type: "text"},
     {name: "change_amount", label: "Change Amount", type: "number"},
     {name: "fee_amount", label: "Fee Amount", type: "number"},
-
   ];
   const [open, setOpen] = React.useState(false);
   const addressRef = useRef<HTMLTextAreaElement>(null);
   const [isReady, setIsReady] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
-  const [shouldFetch, setShouldFetch] = React.useState(true);
-  const [changeAddress, setChangeaddress] = React.useState<string>("");
-  const res = useSWR<ChangeAddressResponse>(
-    shouldFetch
-      ? [
-        "getrawchangeaddress",
-        {},
-      ]
-      : null,
-    ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
-  );
 
-  const add = res.data?.result
-  if (add !== undefined && add !== null) {
-    setChangeaddress(add)
-    form["change_address"] = add
-    form["change_amount"] = 0.0.toString()
-    setShouldFetch(false);
-  }
+  form["change_amount"] = 0.0.toString()
+  form["change_address"] = changeAddress
 
   function totalAmount(): number {
     let total = 0;
@@ -84,8 +63,6 @@ export default function WalletUtxoData(
     });
     return total;
   }
-
-  console.log("changeAddress: " + changeAddress)
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

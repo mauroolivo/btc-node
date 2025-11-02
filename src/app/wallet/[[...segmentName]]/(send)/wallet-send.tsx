@@ -34,7 +34,6 @@ export default function WalletSend() {
 
   const addressRef = useRef<HTMLTextAreaElement>(null);
 
-  // const [shouldFetch, setShouldFetch] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
   const [open, setOpen] = React.useState(false);
   const [isReady, setIsReady] = React.useState(false);
@@ -48,38 +47,6 @@ export default function WalletSend() {
     "replaceable": form.replaceable,
   }
   console.log(payload)
-  // console.log("shouldFetch is " + shouldFetch)
-  // const {data, error, isLoading} = useSWR<SendResponse>(
-  //   shouldFetch
-  //     ? [
-  //       "sendtoaddress",
-  //       payload
-  //     ]
-  //     : null,
-  //   ([m, p]: [string, ParamsDictionary]) => fetcher(m, p)
-  // );
-
-  // if(data !== undefined) {
-  //
-  //   setShouldFetch(false);
-  //   if (data?.result !== undefined) {
-  //
-  //     /// show success message
-  //     setErrorMsg(null);
-  //     setNewTx(data?.result);
-  //     setForm({
-  //       address: "",
-  //       amount: "",
-  //       fee_rate: "",
-  //       subtractfeefromamount: true,
-  //       replaceable: true,
-  //     });
-  //     console.log(data?.result);
-  //   }
-  //   else {
-  //     setErrorMsg(data?.error?.message || "Unknown error");
-  //   }
-  // }
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
