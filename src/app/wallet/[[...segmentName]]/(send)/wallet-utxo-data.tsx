@@ -15,6 +15,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from "@/components/ui/alert-dialog";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import {Divide, Space} from "lucide-react";
 import WalletUtxoSummary from "@/app/wallet/[[...segmentName]]/(send)/wallet-utxo-summary";
 
@@ -187,8 +193,16 @@ export default function WalletUtxoData(
             (<p className="text-red-500">Error: {errorMsg}</p>)
           }
 
-          {utxosList()}
-          <div>Inputs amount: <span className={"text-lg"}>{totalAmount()}</span></div>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Inputs amount: {totalAmount()}</AccordionTrigger>
+              <AccordionContent>
+                {utxosList()}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+
+          <div></div>
           {fields.map((field) => {
             if (field.name === "address") {
               return (
@@ -196,7 +210,7 @@ export default function WalletUtxoData(
                   {field.label}
                   <textarea
                     ref={addressRef}
-                    className="border-1 p-1 resize-none overflow-hidden min-h-[40px]"
+                    className="border-1 p-1 resize-none overflow-hidden min-h-[40px] w-[100%]"
                     placeholder={field.label}
                     name={field.name}
                     value={form[field.name as keyof typeof form] as string}
@@ -213,7 +227,7 @@ export default function WalletUtxoData(
                   <div key={field.name}>
                     <p>{field.label}</p>
                     <input
-                      className="border-1 p-1"
+                      className="border-1 p-1 w-[100%]"
                       placeholder={field.label}
                       name={field.name}
                       type="text"
@@ -231,7 +245,7 @@ export default function WalletUtxoData(
                 <div key={field.name}>
                   <p>{field.label}</p>
                   <input
-                    className="border-1 p-1"
+                    className="border-1 p-1 w-[100%]"
                     placeholder={field.label}
                     name={field.name}
                     type="text"
@@ -249,7 +263,7 @@ export default function WalletUtxoData(
                 <p>{field.label}</p>
                 <input
                   key={field.name}
-                  className="border-1 p-1"
+                  className="border-1 p-1 w-[100%]"
                   placeholder={field.label}
                   name={field.name}
                   type={field.type}
