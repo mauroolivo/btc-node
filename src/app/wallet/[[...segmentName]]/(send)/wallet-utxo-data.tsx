@@ -24,14 +24,12 @@ import {
 import {Divide, Space} from "lucide-react";
 import WalletUtxoSummary from "@/app/wallet/[[...segmentName]]/(send)/wallet-utxo-summary";
 
+type Props = {
+  selected: { txid: string; vout: number, amount: number }[],
+  changeAddress: string
+}
 
-export default function WalletUtxoData({
-    selected,
-    changeAddress
-  }: {
-    selected: { txid: string; vout: number, amount: number }[],
-    changeAddress: string
-  }
+export default function WalletUtxoData({selected, changeAddress}: Props
 ) {
   const [form, setForm] = useState({
     recipient_address: "",
@@ -53,7 +51,7 @@ export default function WalletUtxoData({
   const [isReady, setIsReady] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
 
-  form["change_amount"] = 0.0.toString()
+  // form["change_amount"] = 0.0.toString()
   form["change_address"] = changeAddress
 
   function totalAmount(): number {
@@ -97,7 +95,6 @@ export default function WalletUtxoData({
     // light validation
     setIsReady(false);
 
-
     form["fee_amount"] =  (totalAmount() - (parseFloat(e.target.form?.recipient_amount.value) +  parseFloat(e.target.form?.change_amount.value))) .toString()
 
     if (
@@ -118,7 +115,6 @@ export default function WalletUtxoData({
 
     list_items = selected.map((utxo, idx) => (
       <div
-
         key={idx}
         className="w-full bg-gray-950 mb-4 p-2 border-gray-900 border"
         role="button"
