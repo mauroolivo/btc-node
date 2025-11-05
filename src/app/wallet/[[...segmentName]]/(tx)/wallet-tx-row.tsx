@@ -8,14 +8,18 @@ export default function WalletTxRow({walletTx}: {
   walletTx: WalletTx
 }) {
 
+  console.log(walletTx);
   return (
     <>
 
       <div className="m-1 p-2">
         <div className="flex justify-between items-center">
           <div>
-            <div className={"text-xl" + (walletTx.amount > 0 ? " text-white" : " text-white")}>
-              {(walletTx.amount > 0 ? "+" : "") + walletTx.amount}
+
+            <div className={`text-xl ${walletTx.amount > 0 ? 'text-white' : 'text-white'}`}>
+              <div>{(walletTx.amount > 0 ? "+" : "") + walletTx.amount}</div>
+              <div className={"text-sm text-zinc-400"}>{`RBF: ${walletTx["bip125-replaceable"]}`}, {`Confirmations: ${walletTx["confirmations"]}`}</div>
+
             </div>
             <div className={"text-zinc-400"}>{walletTx.blocktime === undefined ? "" : toDateString(walletTx.blocktime)}</div>
 
