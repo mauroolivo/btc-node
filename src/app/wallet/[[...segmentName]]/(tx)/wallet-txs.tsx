@@ -13,6 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from "@/components/ui/alert-dialog";
+import {toDateString} from "@/util/util";
 
 export default function WalletTxsList() {
 
@@ -82,7 +83,7 @@ export default function WalletTxsList() {
 
                 <div className="flex flex-col">
                   <span className="text-sm text-zinc-400">Parent descs</span>
-                  <span className="text-prominent">{Array.isArray(tx.parent_descs) ? tx.parent_descs.join(', ') : String(tx.parent_descs ?? '')}</span>
+                  <span className="text-prominent break-words">{Array.isArray(tx.parent_descs) ? tx.parent_descs.join(', ') : String(tx.parent_descs ?? '')}</span>
                 </div>
 
                 <div className="flex flex-col">
@@ -152,12 +153,12 @@ export default function WalletTxsList() {
 
                 <div className="flex flex-col">
                   <span className="text-sm text-zinc-400">Time</span>
-                  <span className="text-prominent">{String(tx.time ?? '')}</span>
+                  <span className="text-prominent">{toDateString(tx.time)}</span>
                 </div>
 
                 <div className="flex flex-col">
                   <span className="text-sm text-zinc-400">Time received</span>
-                  <span className="text-prominent">{String(tx.timereceived ?? '')}</span>
+                  <span className="text-prominent">{toDateString(tx.timereceived)}</span>
                 </div>
 
                 <div className="flex flex-col">
